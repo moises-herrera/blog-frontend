@@ -1,6 +1,10 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { routesData } from '.';
-import { LeftSidebar, MainContainer } from 'src/shared/components';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { routesData } from ".";
+import {
+  LeftSidebar,
+  MainContainer,
+  RightSidebar,
+} from "src/shared/components";
 
 export const PrivateRoutes = () => {
   return (
@@ -15,6 +19,7 @@ export const PrivateRoutes = () => {
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </MainContainer>
+      <RightSidebar />
     </main>
   );
 };
