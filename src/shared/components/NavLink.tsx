@@ -3,8 +3,12 @@ import { LinkItem } from 'src/interfaces';
 
 export const NavLink = ({ path, label, icon }: LinkItem) => {
   return (
-    <Link to={path}>
-      <i className={icon}></i>
+    <Link className="flex gap-2" to={path}>
+      {icon && (
+        <span>
+          <i className={icon}></i>
+        </span>
+      )}
       <span>{label}</span>
     </Link>
   );

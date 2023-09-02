@@ -4,7 +4,7 @@ import {
   DrawerContent,
   DrawerHeader,
 } from '@chakra-ui/react';
-import { LeftSidebarLinks } from './LeftSidebarLinks';
+import { LeftSidebarLinks } from '.';
 
 export const LeftSidebar = () => {
   return (
@@ -16,7 +16,12 @@ export const LeftSidebar = () => {
       size="xs"
     >
       <DrawerContent backgroundColor="#2F2F2F" width="100%">
-        <DrawerHeader textAlign="center" textColor="#FF5050" fontSize="48px">
+        <DrawerHeader
+          textAlign="center"
+          textColor="#FF5050"
+          fontSize="48px"
+          fontWeight="700"
+        >
           Blog.
         </DrawerHeader>
 

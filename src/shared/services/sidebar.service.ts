@@ -7,16 +7,16 @@ export const LinkItems: LinkItem[] = [
   {
     path: '/',
     label: 'Inicio',
-    icon: 'home',
+    icon: 'fa-solid fa-house',
   },
   {
     path: '/profile',
     label: 'Perfil',
-    icon: 'user',
+    icon: 'fa-solid fa-user',
   },
   {
     path: '/settings',
     label: 'Configuración',
-    icon: 'cog',
+    icon: 'fa-solid fa-gear',
   },
 ];
