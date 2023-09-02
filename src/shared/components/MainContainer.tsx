@@ -1,9 +1,7 @@
-import { LeftSidebar } from '.';
+interface MainContainerProps {
+  children: React.ReactNode;
+}
 
-export const MainContainer = () => {
-  return (
-    <div className="pl-[350px] h-full w-full">
-      <LeftSidebar />
-    </div>
-  );
+export const MainContainer = ({ children }: MainContainerProps) => {
+  return <div className="pl-[350px] h-full">{children}</div>;
 };

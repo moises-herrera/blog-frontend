@@ -3,12 +3,14 @@ import { LinkItems } from 'src/shared/services';
 
 export const LeftSidebarLinks = () => {
   return (
-    <ul className="flex flex-col gap-2">
-      {LinkItems.map(({ ...props }) => (
-        <li className="text-white">
-          <NavLink {...props} />
-        </li>
-      ))}
-    </ul>
+    <nav className="flex flex-col text-white text-lg">
+      <ul className="flex flex-col gap-2">
+        {LinkItems.map(({ ...props }) => (
+          <li key={props.path}>
+            <NavLink {...props} />
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
