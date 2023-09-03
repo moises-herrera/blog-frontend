@@ -19,4 +19,13 @@ export interface Post {
 
   /** User id of the author. */
   userId: string;
+
+  /** Comments. */
+  comments: string[];
+
+  /** Likes. */
+  likes: string[];
+
+  /** Date of creation. */
+  createdAt: Date;
 }
