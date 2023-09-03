@@ -12,15 +12,18 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { getDateFormattedFromString } from 'src/helpers';
 import { PostInfo } from 'src/interfaces';
 
 export const PostCard = ({
   title,
   topic,
+  image,
   description,
   user,
   comments,
   likes,
+  createdAt,
 }: PostInfo) => {
   return (
     <Card
@@ -47,16 +50,12 @@ export const PostCard = ({
 
       <CardBody>
         <Box className="flex justify-center mb-5">
-          <Image
-            src="https://bit.ly/dan-abramov"
-            alt="Dan Abramov"
-            borderRadius={20}
-          />
+          <Image src={image} alt={title} borderRadius={20} />
         </Box>
 
         <div className="flex justify-between text-[#7B7B7B] text-sm">
           <span>#{topic}</span>
-          <span>02 de septiembre 2023</span>
+          <span>{getDateFormattedFromString(createdAt)}</span>
         </div>
 
         <Stack marginTop={2}>

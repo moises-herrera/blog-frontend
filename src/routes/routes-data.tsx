@@ -1,5 +1,5 @@
+import { Feed } from 'src/feed/pages';
 import { RouteData } from 'src/interfaces';
-import { MainContainer } from 'src/shared/components/MainContainer';
 
 /**
  * Public routes data.
@@ -21,7 +21,7 @@ export const publicRoutesData: RouteData[] = [
 export const routesData: RouteData[] = [
   {
     path: '/',
-    element: <MainContainer />,
+    element: <Feed />,
   },
   {
     path: '/profile',
