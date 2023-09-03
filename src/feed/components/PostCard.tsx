@@ -12,7 +12,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { getDateFormattedFromString } from 'src/helpers';
+import { getDateFormattedFromString, getFullName } from 'src/helpers';
 import { PostInfo } from 'src/interfaces';
 
 export const PostCard = ({
@@ -33,7 +33,7 @@ export const PostCard = ({
       borderRadius={20}
     >
       <CardHeader className="flex items-center space-x-2">
-        <Avatar name="Dan Abrahmov" src={user.avatar} />
+        <Avatar name={getFullName(user)} src={user.avatar} />
         <Heading size="xs">@{user.username}</Heading>
         <Button
           backgroundColor="#FF5050"
