@@ -6,11 +6,7 @@ interface PostCardContainerProps {
 
 export const PostCardContainer = ({ children }: PostCardContainerProps) => {
   return (
-    <Card
-      width="528px"
-      backgroundColor="#D3D3D3"
-      borderRadius={20}
-    >
+    <Card maxWidth="528px" backgroundColor="#D3D3D3" borderRadius={20}>
       {children}
     </Card>
   );

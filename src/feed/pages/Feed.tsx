@@ -27,7 +27,9 @@ export const Feed = () => {
       <Tabs colorScheme="accent" align="center" paddingTop={10}>
         <TabList width="230px">
           <Tab fontSize={18}>Seguidos</Tab>
-          <Tab fontSize={18}>Sugeridos</Tab>
+          <Tab isDisabled fontSize={18}>
+            Sugeridos
+          </Tab>
         </TabList>
 
         <TabPanels>
