@@ -3,7 +3,7 @@ import { LeftSidebarLinks, Sidebar } from '.';
 
 export const LeftSidebar = () => {
   return (
-    <Sidebar>
+    <Sidebar cssClass="hidden lg:block">
       <div className="my-10 text-center">
         <h2 className="text-5xl font-bold text-[#FF5050]">Blog.</h2>
       </div>
