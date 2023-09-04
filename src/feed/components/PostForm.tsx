@@ -11,8 +11,15 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { PostCardContainer } from '.';
+import { useRef } from 'react';
 
 export const PostForm = () => {
+  const profileImageInputRef = useRef<HTMLInputElement | null>(null);
+
+  const onUploadImage = (): void => {
+    profileImageInputRef.current?.click();
+  };
+
   return (
     <PostCardContainer>
       <CardHeader display="flex items-center">
@@ -30,7 +37,10 @@ export const PostForm = () => {
             alt="Post image"
             fallbackSrc="src/assets/images/upload-image.png"
             borderRadius={20}
+            onClick={onUploadImage}
+            cursor="pointer"
           />
+          <Input className="hidden" type="file" ref={profileImageInputRef} />
         </Box>
 
         <form className="flex flex-col gap-4">
