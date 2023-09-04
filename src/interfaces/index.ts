@@ -7,3 +7,4 @@ export * from './user.interface';
 export * from './enums';
 export * from './post-info.interface';
 export * from './comment.interface';
+export * from './ui-state.interface';

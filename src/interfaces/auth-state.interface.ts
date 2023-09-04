@@ -5,7 +5,7 @@ import { AuthStatus, User } from '.';
  */
 export interface AuthState {
   /** User data. */
-  user: User;
+  user: User | null;
 
   /** Auth status. */
   status: AuthStatus;
