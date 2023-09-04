@@ -1,4 +1,4 @@
-import { PostCard } from 'src/feed/components';
+import { PostCard, PostForm } from 'src/feed/components';
 import { PostInfo, Role } from 'src/interfaces';
 
 export const Feed = () => {
@@ -6,6 +6,7 @@ export const Feed = () => {
     {
       _id: '823',
       title: 'React is awesome',
+      image: 'https://bit.ly/dan-abramov',
       topic: 'react',
       description: `when an unknown printer took a galley of type and scrambled it to
       make a type specimen book. It has survived not only five centuries,
@@ -33,7 +34,9 @@ export const Feed = () => {
   ];
 
   return (
-    <section className="flex h-screen w-full bg-[#E0E0E0] justify-center pt-10">
+    <section className="flex flex-col min-h-screen w-full bg-secondary-100 items-center py-10 gap-8">
+      <PostForm />
+
       {posts.map((post) => (
         <PostCard key={post._id} {...post} />
       ))}
