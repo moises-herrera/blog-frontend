@@ -24,3 +24,11 @@ body {
   outline: 1px solid slategrey;
   border-radius: 4px;
 }
+
+.style-contain-comments {
+  border-radius: 0px 20px 20px 0px;
+}
+
+.comments-list {
+  height: calc(100vh - 300px);
+}

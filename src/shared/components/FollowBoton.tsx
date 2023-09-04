@@ -2,11 +2,13 @@ import { Button } from "@chakra-ui/react";
 
 interface Props {
   title: string;
+  onOpen?: () => void;
 }
-export const FollowBoton = ({ title }: Props) => {
+export const FollowBoton = ({ title, onOpen }: Props) => {
   return (
     <>
       <Button
+        onClick={onOpen}
         backgroundColor={"#FF5050"}
         size={"xs"}
         paddingX={"15px"}
