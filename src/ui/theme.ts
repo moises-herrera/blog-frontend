@@ -14,4 +14,14 @@ export const appTheme = extendTheme({
       600: '#f53636',
     },
   },
+  components: {
+    Button: {
+      variants: {
+        brand: {
+          bg: 'accent.500',
+          textColor: 'white',
+        },
+      },
+    },
+  },
 });
