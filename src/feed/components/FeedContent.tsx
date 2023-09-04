@@ -7,7 +7,7 @@ interface FeedContentProps {
 
 export const FeedContent = ({ posts }: FeedContentProps) => {
   return (
-    <div className="flex flex-col w-full gap-8">
+    <div className="flex flex-col w-full items-center gap-8">
       <PostForm />
 
       {posts.map((post) => (

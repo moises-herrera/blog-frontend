@@ -4,7 +4,7 @@ import { LeftSidebar, MainContainer } from 'src/shared/components';
 
 export const PrivateRoutes = () => {
   return (
-    <main className="flex">
+    <main className="flex h-full w-full">
       <LeftSidebar />
       <MainContainer>
         <Routes>
