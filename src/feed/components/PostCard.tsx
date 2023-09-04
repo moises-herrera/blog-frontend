@@ -32,7 +32,7 @@ export const PostCard = ({
           <Avatar name={getFullName(user)} src={user.avatar} />
           <Heading size="xs">@{user.username}</Heading>
           <Button
-            colorScheme="primary"
+            colorScheme="accent"
             textColor="white"
             fontSize="12px"
             fontWeight="500"

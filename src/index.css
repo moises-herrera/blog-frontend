@@ -9,7 +9,7 @@ body {
 }
 
 .section-content {
-  @apply flex flex-col min-h-screen w-full bg-secondary-100 items-center py-10 gap-8;
+  @apply flex flex-col min-h-screen w-full bg-secondary-100 items-center py-8 gap-8;
 }
 
 .profile-header {

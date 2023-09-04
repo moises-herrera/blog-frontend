@@ -9,7 +9,7 @@ export const appTheme = extendTheme({
     body: 'Poppins',
   },
   colors: {
-    primary: {
+    accent: {
       500: '#FF5050',
       600: '#f53636',
     },

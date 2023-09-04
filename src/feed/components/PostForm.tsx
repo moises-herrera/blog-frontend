@@ -55,7 +55,7 @@ export const PostForm = () => {
             borderRadius={10}
             marginX="auto"
             textColor="#E0E0E0"
-            colorScheme="primary"
+            colorScheme="accent"
           >
             Publicar
           </Button>
