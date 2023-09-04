@@ -8,4 +8,10 @@ export const appTheme = extendTheme({
     heading: 'Poppins',
     body: 'Poppins',
   },
+  colors: {
+    primary: {
+      500: '#FF5050',
+      600: '#f53636',
+    },
+  },
 });
