@@ -4,7 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   font-family: 'Poppins', sans-serif !important;
+}
+
+.section-content {
+  @apply flex flex-col min-h-screen w-full bg-secondary-100 items-center py-10 gap-8;
+}
+
+.profile-header {
+  width: calc(100vw - 360px);
 }

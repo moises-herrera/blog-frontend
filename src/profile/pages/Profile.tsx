@@ -1,7 +1,8 @@
 import { FeedContent } from 'src/feed/components';
 import { PostInfo, Role } from 'src/interfaces';
+import { ProfileHeader } from 'src/profile/components';
 
-export const Feed = () => {
+export const Profile = () => {
   const posts: PostInfo[] = [
     {
       _id: '823',
@@ -35,7 +36,11 @@ export const Feed = () => {
 
   return (
     <section className="section-content">
-      <FeedContent posts={posts} />
+      <ProfileHeader />
+
+      <div className="mt-28">
+        <FeedContent posts={posts} />
+      </div>
     </section>
   );
 };

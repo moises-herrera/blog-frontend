@@ -1,5 +1,6 @@
 import { Feed } from 'src/feed/pages';
 import { RouteData } from 'src/interfaces';
+import { Profile } from 'src/profile/pages';
 
 /**
  * Public routes data.
@@ -25,7 +26,7 @@ export const routesData: RouteData[] = [
   },
   {
     path: '/profile',
-    element: <>Perfil</>,
+    element: <Profile />,
   },
   {
     path: '/settings',
