@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Card,
   CardBody,
   CardFooter,
   CardHeader,
@@ -14,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { getDateFormattedFromString, getFullName } from 'src/helpers';
 import { PostInfo } from 'src/interfaces';
+import { PostCardContainer } from '.';
 
 export const PostCard = ({
   title,
@@ -26,26 +26,26 @@ export const PostCard = ({
   createdAt,
 }: PostInfo) => {
   return (
-    <Card
-      width="528px"
-      maxHeight={730}
-      backgroundColor="#D3D3D3"
-      borderRadius={20}
-    >
-      <CardHeader className="flex items-center space-x-2">
-        <Avatar name={getFullName(user)} src={user.avatar} />
-        <Heading size="xs">@{user.username}</Heading>
-        <Button
-          backgroundColor="#FF5050"
-          textColor="white"
-          fontSize="12px"
-          fontWeight="500"
-          width="64px"
-          height="26px"
-          borderRadius={10}
-        >
-          Seguir
-        </Button>
+    <PostCardContainer>
+      <CardHeader className="flex justify-between">
+        <div className="flex items-center space-x-2">
+          <Avatar name={getFullName(user)} src={user.avatar} />
+          <Heading size="xs">@{user.username}</Heading>
+          <Button
+            colorScheme="primary"
+            textColor="white"
+            fontSize="12px"
+            fontWeight="500"
+            width="64px"
+            height="26px"
+            borderRadius={10}
+          >
+            Seguir
+          </Button>
+        </div>
+        <button>
+          <i className="fa-solid fa-ellipsis-vertical"></i>
+        </button>
       </CardHeader>
 
       <CardBody>
@@ -53,7 +53,7 @@ export const PostCard = ({
           <Image src={image} alt={title} borderRadius={20} />
         </Box>
 
-        <div className="flex justify-between text-[#7B7B7B] text-sm">
+        <div className="flex justify-between text-secondary-300 text-sm">
           <span>#{topic}</span>
           <span>{getDateFormattedFromString(createdAt)}</span>
         </div>
@@ -71,24 +71,24 @@ export const PostCard = ({
             {description}
           </Text>
         </Stack>
-
-        <CardFooter className="flex w-full justify-center">
-          <ButtonGroup spacing="55">
-            <div className="space-x-2">
-              <Button>
-                <i className="fa-regular fa-comment"></i>
-              </Button>
-              <span>{comments.length}</span>
-            </div>
-            <div className="space-x-2">
-              <Button>
-                <i className="fa-regular fa-heart"></i>
-              </Button>
-              <span>{likes.length}</span>
-            </div>
-          </ButtonGroup>
-        </CardFooter>
       </CardBody>
-    </Card>
+
+      <CardFooter className="flex w-full justify-center">
+        <ButtonGroup className="space-x-36">
+          <div className="space-x-2">
+            <button>
+              <i className="fa-regular fa-comment"></i>
+            </button>
+            <span>{comments.length}</span>
+          </div>
+          <div className="space-x-2">
+            <button>
+              <i className="fa-regular fa-heart"></i>
+            </button>
+            <span>{likes.length}</span>
+          </div>
+        </ButtonGroup>
+      </CardFooter>
+    </PostCardContainer>
   );
 };
