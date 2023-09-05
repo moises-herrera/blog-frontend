@@ -8,3 +8,4 @@ export * from './enums';
 export * from './post-info.interface';
 export * from './comment.interface';
 export * from './ui-state.interface';
+export * from './post-state.interface';
