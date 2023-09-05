@@ -69,10 +69,12 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                 </div>
               </div>
               <div className="w-full bg-[#2F2F2F] mt-5 lg:w-1/2 h-full">
-                <CloseButton
-                  className=" block lg:hidden text-[#E0E0E0] pl-3 text-xl pb-3"
-                  onClick={onClose}
-                />
+                <div className="block lg:hidden">
+                  <CloseButton
+                    className="  text-[#E0E0E0] pl-3 text-xl pb-3"
+                    onClick={onClose}
+                  />
+                </div>
                 <div className="flex justify-between">
                   <div className="flex items-center">
                     <Avatar
