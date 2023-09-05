@@ -1,4 +1,5 @@
 import { Avatar, Button, Heading, Text } from '@chakra-ui/react';
+import './ProfileHeader.css';
 
 export const ProfileHeader = () => {
   return (
