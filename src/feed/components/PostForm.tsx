@@ -40,7 +40,12 @@ export const PostForm = () => {
             onClick={onUploadImage}
             cursor="pointer"
           />
-          <Input className="hidden" type="file" ref={profileImageInputRef} />
+          <Input
+            className="hidden"
+            type="file"
+            accept="image/png,image/jpg,image/jpeg"
+            ref={profileImageInputRef}
+          />
         </Box>
 
         <form className="flex flex-col gap-4">
