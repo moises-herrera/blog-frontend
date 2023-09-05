@@ -1,11 +1,14 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { LeftSidebarLinks, Sidebar } from '.';
+import { useSelector } from 'react-redux';
 
 export const LeftSidebar = () => {
+  const { isLeftSidebarOpen } = useSelector(({ ui }) => ui);
+
   return (
-    <Sidebar>
+    <Sidebar cssClass={`lg:block ${isLeftSidebarOpen ? 'block w-screen' : 'hidden'}`}>
       <div className="my-10 text-center">
-        <h2 className="text-5xl font-bold text-[#FF5050]">Blog.</h2>
+        <h2 className="text-5xl font-bold text-accent-500">Blog.</h2>
       </div>
 
       <InputGroup className="mb-5">

@@ -4,7 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   font-family: 'Poppins', sans-serif !important;
+}
+
+.section-content {
+  @apply min-h-screen w-full bg-secondary-100 items-center py-4;
 }

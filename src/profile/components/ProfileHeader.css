@@ -1,0 +1,12 @@
+.profile-header {
+  @apply fixed z-40 top-0 bg-primary-500 text-white;
+  @apply flex flex-col w-full max-h-fit items-start p-4 gap-3 pt-20;
+}
+
+@media (min-width: 1024px) {
+  .profile-header {
+    @apply flex flex-row h-[115px] justify-between items-center p-4 gap-3;
+
+    width: calc(100vw - 360px);
+  }
+}

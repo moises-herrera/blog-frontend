@@ -3,7 +3,7 @@ import { LinkItem } from 'src/interfaces';
 /**
  * Sidebar links.
  */
-export const LinkItems: LinkItem[] = [
+export const linkItems: LinkItem[] = [
   {
     path: '/',
     label: 'Inicio',
