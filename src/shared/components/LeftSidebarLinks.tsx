@@ -1,7 +1,15 @@
+import { useDispatch } from 'react-redux';
 import { NavLink } from '.';
 import { linkItems } from 'src/shared/services';
+import { toggleNewPostFormVisibility } from 'src/store/post';
 
 export const LeftSidebarLinks = () => {
+  const dispatch = useDispatch();
+
+  const onClickNewPost = (): void => {
+    dispatch(toggleNewPostFormVisibility());
+  };
+
   return (
     <nav className="flex flex-col text-white text-lg">
       <ul className="flex flex-col gap-2">
@@ -11,7 +19,7 @@ export const LeftSidebarLinks = () => {
           </li>
         ))}
 
-        <button className="flex gap-2 items-center">
+        <button onClick={onClickNewPost} className="flex gap-2 items-center">
           <span>
             <i className="fa-solid fa-square-plus"></i>
           </span>
