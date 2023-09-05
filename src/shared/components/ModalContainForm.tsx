@@ -38,7 +38,7 @@ export const ModalContainForm = ({
               <div className="text-center text-[20px] lg:text-[30px] font-extrabold text-[#E0E0E0] mb-10 px-0 lg:px-52">
                 <p>{title}</p>
               </div>
-              {children}
+              <div className="text-center">{children}</div>
             </div>
           </div>
         </ModalBody>

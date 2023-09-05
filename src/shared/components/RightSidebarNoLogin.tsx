@@ -31,9 +31,10 @@ export const RightSidebarNoLogin = ({ onOpen }: Props) => {
       </div>
       <div className=" text-[#E0E0E0] bg-center">
         <h2 className="font-bold text-[30px] mb-2">Tal vez te interese</h2>
-        <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[310px] font-medium text-[14px] text-[#2F2F2F]">
+        <div className="min-w-full  comments-list lg:h-[310px] font-medium text-[14px] text-[#2F2F2F]">
           {datademo
             .filter((obj) => obj.follow == "Seguir")
+            .slice(0, 5)
             .map((item, index) => (
               <div key={index}>
                 <UserCard user={item.user} img={item.img}>
@@ -42,7 +43,7 @@ export const RightSidebarNoLogin = ({ onOpen }: Props) => {
               </div>
             ))}
         </div>
-        <div className="mt-3 2xl:mt-36">
+        <div className="mt-3 2xl:mt-28">
           <p>
             Condiciones de ServicioPolítica de Privacidad Política de cookies ©
             2023 IUE Corp.

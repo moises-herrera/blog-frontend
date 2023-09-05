@@ -1,5 +1,5 @@
 import { ModalContainForm } from "./ModalContainForm";
-import { FormControl, InputGroup } from "@chakra-ui/react";
+import { FormControl } from "@chakra-ui/react";
 import { ButtonComponent } from "./ButtonComponent";
 import { InputComponent } from "./InputComponent";
 interface Props {
@@ -14,24 +14,27 @@ export const CreateAccount = ({ isOpen, onClose }: Props) => {
       onClose={onClose}
       title={"Da vida a tus ideas y comparte tu pasion con el mundo."}
     >
-      <div>
-        <FormControl>
-          <InputGroup className="flex flex-col items-center">
-            <InputComponent placeholder="Nombre" type="text" />
-            <InputComponent placeholder="Apellido" type="text" />
-            <InputComponent placeholder="Usuario" type="text" />
-            <InputComponent placeholder="Correo" type="email" />
-            <InputComponent placeholder="Contraseña" type="password" />
-            <InputComponent
-              placeholder="Confirmar contraseña"
-              type="password"
-            />
-          </InputGroup>
-          <ButtonComponent title={"Iniciar sesión"} />
-        </FormControl>
-        <div className="text-center font-medium text-[16px] text-[#E0E0E0] mt-4">
-          <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
+      <FormControl>
+        <InputComponent placeholder="Nombre" type="text" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Apellido" type="text" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Usuario" type="text" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Correo" type="email" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Contraseña" type="password" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Confirmar contraseña" type="password" />
+      </FormControl>
+      <ButtonComponent title={"Crear cuenta"} />
+      <div className="text-center font-medium text-[16px] text-[#E0E0E0] mt-4">
+        <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
     </ModalContainForm>
   );

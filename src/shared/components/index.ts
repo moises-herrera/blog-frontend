@@ -4,3 +4,8 @@ export * from "./LeftSidebarLinks";
 export * from "./NavLink";
 export * from "./MainContainer";
 export * from "./Sidebar";
+export * from "./CommentsModal";
+export * from "./LogIn";
+export * from "./RecoveryPassword";
+export * from "./CreateAccount";
+export * from "./RightSidebarNoLogin";

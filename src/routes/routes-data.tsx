@@ -1,5 +1,6 @@
 import { RouteData } from "src/interfaces";
 import { MainContainer } from "src/shared/components/MainContainer";
+import { LogIn } from "src/shared/components";
 
 /**
  * Public routes data.
@@ -9,10 +10,7 @@ export const publicRoutesData: RouteData[] = [
     path: "/login",
     element: <>Login</>,
   },
-  {
-    path: "/register",
-    element: <>Register</>,
-  },
+  { path: "/register", element: <>Register</> },
 ];
 
 /**

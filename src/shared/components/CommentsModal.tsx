@@ -1,4 +1,4 @@
-import { CommendCard } from "./CommendCard";
+import { CommentCard } from "./CommentCard";
 import { usuarios } from "./DataDemo";
 import { FollowBoton } from "./FollowBoton";
 
@@ -6,7 +6,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalFooter,
   ModalBody,
   CloseButton,
   Image,
@@ -34,10 +33,7 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
       >
         <ModalOverlay />
         <ModalContent background={"#2F2F2F"}>
-          {/* <ModalHeader>
-            
-          </ModalHeader> */}
-          <ModalBody margin={"0px"} padding={"0px"} marginBottom={"-32px"}>
+          <ModalBody margin={"0px"} padding={"0px"}>
             <div className="flex flex-col w-full h-full sm:flex-row">
               <div className="hidden w-full bg-white style-contain-comments lg:w-1/2 lg:block">
                 <CloseButton onClick={onClose} />
@@ -73,7 +69,10 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                 </div>
               </div>
               <div className="w-full bg-[#2F2F2F] mt-5 lg:w-1/2 h-full">
-                <i className=" block lg:hidden text-[#E0E0E0] pl-3 text-xl pb-3 fa-solid fa-arrow-left"></i>
+                <CloseButton
+                  className=" block lg:hidden text-[#E0E0E0] pl-3 text-xl pb-3"
+                  onClick={onClose}
+                />
                 <div className="flex justify-between">
                   <div className="flex items-center">
                     <Avatar
@@ -98,7 +97,7 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                   <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[550px]">
                     {usuarios.map((item, index) => (
                       <div key={index}>
-                        <CommendCard
+                        <CommentCard
                           user={item.user}
                           comment={item.comment}
                           img={item.img}
@@ -117,7 +116,7 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                     <Input
                       textColor={"#ffffff"}
                       type="text"
-                      placeholder="Buscar tema de interes"
+                      placeholder="Comentar"
                       height={"50px"}
                     />
                   </InputGroup>
@@ -125,7 +124,6 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
               </div>
             </div>
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </div>

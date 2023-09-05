@@ -1,5 +1,5 @@
 import { ModalContainForm } from "./ModalContainForm";
-import { FormControl, InputGroup } from "@chakra-ui/react";
+import { FormControl } from "@chakra-ui/react";
 import { ButtonComponent } from "./ButtonComponent";
 import { InputComponent } from "./InputComponent";
 interface Props {
@@ -14,17 +14,15 @@ export const LogIn = ({ isOpen, onClose }: Props) => {
       onClose={onClose}
       title={"Iniciar sesión"}
     >
-      <div>
-        <FormControl>
-          <InputGroup className="flex flex-col items-center">
-            <InputComponent placeholder="Correo" type="email" />
-            <InputComponent placeholder="Contraseña" type="password" />
-          </InputGroup>
-          <ButtonComponent title={"Iniciar sesión"} />
-        </FormControl>
-        <div className="text-center font-medium text-[16px] text-[#E0E0E0] mt-4">
-          <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
+      <FormControl>
+        <InputComponent placeholder="Correo" type="email" />
+      </FormControl>
+      <FormControl>
+        <InputComponent placeholder="Contraseña" type="password" />
+      </FormControl>
+      <ButtonComponent title={"Iniciar sesión"} />
+      <div className="text-center font-medium text-[16px] text-[#E0E0E0] mt-4">
+        <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
     </ModalContainForm>
   );

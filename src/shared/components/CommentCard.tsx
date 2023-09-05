@@ -5,7 +5,7 @@ interface Props {
   comment: string;
   img: string;
 }
-export const CommendCard = ({ user, comment, img }: Props) => {
+export const CommentCard = ({ user, comment, img }: Props) => {
   return (
     <div className="flex mb-4">
       <div className="pl-3 pr-4">

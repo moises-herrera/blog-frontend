@@ -1,5 +1,5 @@
 import { ModalContainForm } from "./ModalContainForm";
-import { FormControl, InputGroup } from "@chakra-ui/react";
+import { FormControl } from "@chakra-ui/react";
 import { ButtonComponent } from "./ButtonComponent";
 import { InputComponent } from "./InputComponent";
 interface Props {
@@ -14,14 +14,10 @@ export const RecoveryPassword = ({ isOpen, onClose }: Props) => {
       onClose={onClose}
       title={"Recuperar contraseña"}
     >
-      <div>
-        <FormControl>
-          <InputGroup className="flex flex-col items-center">
-            <InputComponent placeholder="Correo" type="email" />
-          </InputGroup>
-          <ButtonComponent title={"Siguiente"} />
-        </FormControl>
-      </div>
+      <FormControl>
+        <InputComponent placeholder="Correo" type="email" />
+      </FormControl>
+      <ButtonComponent title={"Siguiente"} />
     </ModalContainForm>
   );
 };
