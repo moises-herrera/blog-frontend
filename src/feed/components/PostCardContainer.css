@@ -1,0 +1,10 @@
+.post-card-container {
+  width: 352px;
+}
+
+@media (min-width: 640px) {
+  .post-card-container {
+    width: 100%;
+    max-width: 528px;
+  }
+}

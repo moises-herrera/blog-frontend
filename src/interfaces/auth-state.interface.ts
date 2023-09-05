@@ -1,11 +1,11 @@
-import { AuthStatus } from '.';
+import { AuthStatus, User } from '.';
 
 /**
  * Auth state for Redux.
  */
 export interface AuthState {
   /** User data. */
-  user: unknown;
+  user: User | null;
 
   /** Auth status. */
   status: AuthStatus;

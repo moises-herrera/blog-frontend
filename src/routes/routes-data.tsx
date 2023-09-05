@@ -1,6 +1,7 @@
 import { RouteData } from "src/interfaces";
 import { MainContainer } from "src/shared/components/MainContainer";
-import { LogIn } from "src/shared/components";
+import { Feed } from "src/feed/pages";
+import { Profile } from "src/profile/pages";
 
 /**
  * Public routes data.
@@ -24,6 +25,12 @@ export const routesData: RouteData[] = [
   {
     path: "/profile",
     element: <>Perfil</>,
+    path: "/",
+    element: <Feed />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
   {
     path: "/settings",

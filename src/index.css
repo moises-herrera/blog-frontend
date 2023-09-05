@@ -32,3 +32,7 @@ body {
 .comments-list {
   height: calc(100vh - 300px);
 }
+
+.section-content {
+  @apply min-h-screen w-full bg-secondary-100 items-center py-4;
+}
