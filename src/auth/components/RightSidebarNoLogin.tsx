@@ -1,8 +1,8 @@
-import { Sidebar } from ".";
-import { ButtonComponent } from "./ButtonComponent";
-import { UserCard } from "./UserCard";
-import { FollowBoton } from "./FollowBoton";
-import { datademo } from "./DataDemo";
+import { Sidebar } from "../../shared/components";
+import { ButtonComponent } from "../../shared/components/ButtonComponent";
+import { UserCard } from "../../shared/components/UserCard";
+import { FollowBoton } from "../../shared/components/FollowBoton";
+import { datademo } from "../../mocks/DataDemo";
 
 interface Props {
   onOpen: () => void;

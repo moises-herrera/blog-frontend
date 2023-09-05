@@ -1,17 +1,18 @@
-import { Feed } from 'src/feed/pages';
-import { RouteData } from 'src/interfaces';
-import { Profile } from 'src/profile/pages';
+import { Feed } from "src/feed/pages";
+import { RouteData } from "src/interfaces";
+import { Profile } from "src/profile/pages";
+import { SettingForm } from "src/shared/components";
 
 /**
  * Public routes data.
  */
 export const publicRoutesData: RouteData[] = [
   {
-    path: '/login',
+    path: "/login",
     element: <>Login</>,
   },
   {
-    path: '/register',
+    path: "/register",
     element: <>Register</>,
   },
 ];
@@ -21,15 +22,15 @@ export const publicRoutesData: RouteData[] = [
  */
 export const routesData: RouteData[] = [
   {
-    path: '/',
+    path: "/",
     element: <Feed />,
   },
   {
-    path: '/profile',
+    path: "/profile",
     element: <Profile />,
   },
   {
-    path: '/settings',
-    element: <>Configuracion</>,
+    path: "/settings",
+    element: <SettingForm />,
   },
 ];

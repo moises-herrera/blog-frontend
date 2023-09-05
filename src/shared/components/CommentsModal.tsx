@@ -1,6 +1,5 @@
-import { CommentCard } from "./CommentCard";
-import { usuarios } from "./DataDemo";
-import { FollowBoton } from "./FollowBoton";
+import { CommentCard, FollowBoton } from "src/shared/components";
+import { usuarios } from "src/mocks";
 
 import {
   Modal,

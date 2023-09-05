@@ -1,8 +1,7 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { Sidebar } from ".";
-import { UserCard } from "./UserCard";
-import { FollowBoton } from "./FollowBoton";
-import { datademo } from "./DataDemo";
+import { FollowBoton, UserCard } from "src/shared/components";
+import { datademo } from "src/mocks";
 
 interface Props {
   onOpen: () => void;
@@ -10,7 +9,7 @@ interface Props {
 
 export const RightSidebar = ({ onOpen }: Props) => {
   return (
-    <Sidebar align="right">
+    <Sidebar align="right" cssClass="hidden lg:block">
       <div className="pt-10">
         <InputGroup className="mb-5">
           <InputLeftElement pointerEvents="none">
