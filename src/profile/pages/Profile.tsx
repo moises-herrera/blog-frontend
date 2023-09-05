@@ -7,7 +7,7 @@ export const Profile = () => {
     <section className="section-content">
       <ProfileHeader />
 
-      <div className="mt-28">
+      <div className="mt-[300px] lg:mt-28">
         <FeedContent posts={posts} />
       </div>
     </section>
