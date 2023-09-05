@@ -1,4 +1,4 @@
-import { CommentCard, FollowBoton } from "src/shared/components";
+import { CommentCard, FollowButton } from "src/shared/components";
 import { usuarios } from "src/mocks";
 
 import {
@@ -88,7 +88,7 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                     </p>
                   </div>
                   <div className="flex items-center pr-3">
-                    <FollowBoton title={title} />
+                    <FollowButton title={title} />
                   </div>
                 </div>
                 <div>

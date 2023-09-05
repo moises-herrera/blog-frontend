@@ -10,7 +10,6 @@ export const InputSetting = ({ value, label }: Props) => {
       <FormControl className="mb-10">
         <FormLabel className=" text-[#FF5050]">{label}</FormLabel>
         <Input
-          pointerEvents={"none"}
           borderBottom="1px"
           borderColor="#FF5050"
           borderTop="none"

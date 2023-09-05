@@ -1,6 +1,5 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { Sidebar } from ".";
-import { FollowBoton, UserCard } from "src/shared/components";
+import { FollowButton, UserCard, Sidebar } from "src/shared/components";
 import { datademo } from "src/mocks";
 
 interface Props {
@@ -29,7 +28,7 @@ export const RightSidebar = ({ onOpen }: Props) => {
         {datademo.map((item) => (
           <div key={item.user}>
             <UserCard user={item.user} img={item.img}>
-              <FollowBoton title="No seguir" onOpen={onOpen} />
+              <FollowButton title="No seguir" onOpen={onOpen} />
             </UserCard>
           </div>
         ))}
@@ -41,7 +40,7 @@ export const RightSidebar = ({ onOpen }: Props) => {
         {datademo.map((item) => (
           <div key={item.user}>
             <UserCard user={item.user} img={item.img}>
-              <FollowBoton title="Seguir" onOpen={onOpen} />
+              <FollowButton title="Seguir" onOpen={onOpen} />
             </UserCard>
           </div>
         ))}

@@ -1,8 +1,10 @@
-import { Sidebar } from "../../shared/components";
-import { ButtonComponent } from "../../shared/components/ButtonComponent";
-import { UserCard } from "../../shared/components/UserCard";
-import { FollowBoton } from "../../shared/components/FollowBoton";
-import { datademo } from "../../mocks/DataDemo";
+import {
+  Sidebar,
+  ButtonComponent,
+  UserCard,
+  FollowButton,
+} from "src/shared/components";
+import { datademo } from "src/mocks";
 
 interface Props {
   onOpen: () => void;
@@ -38,7 +40,7 @@ export const RightSidebarNoLogin = ({ onOpen }: Props) => {
             .map((item, index) => (
               <div key={index}>
                 <UserCard user={item.user} img={item.img}>
-                  <FollowBoton title={item.follow} />
+                  <FollowButton title={item.follow} />
                 </UserCard>
               </div>
             ))}

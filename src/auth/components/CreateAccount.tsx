@@ -1,7 +1,9 @@
-import { ModalContainForm } from "../../shared/components/ModalContainForm";
 import { FormControl } from "@chakra-ui/react";
-import { ButtonComponent } from "../../shared/components/ButtonComponent";
-import { InputComponent } from "../../shared/components/InputComponent";
+import {
+  ModalContainForm,
+  ButtonComponent,
+  InputComponent,
+} from "src/shared/components";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
