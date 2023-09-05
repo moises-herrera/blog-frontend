@@ -1,17 +1,19 @@
-import { RouteData } from "src/interfaces";
-import { MainContainer } from "src/shared/components/MainContainer";
-import { Feed } from "src/feed/pages";
-import { Profile } from "src/profile/pages";
+import { Feed } from 'src/feed/pages';
+import { RouteData } from 'src/interfaces';
+import { Profile } from 'src/profile/pages';
 
 /**
  * Public routes data.
  */
 export const publicRoutesData: RouteData[] = [
   {
-    path: "/login",
+    path: '/login',
     element: <>Login</>,
   },
-  { path: "/register", element: <>Register</> },
+  {
+    path: '/register',
+    element: <>Register</>,
+  },
 ];
 
 /**
@@ -19,21 +21,15 @@ export const publicRoutesData: RouteData[] = [
  */
 export const routesData: RouteData[] = [
   {
-    path: "/",
-    element: <MainContainer />,
-  },
-  {
-    path: "/profile",
-    element: <>Perfil</>,
-    path: "/",
+    path: '/',
     element: <Feed />,
   },
   {
-    path: "/profile",
+    path: '/profile',
     element: <Profile />,
   },
   {
-    path: "/settings",
+    path: '/settings',
     element: <>Configuracion</>,
   },
 ];
