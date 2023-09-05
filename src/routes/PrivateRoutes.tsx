@@ -1,10 +1,19 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { routesData } from '.';
-import { LeftSidebar, MainContainer } from 'src/shared/components';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { routesData } from ".";
+import {
+  LeftSidebar,
+  MainContainer,
+  RightSidebar,
+  CommentsModal,
+} from "src/shared/components";
+
+//Gabriel
+import { useDisclosure } from "@chakra-ui/react";
 
 export const PrivateRoutes = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <main className="flex h-full w-full">
+    <main className="flex w-full h-full">
       <LeftSidebar />
       <MainContainer>
         <Routes>
@@ -15,6 +24,8 @@ export const PrivateRoutes = () => {
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </MainContainer>
+      <RightSidebar onOpen={onOpen} />
+      <CommentsModal isOpen={isOpen} onClose={onClose} title="Seguir" />
     </main>
   );
 };

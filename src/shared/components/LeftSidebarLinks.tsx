@@ -1,7 +1,7 @@
-import { useDispatch } from 'react-redux';
-import { NavLink } from '.';
-import { linkItems } from 'src/shared/services';
-import { toggleNewPostFormVisibility } from 'src/store/post';
+import { useDispatch } from "react-redux";
+import { NavLink } from ".";
+import { linkItems } from "src/shared/services";
+import { toggleNewPostFormVisibility } from "src/store/post";
 
 export const LeftSidebarLinks = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const LeftSidebarLinks = () => {
   };
 
   return (
-    <nav className="flex flex-col text-white text-lg">
+    <nav className="flex flex-col text-lg text-white">
       <ul className="flex flex-col gap-2">
         {linkItems.slice(0, 2).map(({ ...props }) => (
           <li key={props.path}>
@@ -19,7 +19,7 @@ export const LeftSidebarLinks = () => {
           </li>
         ))}
 
-        <button onClick={onClickNewPost} className="flex gap-2 items-center">
+        <button onClick={onClickNewPost} className="flex items-center gap-2">
           <span>
             <i className="fa-solid fa-square-plus"></i>
           </span>
