@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { routesData } from ".";
+import { privateRoutesData } from ".";
 import {
   LeftSidebar,
   MainContainer,
@@ -17,7 +17,7 @@ export const PrivateRoutes = () => {
       <LeftSidebar />
       <MainContainer>
         <Routes>
-          {routesData.map(({ path, element }) => (
+          {privateRoutesData.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
 

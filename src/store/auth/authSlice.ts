@@ -3,7 +3,7 @@ import { AuthState } from 'src/interfaces';
 
 const initialState: AuthState = {
   user: null,
-  status: 'authenticated',
+  status: 'not-authenticated',
   errorMessage: null,
 };
 

@@ -24,8 +24,8 @@ export const RightSidebarNoLogin = ({ onOpen }: Props) => {
           </p>
         </div>
         <div className="mt-5 2xl:mt-10">
-          <ButtonComponent title="Iniciar sesión" onOpen={onOpen} />
-          <ButtonComponent title="Crear cuenta" onOpen={onOpen} />
+          <ButtonComponent title="Iniciar sesión" onClick={onOpen} />
+          <ButtonComponent title="Crear cuenta" onClick={onOpen} />
         </div>
         <div className="text-[#FF5050] font-medium text-[14px] 2xl:text-[16px] text-center mb-5">
           <a href="#">¿Olvidaste tu contraseña?</a>
