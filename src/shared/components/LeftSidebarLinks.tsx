@@ -2,18 +2,18 @@ import { useDispatch } from "react-redux";
 import { NavLink } from ".";
 import { linkItems } from "src/shared/services";
 import { toggleNewPostFormVisibility } from "src/store/post";
-import { toggleLeftSidebar } from "src/store/ui";
+import { closeLeftSidebar } from "src/store/ui";
 
 export const LeftSidebarLinks = () => {
   const dispatch = useDispatch();
 
   const onClickNavLink = (): void => {
-    dispatch(toggleLeftSidebar());
+    dispatch(closeLeftSidebar());
   };
 
   const onClickNewPost = (): void => {
     dispatch(toggleNewPostFormVisibility());
-    dispatch(toggleLeftSidebar());
+    dispatch(closeLeftSidebar());
   };
 
   return (
