@@ -1,3 +1,4 @@
+import { ForgotPassword } from "src/auth/pages";
 import { Login } from "src/auth/pages/Login";
 import { Register } from "src/auth/pages/Register";
 import { Feed } from "src/feed/pages";
@@ -16,6 +17,10 @@ export const publicRoutesData: RouteData[] = [
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
 ];
 

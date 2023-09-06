@@ -43,10 +43,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
       onClose={onClose}
       title={"Da vida a tus ideas y comparte tu pasion con el mundo."}
     >
-      <form
-        onSubmit={handleSubmit(onSubmitForm)}
-        className="auth-form"
-      >
+      <form onSubmit={handleSubmit(onSubmitForm)} className="auth-form">
         <FormControlContainer fieldError={errors.firstName}>
           <Input placeholder="Nombre" type="text" {...register("firstName")} />
         </FormControlContainer>
@@ -78,7 +75,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
         </Button>
         <div className="forgot-password-link">
           <NavLink
-            path="/auth"
+            path="/auth/forgot-password"
             label="¿Olvidaste tu contraseña?"
             className="!w-full"
           />

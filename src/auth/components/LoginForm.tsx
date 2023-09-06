@@ -59,7 +59,7 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
         </Button>
         <div className="forgot-password-link">
           <NavLink
-            path="/auth"
+            path="/auth/forgot-password"
             label="¿Olvidaste tu contraseña?"
             className="!w-full"
           />
