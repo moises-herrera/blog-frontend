@@ -1,8 +1,7 @@
 import { Modal, ModalContent, ModalBody, Image } from "@chakra-ui/react";
+import { ModalData } from "src/interfaces";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
+interface ModalContainFormProps extends ModalData {
   title: string;
   children: React.ReactNode;
 }
@@ -12,7 +11,7 @@ export const ModalContainForm = ({
   onClose,
   title,
   children,
-}: Props) => {
+}: ModalContainFormProps) => {
   return (
     <Modal
       size={"full"}
