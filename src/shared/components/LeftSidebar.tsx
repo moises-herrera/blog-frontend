@@ -1,10 +1,19 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { LeftSidebarLinks, Sidebar } from ".";
-
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "src/store";
+import { removeToken } from "src/helpers";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
+import { onLogout } from "src/store/auth";
 
 export const LeftSidebar = () => {
-  const { isLeftSidebarOpen } = useSelector(({ ui }) => ui);
+  const dispatch = useDispatch<AppDispatch>();
+  const { isLeftSidebarOpen } = useTypedSelector(({ ui }) => ui);
+
+  const onClickLogout = (): void => {
+    removeToken();
+    dispatch(onLogout(null));
+  };
 
   return (
     <Sidebar
@@ -27,7 +36,10 @@ export const LeftSidebar = () => {
 
       <LeftSidebarLinks />
 
-      <button className="absolute bottom-0 pb-5 space-x-2 text-lg text-white">
+      <button
+        onClick={onClickLogout}
+        className="absolute bottom-0 pb-5 space-x-2 text-lg text-white"
+      >
         <i className="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Cerrar sesión</span>
       </button>

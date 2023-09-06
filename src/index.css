@@ -36,3 +36,11 @@ body {
 .section-content {
   @apply min-h-screen w-full bg-secondary-100 items-center py-4;
 }
+
+.auth-form {
+  @apply flex flex-col w-[70%] lg:w-[30%] mx-auto items-center gap-5 text-white;
+}
+
+.auth-link {
+  @apply text-center font-medium text-[16px] text-[#E0E0E0] mt-4;
+}

@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { routesData } from ".";
+import { privateRoutesData } from ".";
 import {
   LeftSidebar,
   MainContainer,
@@ -12,12 +12,13 @@ import { useDisclosure } from "@chakra-ui/react";
 
 export const PrivateRoutes = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <main className="flex w-full h-full">
       <LeftSidebar />
       <MainContainer>
         <Routes>
-          {routesData.map(({ path, element }) => (
+          {privateRoutesData.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
 

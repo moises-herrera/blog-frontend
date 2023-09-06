@@ -11,5 +11,5 @@ export interface AuthState {
   status: AuthStatus;
 
   /** Error message. */
-  errorMessage: string | null;
+  errorMessage?: string | null;
 }

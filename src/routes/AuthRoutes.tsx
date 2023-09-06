@@ -1,10 +1,10 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { publicRoutesData } from '.';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { authRoutesData } from ".";
 
 export const AuthRoutes = () => {
   return (
     <Routes>
-      {publicRoutesData.map(({ path, element }) => (
+      {authRoutesData.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />
       ))}
 

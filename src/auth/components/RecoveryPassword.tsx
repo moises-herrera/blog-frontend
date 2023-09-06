@@ -1,15 +1,12 @@
 import { FormControl } from "@chakra-ui/react";
+import { ModalData } from "src/interfaces";
 import {
   ModalContainForm,
   ButtonComponent,
   InputComponent,
 } from "src/shared/components";
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
-export const RecoveryPassword = ({ isOpen, onClose }: Props) => {
+export const RecoveryPassword = ({ isOpen, onClose }: ModalData) => {
   return (
     <ModalContainForm
       isOpen={isOpen}
