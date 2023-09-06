@@ -11,3 +11,7 @@ export * from "./ui-state.interface";
 export * from "./post-state.interface";
 export * from "./modal-data.interface";
 export * from "./user-auth.interface";
+export * from "./auth-response.interface";
+export * from "./send-email.interface";
+export * from "./email-state.interface";
+export * from "./standard-response.interface";
