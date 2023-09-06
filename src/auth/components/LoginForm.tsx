@@ -57,12 +57,25 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
         <Button type="submit" variant="form">
           Iniciar sesión
         </Button>
-        <div className="forgot-password-link">
+        <div className="auth-link">
           <NavLink
             path="/auth/forgot-password"
             label="¿Olvidaste tu contraseña?"
             className="!w-full"
           />
+        </div>
+
+        <div className="auth-link">
+          <hr />
+
+          <p className="w-full mt-2">
+            ¿No tienes una cuenta?
+            <NavLink
+              path="/auth/register"
+              label="Regístrate"
+              className="!w-full justify-center"
+            />
+          </p>
         </div>
       </form>
     </ModalContainForm>

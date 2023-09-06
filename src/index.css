@@ -41,6 +41,6 @@ body {
   @apply flex flex-col w-[70%] lg:w-[30%] mx-auto items-center gap-5 text-white;
 }
 
-.forgot-password-link {
+.auth-link {
   @apply text-center font-medium text-[16px] text-[#E0E0E0] mt-4;
 }

@@ -5,7 +5,6 @@ import { getToken, setToken } from "src/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "src/store/types";
 import { sendConfirmEmail } from "src/store/email";
-import { clearErrorMessage } from "src/store/auth";
 
 /**
  * Start register a user.
