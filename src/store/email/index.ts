@@ -1,2 +1,2 @@
 export * from "./emailSlice";
-export * from "./thunks";
+export * from "./email-thunks";
