@@ -11,12 +11,12 @@ import { ModalData } from "src/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { startRegisterUser } from "src/store/auth";
 import { useEffect } from "react";
-import { useErrorToast } from "src/hooks";
+import { useMessageToast } from "src/hooks";
 
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch();
-  const { errorMessage } = useSelector(({ auth }) => auth);
-  const { displayError } = useErrorToast();
+  const { status, errorMessage } = useSelector(({ auth }) => auth);
+  const { displayError } = useMessageToast();
   const {
     handleSubmit,
     register,
@@ -72,7 +72,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
             {...register("confirmPassword")}
           />
         </FormControlContainer>
-        <Button type="submit" variant="form">
+        <Button type="submit" variant="form" isLoading={status === "checking"}>
           Crear cuenta
         </Button>
         <div className="text-center font-medium text-[16px] text-secondary-100 mt-4">
