@@ -13,3 +13,4 @@ export * from "./RightSidebar";
 export * from "./SettingForm";
 export * from "./Sidebar";
 export * from "./UserCard";
+export * from "./FormControlContainer";
