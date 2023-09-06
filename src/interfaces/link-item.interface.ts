@@ -9,5 +9,5 @@ export interface LinkItem {
   label: string;
 
   /** Icon. */
-  icon: string;
+  icon?: string;
 }
