@@ -3,6 +3,7 @@ import { authSlice } from "src/store/auth";
 import { uiSlice } from "src/store/ui";
 import { postSlice } from "src/store/post";
 import { emailSlice } from "src/store/email";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 /**
  * Redux store.
@@ -15,3 +16,7 @@ export const store = configureStore({
     email: emailSlice.reducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

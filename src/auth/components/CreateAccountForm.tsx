@@ -8,14 +8,15 @@ import {
 } from "src/shared/components";
 import { SignUpSchema, SignUpSchemaType } from "src/auth/validations";
 import { ModalData } from "src/interfaces";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { startRegisterUser } from "src/store/auth";
 import { useEffect } from "react";
 import { useMessageToast } from "src/hooks";
+import { useTypedSelector } from "src/store";
 
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch();
-  const { status, errorMessage } = useSelector(({ auth }) => auth);
+  const { status, errorMessage } = useTypedSelector(({ auth }) => auth);
   const { displayError } = useMessageToast();
   const {
     handleSubmit,

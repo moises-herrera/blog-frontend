@@ -1,10 +1,9 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { LeftSidebarLinks, Sidebar } from ".";
-
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "src/store";
 
 export const LeftSidebar = () => {
-  const { isLeftSidebarOpen } = useSelector(({ ui }) => ui);
+  const { isLeftSidebarOpen } = useTypedSelector(({ ui }) => ui);
 
   return (
     <Sidebar

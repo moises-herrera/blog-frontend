@@ -1,5 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useTypedSelector } from "src/store";
 import { toggleLeftSidebar } from "src/store/ui";
 
 interface MainContainerProps {
@@ -7,7 +8,7 @@ interface MainContainerProps {
 }
 
 export const MainContainer = ({ children }: MainContainerProps) => {
-  const { isLeftSidebarOpen } = useSelector(({ ui }) => ui);
+  const { isLeftSidebarOpen } = useTypedSelector(({ ui }) => ui);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
