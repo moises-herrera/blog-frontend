@@ -1,6 +1,6 @@
-import { Dispatch } from "@reduxjs/toolkit";
 import { ErrorResponse } from "src/interfaces";
 import { RootState } from "src/store";
+import { AppDispatch } from ".";
 
 /**
  * Async thunk config.
@@ -10,7 +10,7 @@ export type AsyncThunkConfig = {
   state: RootState;
 
   /** Dispatch function. */
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
 
   /** Reject value function. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
