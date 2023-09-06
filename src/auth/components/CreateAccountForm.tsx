@@ -1,4 +1,4 @@
-import { Button, Input, useToast } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -11,11 +11,12 @@ import { ModalData } from "src/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { startRegisterUser } from "src/store/auth";
 import { useEffect } from "react";
+import { useErrorToast } from "src/hooks";
 
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch();
   const { errorMessage } = useSelector(({ auth }) => auth);
-  const toast = useToast();
+  const { displayError } = useErrorToast();
   const {
     handleSubmit,
     register,
@@ -26,13 +27,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
 
   useEffect(() => {
     if (errorMessage) {
-      toast({
-        title: "Error",
-        description: errorMessage,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      displayError(errorMessage);
     }
   });
 
