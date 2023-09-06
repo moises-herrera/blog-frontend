@@ -31,7 +31,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
     if (errorMessage) {
       displayError(errorMessage);
     }
-  });
+  }, [errorMessage, displayError]);
 
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
     dispatch(registerUser(data));
@@ -45,7 +45,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
     >
       <form
         onSubmit={handleSubmit(onSubmitForm)}
-        className="flex flex-col w-[70%] lg:w-[30%] mx-auto items-center gap-5 text-white"
+        className="auth-form"
       >
         <FormControlContainer fieldError={errors.firstName}>
           <Input placeholder="Nombre" type="text" {...register("firstName")} />
@@ -76,7 +76,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
         <Button type="submit" variant="form" isLoading={status === "checking"}>
           Crear cuenta
         </Button>
-        <div className="text-center font-medium text-[16px] text-secondary-100 mt-4">
+        <div className="forgot-password-link">
           <NavLink
             path="/auth"
             label="¿Olvidaste tu contraseña?"

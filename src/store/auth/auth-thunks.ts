@@ -5,6 +5,7 @@ import { getToken, setToken } from "src/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "src/store/types";
 import { sendConfirmEmail } from "src/store/email";
+import { clearErrorMessage } from "src/store/auth";
 
 /**
  * Start register a user.
@@ -81,10 +82,14 @@ export const validateAccessToken = createAsyncThunk<
   User,
   void,
   AsyncThunkConfig
->("renewToken", async (_, { rejectWithValue }) => {
+>("renewToken", async (_, { dispatch, rejectWithValue }) => {
   const token = getToken();
 
   if (!token) {
+    setTimeout(() => {
+      dispatch(clearErrorMessage());
+    }, 3000);
+
     return rejectWithValue({
       message: "La sesión ha expirado.",
     });
