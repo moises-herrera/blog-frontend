@@ -10,3 +10,4 @@ export * from "./comment.interface";
 export * from "./ui-state.interface";
 export * from "./post-state.interface";
 export * from "./modal-data.interface";
+export * from "./user-auth.interface";
