@@ -12,6 +12,7 @@ import { useDisclosure } from "@chakra-ui/react";
 
 export const PrivateRoutes = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <main className="flex w-full h-full">
       <LeftSidebar />

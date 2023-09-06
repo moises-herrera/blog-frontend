@@ -82,16 +82,12 @@ export const validateAccessToken = createAsyncThunk<
   User,
   void,
   AsyncThunkConfig
->("renewToken", async (_, { dispatch, rejectWithValue }) => {
+>("renewToken", async (_, { rejectWithValue }) => {
   const token = getToken();
 
   if (!token) {
-    setTimeout(() => {
-      dispatch(clearErrorMessage());
-    }, 3000);
-
     return rejectWithValue({
-      message: "La sesión ha expirado.",
+      message: "",
     });
   }
 
