@@ -2,24 +2,13 @@ import { Button } from "@chakra-ui/react";
 
 interface Props {
   title: string;
-  onOpen?: () => void;
+  onClick?: () => void;
 }
 
-export const ButtonComponent = ({ title, onOpen }: Props) => {
+export const ButtonComponent = ({ title, onClick }: Props) => {
   return (
     <div className="w-full text-center">
-      <Button
-        onClick={onOpen}
-        className="text-[20px] font-medium mb-2"
-        _hover={{ bg: "#FF5050" }}
-        textColor={"#E0E0E0"}
-        background={"#FF5050"}
-        rounded={"20px"}
-        size="md"
-        color={"#E0E0E0"}
-        paddingX={"60px"}
-        paddingY={"5px"}
-      >
+      <Button onClick={onClick} variant="form">
         {title}
       </Button>
     </div>
