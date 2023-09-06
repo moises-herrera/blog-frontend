@@ -10,10 +10,10 @@ import {
   Image,
   Stack,
   Text,
-} from '@chakra-ui/react';
-import { getDateFormattedFromString, getFullName } from 'src/helpers';
-import { PostInfo } from 'src/interfaces';
-import { PostCardContainer } from '.';
+} from "@chakra-ui/react";
+import { getDateFormattedFromString, getFullName } from "src/helpers";
+import { PostInfo } from "src/interfaces";
+import { PostCardContainer } from ".";
 
 export const PostCard = ({
   title,
@@ -28,17 +28,12 @@ export const PostCard = ({
   return (
     <PostCardContainer>
       <CardHeader className="flex justify-between">
-        <div className="flex items-center space-x-2">
-          <Avatar name={getFullName(user)} src={user.avatar} />
-          <Heading size="xs">@{user.username}</Heading>
-          <Button
-            variant="brand"
-            fontSize="12px"
-            fontWeight="500"
-            width="64px"
-            height="26px"
-            borderRadius={10}
-          >
+        <div className="flex items-center gap-8">
+          <div className="flex items-center space-x-2">
+            <Avatar name={getFullName(user)} src={user.avatar} />
+            <Heading size="xs">@{user.username}</Heading>
+          </div>
+          <Button variant="form" fontSize="12px" width="40px" height="26px">
             Seguir
           </Button>
         </div>

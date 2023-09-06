@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthResponse, User, UserAuth } from "src/interfaces";
-import { onChecking, onLogin, onLogout } from ".";
 import { blogApi } from "src/api";
 import { AxiosError } from "axios";
-import { getToken, removeToken, setToken } from "src/helpers";
+import { getToken, setToken } from "src/helpers";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AsyncThunkConfig } from "src/store/types";
 
 /**
  * Start register a user.
@@ -11,99 +11,90 @@ import { getToken, removeToken, setToken } from "src/helpers";
  * @param user The user to register.
  * @returns A thunk that dispatches an action.
  */
-export const startRegisterUser =
-  (user: Partial<User>) => async (dispatch: any) => {
-    dispatch(onChecking());
+export const registerUser = createAsyncThunk<
+  User,
+  Partial<User>,
+  AsyncThunkConfig
+>("registerUser", async (user: Partial<User>, { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.post<AuthResponse>("/auth/register", user);
 
-    try {
-      const { data } = await blogApi.post<AuthResponse>("/auth/register", user);
+    setToken(data.accessToken);
 
-      setToken(data.accessToken);
+    return data.user;
+  } catch (error) {
+    const message: string =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error al intentar registrarse.";
 
-      dispatch(
-        onLogin({
-          user: data.user,
-        })
-      );
-    } catch (error) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Ha ocurrido un error al intentar registrarse.";
-
-      dispatch(onLogout(message));
-    }
-  };
+    return rejectWithValue({
+      message,
+    });
+  }
+});
 
 /**
  * Start login a user.
  *
- * @param user The user to login.
+ * @param user The user credentials to login.
  * @returns A thunk that dispatches an action.
  */
-export const startLoginUser = (user: UserAuth) => async (dispatch: any) => {
-  dispatch(onChecking());
-
+export const loginUser = createAsyncThunk<
+  User,
+  UserAuth,
+  AsyncThunkConfig
+>("loginUser", async (user: UserAuth, { rejectWithValue }) => {
   try {
     const { data } = await blogApi.post<AuthResponse>("/auth/login", user);
 
     setToken(data.accessToken);
 
-    dispatch(
-      onLogin({
-        user: data.user,
-      })
-    );
+    return data.user;
   } catch (error) {
-    const message =
+    const message: string =
       error instanceof AxiosError
         ? error.response?.data.message
         : "Ha ocurrido un error al iniciar sesión.";
 
-    dispatch(onLogout(message));
+    return rejectWithValue({
+      message,
+    });
   }
-};
+});
 
 /**
  * Validate the access token.
  *
  * @returns A thunk that dispatches an action.
  */
-export const validateAccessToken = () => async (dispatch: any) => {
+export const validateAccessToken = createAsyncThunk<
+  User,
+  void,
+  AsyncThunkConfig
+>("renewToken", async (_, { rejectWithValue }) => {
   const token = getToken();
 
-  if (!token) return dispatch(onLogout("La sesión ha expirado."));
+  if (!token) {
+    return rejectWithValue({
+      message: "La sesión ha expirado.",
+    });
+  }
 
   try {
     const { data } = await blogApi.get<AuthResponse>("/auth/renew-token");
 
     setToken(data.accessToken);
 
-    dispatch(
-      onLogin({
-        user: data.user,
-      })
-    );
+    return data.user;
   } catch (error) {
     const message =
       error instanceof AxiosError
         ? error.response?.data.message
         : "Ha ocurrido un error.";
 
-    dispatch(
-      onLogout({
-        error: message,
-      })
-    );
+    return rejectWithValue({
+      message,
+    });
   }
-};
-
-/**
- * Start logout a user.
- *
- * @returns A thunk that dispatches an action.
- */
-export const startLogoutUser = () => async (dispatch: any) => {
-  removeToken();
-  dispatch(onLogout(null));
-};
+});

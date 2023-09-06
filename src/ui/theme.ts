@@ -41,14 +41,5 @@ export const appTheme = extendTheme({
         },
       },
     },
-    Input: {
-      variants: {
-        outline: {
-          field: {
-            textColor: "secondary.100",
-          },
-        },
-      },
-    },
   },
 });

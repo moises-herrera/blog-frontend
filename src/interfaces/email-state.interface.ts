@@ -9,5 +9,5 @@ export interface EmailState {
   isLoading: boolean;
 
   /** Error message. */
-  error: string;
+  error?: string | null;
 }

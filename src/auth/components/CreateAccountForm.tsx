@@ -9,13 +9,14 @@ import {
 import { SignUpSchema, SignUpSchemaType } from "src/auth/validations";
 import { ModalData } from "src/interfaces";
 import { useDispatch } from "react-redux";
-import { startRegisterUser } from "src/store/auth";
+import { registerUser } from "src/store/auth";
 import { useEffect } from "react";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
+import { AppDispatch } from "src/store/types";
 
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { status, errorMessage } = useTypedSelector(({ auth }) => auth);
   const { displayError } = useMessageToast();
   const {
@@ -33,8 +34,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   });
 
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dispatch(startRegisterUser(data) as any);
+    dispatch(registerUser(data));
   };
 
   return (
@@ -45,7 +45,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
     >
       <form
         onSubmit={handleSubmit(onSubmitForm)}
-        className="flex flex-col w-[70%] lg:w-[30%] mx-auto items-center gap-5"
+        className="flex flex-col w-[70%] lg:w-[30%] mx-auto items-center gap-5 text-white"
       >
         <FormControlContainer fieldError={errors.firstName}>
           <Input placeholder="Nombre" type="text" {...register("firstName")} />
@@ -77,7 +77,11 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
           Crear cuenta
         </Button>
         <div className="text-center font-medium text-[16px] text-secondary-100 mt-4">
-          <NavLink path="/auth" label="¿Olvidaste tu contraseña?" />
+          <NavLink
+            path="/auth"
+            label="¿Olvidaste tu contraseña?"
+            className="!w-full"
+          />
         </div>
       </form>
     </ModalContainForm>

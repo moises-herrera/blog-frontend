@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom';
-import { LinkItem } from 'src/interfaces';
+import { Link } from "react-router-dom";
+import { LinkItem } from "src/interfaces";
 
-export const NavLink = ({ path, label, icon }: LinkItem) => {
+interface NavLinkProps extends LinkItem {
+  className?: string;
+}
+
+export const NavLink = ({ path, label, icon, className }: NavLinkProps) => {
   return (
-    <Link className="flex gap-2 items-center" to={path}>
+    <Link className={`flex gap-2 items-center w-min ${className}`} to={path}>
       {icon && (
         <span>
           <i className={icon}></i>

@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
 import { blogApi } from "src/api";
-import { onSendEmail, onSendEmailError, onSendEmailSuccess } from ".";
 import { SendEmail, StandardResponse } from "src/interfaces";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AsyncThunkConfig } from "src/store/types";
 
 /**
  * Start send confirm email.
@@ -9,23 +10,26 @@ import { SendEmail, StandardResponse } from "src/interfaces";
  * @param emailData The email data.
  * @returns A thunk that dispatches an action.
  */
-export const startSendConfirmEmail =
-  (emailData: SendEmail) => async (dispatch: any) => {
-    dispatch(onSendEmail());
+export const sendConfirmEmail = createAsyncThunk<
+  StandardResponse,
+  SendEmail,
+  AsyncThunkConfig
+>("sendConfirmEmail", async (emailData, { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.post<StandardResponse>(
+      "/email/confirm-email",
+      emailData
+    );
 
-    try {
-      const { data } = await blogApi.post<StandardResponse>(
-        "/email/confirm-email",
-        emailData
-      );
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
 
-      dispatch(onSendEmailSuccess(data.message));
-    } catch (error) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Ha ocurrido un error.";
-
-      dispatch(onSendEmailError(message));
-    }
-  };
+    return rejectWithValue({
+      message,
+    });
+  }
+});

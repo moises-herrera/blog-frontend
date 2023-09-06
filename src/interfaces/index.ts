@@ -15,3 +15,4 @@ export * from "./auth-response.interface";
 export * from "./send-email.interface";
 export * from "./email-state.interface";
 export * from "./standard-response.interface";
+export * from "./error-response.interface";
