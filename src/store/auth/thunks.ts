@@ -2,6 +2,7 @@
 import { User, UserAuth } from "src/interfaces";
 import { onChecking, onLogin, onLogout } from ".";
 import { blogApi } from "src/api";
+import { AxiosError } from "axios";
 
 /**
  * Start register a user.
@@ -22,11 +23,12 @@ export const startRegisterUser =
         })
       );
     } catch (error) {
-      dispatch(
-        onLogout({
-          error: (error as any).response.data.message,
-        })
-      );
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Ha ocurrido un error al intentar registrarse.";
+
+      dispatch(onLogout(message));
     }
   };
 
