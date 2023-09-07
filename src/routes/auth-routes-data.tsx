@@ -1,4 +1,5 @@
 import { Login, Register, ForgotPassword } from "src/auth/pages";
+import { ResetPassword } from "src/auth/pages/ResetPassword";
 import { RouteData } from "src/interfaces";
 
 /**
@@ -16,5 +17,9 @@ export const authRoutesData: RouteData[] = [
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
 ];
