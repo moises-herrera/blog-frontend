@@ -17,3 +17,4 @@ export * from "./email-state.interface";
 export * from "./standard-response.interface";
 export * from "./error-response.interface";
 export * from "./standard-object.interface";
+export * from "./update-user.interface";

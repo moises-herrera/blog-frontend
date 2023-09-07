@@ -12,4 +12,7 @@ export interface AuthState {
 
   /** Error message. */
   errorMessage?: string | null;
+
+  /** Loading status. */
+  isLoading: boolean;
 }
