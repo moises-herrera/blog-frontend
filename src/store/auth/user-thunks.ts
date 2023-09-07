@@ -1,9 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { ChangePassword, StandardResponse } from "src/interfaces";
+import { ChangePassword, ConfirmEmail, StandardResponse } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 
 const { VITE_API_URL } = import.meta.env;
+
+export const confirmEmail = createAsyncThunk<
+  StandardResponse,
+  ConfirmEmail,
+  AsyncThunkConfig
+>("confirmEmail", async ({ userId, token }, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post<StandardResponse>(
+      `${VITE_API_URL}/user/${userId}/verify-email`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
 
 /**
  * Change user password.
