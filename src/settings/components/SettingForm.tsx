@@ -1,7 +1,6 @@
 import { Box, Image, Input } from "@chakra-ui/react";
 import { ButtonComponent } from "src/shared/components";
 import { useRef } from "react";
-import { InputSetting } from ".";
 
 export const SettingForm = () => {
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
@@ -30,12 +29,20 @@ export const SettingForm = () => {
           />
         </Box>
         <div className="flex justify-center w-full mt-5">
-          <form className="w-full px-5 lg:w-1/2 lg:px-0">
-            <InputSetting value="Gabriel" label="Nombre" />
-            <InputSetting value="Oquendo" label="Apellido" />
-            <InputSetting value="@Oquendo_Gabriel" label="Usuario" />
-            <InputSetting value="oquendogabrielq8@gmail.com" label="Correo" />
-            <div className="lg:flex">
+          <form className="flex flex-col w-full gap-10 px-5 lg:w-1/2 lg:px-0">
+            <Input value="Gabriel" placeholder="Nombre" variant="settings" />
+            <Input value="Oquendo" placeholder="Apellido" variant="settings" />
+            <Input
+              value="@Oquendo_Gabriel"
+              placeholder="Usuario"
+              variant="settings"
+            />
+            <Input
+              value="oquendogabrielq8@gmail.com"
+              placeholder="Correo"
+              variant="settings"
+            />
+            <div className="flex">
               <ButtonComponent title="Cancelar" />
               <ButtonComponent title="Guardar" />
             </div>

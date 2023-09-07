@@ -9,14 +9,7 @@ export const InputSetting = ({ value, label }: Props) => {
     <div>
       <FormControl className="mb-10">
         <FormLabel className=" text-[#FF5050]">{label}</FormLabel>
-        <Input
-          borderBottom="1px"
-          borderColor="#FF5050"
-          borderTop="none"
-          borderLeft="none"
-          borderRight="none"
-          value={value}
-        />
+        <Input variant="settings" value={value} />
       </FormControl>
     </div>
   );
