@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "src/interfaces";
-import { loginUser, registerUser, validateAccessToken } from ".";
+import { confirmEmail, loginUser, registerUser, validateAccessToken } from ".";
 import { changePassword } from "src/store/auth";
 
 const initialState: AuthState = {
@@ -93,6 +93,20 @@ export const authSlice = createSlice({
       state.errorMessage = null;
     });
     builder.addCase(changePassword.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(confirmEmail.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+    });
+    builder.addCase(confirmEmail.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.successMessage = payload.message;
+      state.errorMessage = null;
+    });
+    builder.addCase(confirmEmail.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.errorMessage = payload?.message;
     });
