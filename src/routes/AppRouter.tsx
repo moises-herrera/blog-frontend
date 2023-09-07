@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { validateAccessToken } from "src/store/auth";
+import { AuthLoading } from "src/auth/components";
 
 export const AppRouter = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,8 @@ export const AppRouter = () => {
   useEffect(() => {
     dispatch(validateAccessToken());
   }, []);
+
+  if (status === "checking") return <AuthLoading />;
 
   return (
     <Routes>

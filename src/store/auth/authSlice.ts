@@ -4,7 +4,7 @@ import { loginUser, registerUser, validateAccessToken } from ".";
 
 const initialState: AuthState = {
   user: null,
-  status: "not-authenticated",
+  status: "checking",
   errorMessage: null,
 };
 
