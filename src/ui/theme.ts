@@ -41,5 +41,18 @@ export const appTheme = extendTheme({
         },
       },
     },
+    Input: {
+      variants: {
+        settings: {
+          field: {
+            backgroundColor: "transparent",
+            borderTop: "none",
+            borderLeft: "none",
+            borderRight: "none",
+            borderBottom: "1px solid #FF5050",
+          },
+        },
+      },
+    },
   },
 });
