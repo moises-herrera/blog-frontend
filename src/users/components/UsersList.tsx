@@ -11,7 +11,7 @@ export const UsersList = ({ users }: UsersListProps) => {
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="users-list mt-4">
       {users.map((user) => (
         <>
           {user._id !== currentUser?._id && (
