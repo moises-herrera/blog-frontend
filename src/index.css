@@ -44,3 +44,7 @@ body {
 .auth-link {
   @apply text-center font-medium text-[16px] text-[#E0E0E0] mt-4;
 }
+
+.users-list {
+  @apply flex flex-col w-full gap-4;
+}

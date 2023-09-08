@@ -12,7 +12,12 @@ export const linkItems: LinkItem[] = [
   {
     path: "/profile",
     label: "Perfil",
-    icon: "fa-solid fa-user",
+    icon: "fa-solid fa-circle-user",
+  },
+  {
+    path: "/users",
+    label: "Usuarios",
+    icon: "fa-solid fa-user-group",
   },
   {
     path: "/settings",

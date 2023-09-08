@@ -30,4 +30,7 @@ export interface User {
 
   /** If the email is verified. */
   isEmailVerified: boolean;
+
+  /** User's followers. */
+  followers: string[];
 }

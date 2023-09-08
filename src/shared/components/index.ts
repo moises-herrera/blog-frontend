@@ -12,3 +12,4 @@ export * from "./RightSidebar";
 export * from "./Sidebar";
 export * from "./UserCard";
 export * from "./FormControlContainer";
+export * from "./Loading";

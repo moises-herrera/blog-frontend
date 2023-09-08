@@ -11,7 +11,7 @@ import {
 import { useDisclosure } from "@chakra-ui/react";
 
 export const PrivateRoutes = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onClose } = useDisclosure();
 
   return (
     <main className="flex w-full h-full">
@@ -25,7 +25,7 @@ export const PrivateRoutes = () => {
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </MainContainer>
-      <RightSidebar onOpen={onOpen} />
+      <RightSidebar />
       <CommentsModal isOpen={isOpen} onClose={onClose} title="Seguir" />
     </main>
   );

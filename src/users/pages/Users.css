@@ -1,0 +1,5 @@
+.loading-container {
+  @apply flex flex-col justify-center items-center;
+
+  height: calc(100vh - 150px);
+}

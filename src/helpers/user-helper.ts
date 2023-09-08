@@ -1,4 +1,4 @@
-import { User } from 'src/interfaces';
+import { User } from "src/interfaces";
 
 /**
  * Get user full name.
@@ -9,4 +9,15 @@ import { User } from 'src/interfaces';
 export const getFullName = (user: User): string => {
   const fullName = `${user.firstName} ${user.lastName}`;
   return fullName;
+};
+
+/**
+ * Whether the user has a follower.
+ *
+ * @param user The user data.
+ * @param followerId The follower id.
+ * @returns Whether the user has a follower.
+ */
+export const hasFollower = (user: User, followerId: string): boolean => {
+  return user.followers.includes(followerId);
 };
