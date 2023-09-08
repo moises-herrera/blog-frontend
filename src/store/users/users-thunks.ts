@@ -9,25 +9,26 @@ import { blogApi } from "src/api";
  *
  * @returns A thunk that dispatches an action.
  */
-export const getUsers = createAsyncThunk<User[], void, AsyncThunkConfig>(
-  "getUsers",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await blogApi.get<User[]>("/user");
+export const getUsers = createAsyncThunk<
+  User[],
+  string | void,
+  AsyncThunkConfig
+>("getUsers", async (username = "", { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.get<User[]>(`/user?username=${username}`);
 
-      return data;
-    } catch (error) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Ha ocurrido un error.";
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
 
-      return rejectWithValue({
-        message,
-      });
-    }
+    return rejectWithValue({
+      message,
+    });
   }
-);
+});
 
 /**
  * Get all followers.
