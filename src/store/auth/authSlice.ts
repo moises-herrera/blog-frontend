@@ -36,6 +36,9 @@ export const authSlice = createSlice({
       state.user = null;
       state.errorMessage = payload;
     },
+    clearSuccessMessage: (state) => {
+      state.successMessage = null;
+    },
     clearErrorMessage: (state) => {
       state.errorMessage = null;
     },
@@ -135,5 +138,10 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { onChecking, onLogin, onLogout, clearErrorMessage } =
-  authSlice.actions;
+export const {
+  onChecking,
+  onLogin,
+  onLogout,
+  clearSuccessMessage,
+  clearErrorMessage,
+} = authSlice.actions;

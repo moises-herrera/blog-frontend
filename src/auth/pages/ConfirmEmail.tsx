@@ -5,9 +5,13 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { getQueryParams } from "src/helpers";
 import { useMessageToast } from "src/hooks";
 import { AppDispatch } from "src/store/types";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Box, Image } from "@chakra-ui/react";
-import { confirmEmail } from "src/store/auth";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+  confirmEmail,
+} from "src/store/auth";
 import mailBox from "src/assets/images/mailbox.svg";
 
 export const ConfirmEmail = () => {
@@ -20,14 +24,22 @@ export const ConfirmEmail = () => {
   );
   const { displaySuccessMessage, displayError } = useMessageToast();
 
+  const clearSuccess = useCallback(() => {
+    dispatch(clearSuccessMessage());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
   useEffect(() => {
     if (successMessage) {
-      displaySuccessMessage(successMessage);
+      displaySuccessMessage(successMessage, 5000, clearSuccess);
       setTimeout(() => {
         navigate("/");
       }, 3000);
     } else if (errorMessage) {
-      displayError(errorMessage);
+      displayError(errorMessage, 5000, clearError);
     }
   }, [
     successMessage,
@@ -35,6 +47,8 @@ export const ConfirmEmail = () => {
     displaySuccessMessage,
     displayError,
     navigate,
+    clearSuccess,
+    clearError,
   ]);
 
   useEffect(() => {

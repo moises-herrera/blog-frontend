@@ -6,14 +6,14 @@ import {
   FormControlContainer,
   NavLink,
 } from "src/shared/components";
-import { LoginSchema, LoginSchemaType } from "../validations";
+import { LoginSchema, LoginSchemaType } from "src/auth/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTypedSelector } from "src/store";
 import { useMessageToast } from "src/hooks";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { loginUser } from "src/store/auth";
+import { clearErrorMessage, loginUser } from "src/store/auth";
 
 export const LoginForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,11 +27,15 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
     resolver: zodResolver(LoginSchema),
   });
 
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
   useEffect(() => {
     if (errorMessage) {
-      displayError(errorMessage);
+      displayError(errorMessage, 5000, clearError);
     }
-  }, [errorMessage, displayError]);
+  }, [errorMessage, displayError, clearError]);
 
   const onSubmitForm: SubmitHandler<LoginSchemaType> = (data) => {
     dispatch(loginUser(data));
