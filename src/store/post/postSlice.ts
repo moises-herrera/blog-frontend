@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PostState } from "src/interfaces";
-import { createPost } from ".";
+import { createPost, updatePost } from ".";
 
 const initialState: PostState = {
   posts: [],
@@ -40,6 +40,18 @@ export const postSlice = createSlice({
       state.successMessage = payload.message;
     });
     builder.addCase(createPost.rejected, (state, { payload }) => {
+      state.isLoadingPostForm = false;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(updatePost.pending, (state) => {
+      state.isLoadingPostForm = true;
+    });
+    builder.addCase(updatePost.fulfilled, (state, { payload }) => {
+      state.isLoadingPostForm = false;
+      state.successMessage = payload.message;
+    });
+    builder.addCase(updatePost.rejected, (state, { payload }) => {
       state.isLoadingPostForm = false;
       state.errorMessage = payload?.message;
     });
