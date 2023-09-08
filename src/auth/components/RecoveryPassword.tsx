@@ -9,12 +9,18 @@ import {
 } from "src/auth/validations";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { sendForgotPasswordEmail } from "src/store/email";
+import { clearErrorMessage, sendForgotPasswordEmail } from "src/store/email";
 import { useTypedSelector } from "src/store";
+import { useCallback, useEffect } from "react";
+import { useMessageToast } from "src/hooks";
+import { clearSuccessMessage } from "src/store/auth";
 
 export const RecoveryPassword = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useTypedSelector(({ email }) => email);
+  const { isLoading, notification, error } = useTypedSelector(
+    ({ email }) => email
+  );
+  const { displaySuccessMessage, displayError } = useMessageToast();
   const {
     handleSubmit,
     register,
@@ -22,6 +28,29 @@ export const RecoveryPassword = ({ isOpen, onClose }: ModalData) => {
   } = useForm<ForgotPasswordSchemaType>({
     resolver: zodResolver(ForgotPasswordSchema),
   });
+
+  const clearSuccess = useCallback(() => {
+    dispatch(clearSuccessMessage());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (notification) {
+      displaySuccessMessage(notification, 5000, clearError);
+    } else if (error) {
+      displayError(error, 5000, clearError);
+    }
+  }, [
+    notification,
+    error,
+    displaySuccessMessage,
+    displayError,
+    clearSuccess,
+    clearError,
+  ]);
 
   const onSubmitForm: SubmitHandler<ForgotPasswordSchemaType> = ({ email }) => {
     dispatch(sendForgotPasswordEmail({ recipient: email }));
