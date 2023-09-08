@@ -87,7 +87,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
 
   const onSubmitForm: SubmitHandler<PostSchemaType> = (data) => {
     const formData = getFormDataFromObject(data);
-    console.log(defaultValues);
+
     if (!defaultValues?._id) {
       dispatch(createPost(formData));
     } else {
