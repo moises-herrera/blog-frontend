@@ -32,6 +32,7 @@ export const getUsers = createAsyncThunk<User[], void, AsyncThunkConfig>(
 /**
  * Get all followers.
  *
+ * @param id The user id.
  * @returns A thunk that dispatches an action.
  */
 export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
@@ -57,6 +58,7 @@ export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
 /**
  * Get the accounts that the user follows.
  *
+ * @param id The user id.
  * @returns A thunk that dispatches an action.
  */
 export const getFollowing = createAsyncThunk<User[], string, AsyncThunkConfig>(
