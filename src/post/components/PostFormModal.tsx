@@ -38,7 +38,7 @@ export const PostFormModal = () => {
         <ModalHeader fontSize="16px" textAlign="center">
           @{user?.username}
         </ModalHeader>
-        <ModalBody padding="0">
+        <ModalBody maxHeight="800px" overflow="auto">
           <PostForm />
         </ModalBody>
       </ModalContent>
