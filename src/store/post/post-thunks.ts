@@ -74,6 +74,30 @@ export const getPostsSuggested = createAsyncThunk<
 });
 
 /**
+ * Get user's posts list.
+ * @returns A thunk that dispatches an action.
+ */
+export const getUserPosts = createAsyncThunk<
+  PostInfo[],
+  string,
+  AsyncThunkConfig
+>("getUserPosts", async (userId, { rejectWithValue }) => {
+  try {
+    const posts = await getPosts({ userId });
+    return posts;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
  * Create a new post.
  *
  * @param postData The post data.
