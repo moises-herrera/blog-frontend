@@ -44,6 +44,11 @@ export const postSlice = createSlice({
     setEditPost: (state, { payload }) => {
       state.editPost = payload;
     },
+    updateUserPost: (state, { payload }) => {
+      state.userPosts = state.userPosts.map((post) =>
+        post._id === payload.id ? payload : post
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsFollowing.pending, (state) => {
@@ -99,6 +104,7 @@ export const postSlice = createSlice({
     });
     builder.addCase(updatePost.fulfilled, (state, { payload }) => {
       state.isLoadingPostForm = false;
+      state.editPost = payload.data;
       state.successMessage = payload.message;
     });
     builder.addCase(updatePost.rejected, (state, { payload }) => {
@@ -115,4 +121,5 @@ export const {
   clearSuccessMessage,
   clearErrorMessage,
   setEditPost,
+  updateUserPost,
 } = postSlice.actions;
