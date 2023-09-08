@@ -24,6 +24,12 @@ export const postSlice = createSlice({
     toggleNewPostFormVisibility: (state) => {
       state.isNewPostFormVisible = !state.isNewPostFormVisible;
     },
+    clearSuccessMessage: (state) => {
+      state.successMessage = null;
+    },
+    clearErrorMessage: (state) => {
+      state.errorMessage = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createPost.pending, (state) => {
@@ -44,4 +50,6 @@ export const {
   openNewPostForm,
   closeNewPostForm,
   toggleNewPostFormVisibility,
+  clearSuccessMessage,
+  clearErrorMessage,
 } = postSlice.actions;

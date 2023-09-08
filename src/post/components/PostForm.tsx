@@ -6,7 +6,7 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import "./PostForm.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PostSchema, PostSchemaType } from "../validations";
@@ -15,11 +15,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { useTypedSelector } from "src/store";
-import { createPost } from "src/store/post";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+  createPost,
+} from "src/store/post";
+import { useMessageToast } from "src/hooks";
 
 export const PostForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoadingPostForm } = useTypedSelector(({ post }) => post);
+  const { isLoadingPostForm, successMessage, errorMessage } = useTypedSelector(
+    ({ post }) => post
+  );
   const {
     handleSubmit,
     register,
@@ -27,7 +34,31 @@ export const PostForm = () => {
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
   });
+  const { displaySuccessMessage, displayError } = useMessageToast();
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
+
+  const clearSuccess = useCallback(() => {
+    dispatch(clearSuccessMessage());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (successMessage) {
+      displaySuccessMessage(successMessage, 5000, clearSuccess);
+    } else if (errorMessage) {
+      displayError(errorMessage, 5000, clearError);
+    }
+  }, [
+    successMessage,
+    errorMessage,
+    displaySuccessMessage,
+    displayError,
+    clearSuccess,
+    clearError,
+  ]);
 
   const onUploadImage = (): void => {
     profileImageInputRef.current?.click();
