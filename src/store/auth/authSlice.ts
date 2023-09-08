@@ -97,6 +97,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.user = payload;
       state.errorMessage = null;
+      state.successMessage = "Datos actualizados";
     });
     builder.addCase(updateUser.rejected, (state, { payload }) => {
       state.isLoading = false;

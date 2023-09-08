@@ -1,7 +1,5 @@
 import { Box, Image, Input, Button } from "@chakra-ui/react";
 import { useRef, useState, useEffect } from "react";
-
-//New imports
 import { useTypedSelector } from "src/store";
 import { SettingSchema, SettingSchemaType } from "src/settings/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,17 +14,24 @@ import { convertImageToBase64 } from "src/helpers/convert-image";
 import { useMessageToast } from "src/hooks";
 
 export const SettingForm = () => {
+  const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
+    ({ auth }) => auth
+  );
+
   const { displaySuccessMessage, displayError } = useMessageToast();
-  const { user, errorMessage } = useTypedSelector(({ auth }) => auth);
+
   const [userAvatar, setUserAvatar] = useState<string | ArrayBuffer | null>(
     user?.avatar ? (user?.avatar as string) : null
   );
+
   const dispatch = useDispatch<AppDispatch>();
+
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
+
   const onUploadImage = (): void => {
     profileImageInputRef.current?.click();
   };
-  //Gabriel
+
   const formDefaultValues = {
     ...user,
     password: "",
@@ -50,14 +55,14 @@ export const SettingForm = () => {
         userData: userData,
       })
     );
-    // useEffect(() => {
-    //   if (errorMessage) {
-    //     displayError(errorMessage);
-    //   } else {
-    //     displaySuccessMessage("Bien hecho");
-    //   }
-    // }, [errorMessage, displayError, displaySuccessMessage]);
   };
+  useEffect(() => {
+    if (successMessage) {
+      displaySuccessMessage(successMessage);
+    } else if (errorMessage) {
+      displayError(errorMessage);
+    }
+  }, [errorMessage, displayError, displaySuccessMessage, successMessage]);
 
   return (
     <div className="w-full h-screen bg-secondary-200 text-primary-500">
@@ -135,7 +140,7 @@ export const SettingForm = () => {
                 Cancelar
               </Button>
 
-              <Button type="submit" variant="form">
+              <Button type="submit" variant="form" isLoading={isLoading}>
                 Guardar
               </Button>
             </div>
