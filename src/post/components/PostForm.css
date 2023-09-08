@@ -1,0 +1,11 @@
+.post-form-container {
+  @apply bg-secondary-200 px-5 pb-4 rounded-[20px] max-h-[900px];
+
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .post-form-container {
+    width: 500px;
+  }
+}

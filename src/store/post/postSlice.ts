@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { PostState } from 'src/interfaces';
+import { createSlice } from "@reduxjs/toolkit";
+import { PostState } from "src/interfaces";
 
 const initialState: PostState = {
   posts: [],
@@ -8,13 +8,23 @@ const initialState: PostState = {
 };
 
 export const postSlice = createSlice({
-  name: 'post',
+  name: "post",
   initialState,
   reducers: {
+    openNewPostForm: (state) => {
+      state.isNewPostFormVisible = true;
+    },
+    closeNewPostForm: (state) => {
+      state.isNewPostFormVisible = false;
+    },
     toggleNewPostFormVisibility: (state) => {
       state.isNewPostFormVisible = !state.isNewPostFormVisible;
     },
   },
 });
 
-export const { toggleNewPostFormVisibility } = postSlice.actions;
+export const {
+  openNewPostForm,
+  closeNewPostForm,
+  toggleNewPostFormVisibility,
+} = postSlice.actions;
