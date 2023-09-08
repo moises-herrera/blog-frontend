@@ -11,7 +11,14 @@ const initialState: EmailState = {
 export const emailSlice = createSlice({
   name: "email",
   initialState,
-  reducers: {},
+  reducers: {
+    clearNotification: (state) => {
+      state.notification = "";
+    },
+    clearErrorMessage: (state) => {
+      state.error = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(sendConfirmEmail.pending, (state) => {
       state.isLoading = true;
@@ -38,3 +45,5 @@ export const emailSlice = createSlice({
     });
   },
 });
+
+export const { clearNotification, clearErrorMessage } = emailSlice.actions;

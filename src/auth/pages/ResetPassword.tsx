@@ -10,9 +10,13 @@ import {
 } from "src/auth/validations";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { getQueryParams } from "src/helpers";
-import { changePassword } from "src/store/auth";
+import {
+  changePassword,
+  clearErrorMessage,
+  clearSuccessMessage,
+} from "src/store/auth";
 import { useTypedSelector } from "src/store";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useMessageToast } from "src/hooks";
 
 export const ResetPassword = () => {
@@ -32,12 +36,20 @@ export const ResetPassword = () => {
     resolver: zodResolver(ResetPasswordSchema),
   });
 
+  const clearSuccess = useCallback(() => {
+    dispatch(clearSuccessMessage());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
   useEffect(() => {
     if (successMessage) {
-      displaySuccessMessage(successMessage);
+      displaySuccessMessage(successMessage, 5000, clearSuccess);
       navigate("/");
     } else if (errorMessage) {
-      displayError(errorMessage);
+      displayError(errorMessage, 5000, clearError);
     }
   }, [
     successMessage,
@@ -45,6 +57,8 @@ export const ResetPassword = () => {
     displaySuccessMessage,
     displayError,
     navigate,
+    clearSuccess,
+    clearError,
   ]);
 
   const onSubmitForm: SubmitHandler<ResetPasswordSchemaType> = (data) => {
