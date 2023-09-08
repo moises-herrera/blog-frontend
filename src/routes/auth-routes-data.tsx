@@ -1,4 +1,10 @@
-import { Login, Register, ForgotPassword } from "src/auth/pages";
+import {
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  ConfirmEmail,
+} from "src/auth/pages";
 import { RouteData } from "src/interfaces";
 
 /**
@@ -16,5 +22,13 @@ export const authRoutesData: RouteData[] = [
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/confirm-email",
+    element: <ConfirmEmail />,
   },
 ];

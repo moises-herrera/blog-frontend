@@ -7,7 +7,7 @@ export const useMessageToast = () => {
     toast({
       title: "Mensaje",
       description: message,
-      status: "info",
+      status: "success",
       duration,
       isClosable: true,
     });
