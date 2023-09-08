@@ -4,6 +4,7 @@ import { uiSlice } from "src/store/ui";
 import { postSlice } from "src/store/post";
 import { emailSlice } from "src/store/email";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { usersSlice } from "./users";
 
 /**
  * Redux store.
@@ -14,6 +15,7 @@ export const store = configureStore({
     ui: uiSlice.reducer,
     post: postSlice.reducer,
     email: emailSlice.reducer,
+    users: usersSlice.reducer,
   },
 });
 

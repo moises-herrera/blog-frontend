@@ -16,6 +16,7 @@ export * from "./send-email.interface";
 export * from "./email-state.interface";
 export * from "./standard-response.interface";
 export * from "./error-response.interface";
+export * from "./users-state.interface";
 export * from "./standard-object.interface";
 export * from "./change-password.interface";
 export * from "./confirm-email.interface";
