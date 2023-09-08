@@ -2,9 +2,13 @@ import { Spinner } from "@chakra-ui/react";
 
 interface LoadingProps {
   text?: string;
+  textClass?: string;
 }
 
-export const Loading = ({ text = "Cargando" }: LoadingProps) => {
+export const Loading = ({
+  text = "Cargando",
+  textClass = "",
+}: LoadingProps) => {
   return (
     <div className="flex flex-col w-full h-full gap-4 justify-center items-center">
       <Spinner
@@ -15,7 +19,7 @@ export const Loading = ({ text = "Cargando" }: LoadingProps) => {
         w="100px"
         h="100px"
       />
-      <p className="text-lg text-white">{text}</p>
+      <p className={`text-lg text-white ${textClass}`}>{text}</p>
     </div>
   );
 };
