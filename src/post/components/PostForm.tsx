@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  FormControl,
   FormLabel,
   Image,
   Input,
@@ -9,12 +8,33 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import "./PostForm.css";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { PostSchema, PostSchemaType } from "../validations";
+import { FormControlContainer } from "src/shared/components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
+import { useTypedSelector } from "src/store";
+import { createPost } from "src/store/post";
 
 export const PostForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { isLoadingPostForm } = useTypedSelector(({ post }) => post);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<PostSchemaType>({
+    resolver: zodResolver(PostSchema),
+  });
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const onUploadImage = (): void => {
     profileImageInputRef.current?.click();
+  };
+
+  const onSubmitForm: SubmitHandler<PostSchemaType> = (data) => {
+    dispatch(createPost(data));
   };
 
   return (
@@ -37,23 +57,36 @@ export const PostForm = () => {
         />
       </Box>
 
-      <form className="w-full flex flex-col gap-4">
-        <FormControl>
+      <form
+        onSubmit={handleSubmit(onSubmitForm)}
+        className="w-full flex flex-col gap-3 pb-4"
+      >
+        <FormControlContainer fieldError={errors.topic}>
           <FormLabel textColor="secondary.300">Tema</FormLabel>
-          <Input backgroundColor="white" />
-        </FormControl>
+          <Input backgroundColor="white" {...register("topic")} />
+        </FormControlContainer>
 
-        <FormControl>
+        <FormControlContainer fieldError={errors.title}>
           <FormLabel textColor="secondary.300">Título</FormLabel>
-          <Input backgroundColor="white" />
-        </FormControl>
+          <Input backgroundColor="white" {...register("title")} />
+        </FormControlContainer>
 
-        <FormControl>
+        <FormControlContainer fieldError={errors.description}>
           <FormLabel textColor="secondary.300">Descripción</FormLabel>
-          <Textarea backgroundColor="white" rows={6} resize="none" />
-        </FormControl>
+          <Textarea
+            backgroundColor="white"
+            rows={6}
+            resize="none"
+            {...register("description")}
+          />
+        </FormControlContainer>
 
-        <Button type="submit" marginX="auto" variant="form">
+        <Button
+          type="submit"
+          marginX="auto"
+          variant="form"
+          isLoading={isLoadingPostForm}
+        >
           Publicar
         </Button>
       </form>
