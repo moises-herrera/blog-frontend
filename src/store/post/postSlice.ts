@@ -19,6 +19,7 @@ const initialState: PostState = {
   isNewPostFormVisible: false,
   successMessage: null,
   errorMessage: null,
+  editPost: null,
 };
 
 export const postSlice = createSlice({
@@ -39,6 +40,9 @@ export const postSlice = createSlice({
     },
     clearErrorMessage: (state) => {
       state.errorMessage = null;
+    },
+    setEditPost: (state, { payload }) => {
+      state.editPost = payload;
     },
   },
   extraReducers: (builder) => {
@@ -110,4 +114,5 @@ export const {
   toggleNewPostFormVisibility,
   clearSuccessMessage,
   clearErrorMessage,
+  setEditPost,
 } = postSlice.actions;

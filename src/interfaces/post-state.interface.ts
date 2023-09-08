@@ -1,4 +1,4 @@
-import { PostInfo } from ".";
+import { Post, PostInfo } from ".";
 
 /**
  * Represents the state of the post in the store.
@@ -33,4 +33,7 @@ export interface PostState {
 
   /** Error message. */
   errorMessage?: string | null;
+
+  /** Edit post active. */
+  editPost?: Post | null;
 }

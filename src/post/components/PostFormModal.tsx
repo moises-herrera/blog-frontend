@@ -8,17 +8,21 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "src/store";
-import { closeNewPostForm } from "src/store/post";
+import { closeNewPostForm, setEditPost } from "src/store/post";
 import { AppDispatch } from "src/store/types";
 import { PostForm } from ".";
+import { Post } from "src/interfaces";
 
 export const PostFormModal = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isNewPostFormVisible } = useTypedSelector(({ post }) => post);
+  const { isNewPostFormVisible, editPost } = useTypedSelector(
+    ({ post }) => post
+  );
   const { user } = useTypedSelector(({ auth }) => auth);
 
   const onCloseModal = () => {
     dispatch(closeNewPostForm());
+    dispatch(setEditPost(null));
   };
 
   return (
@@ -39,7 +43,7 @@ export const PostFormModal = () => {
           @{user?.username}
         </ModalHeader>
         <ModalBody maxHeight="800px" overflow="auto">
-          <PostForm />
+          <PostForm defaultValues={editPost as Post} />
         </ModalBody>
       </ModalContent>
     </Modal>

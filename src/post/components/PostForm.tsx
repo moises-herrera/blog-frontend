@@ -19,12 +19,18 @@ import {
   clearErrorMessage,
   clearSuccessMessage,
   createPost,
+  updatePost,
 } from "src/store/post";
 import { useMessageToast } from "src/hooks";
 import { convertImageToBase64, getFormDataFromObject } from "src/helpers";
 import postImagePlaceholder from "src/assets/images/upload-image.png";
+import { Post } from "src/interfaces";
 
-export const PostForm = () => {
+interface PostFormProps {
+  defaultValues?: Post;
+}
+
+export const PostForm = ({ defaultValues }: PostFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoadingPostForm, successMessage, errorMessage } = useTypedSelector(
     ({ post }) => post
@@ -36,6 +42,7 @@ export const PostForm = () => {
     setValue,
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
+    defaultValues,
   });
   const { displaySuccessMessage, displayError } = useMessageToast();
   const [imageFile, setImageFile] = useState<ArrayBuffer | string | null>(null);
@@ -79,8 +86,18 @@ export const PostForm = () => {
   };
 
   const onSubmitForm: SubmitHandler<PostSchemaType> = (data) => {
-    const postData = getFormDataFromObject(data);
-    dispatch(createPost(postData));
+    const formData = getFormDataFromObject(data);
+    console.log(defaultValues);
+    if (!defaultValues?._id) {
+      dispatch(createPost(formData));
+    } else {
+      dispatch(
+        updatePost({
+          id: defaultValues._id,
+          postData: formData,
+        })
+      );
+    }
   };
 
   return (

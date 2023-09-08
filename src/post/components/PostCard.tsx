@@ -24,8 +24,12 @@ import { PostCardContainer } from ".";
 import postImage from "src/assets/images/upload-image.png";
 import { FollowButton } from "src/shared/components";
 import { useTypedSelector } from "src/store";
+import { AppDispatch } from "src/store/types";
+import { useDispatch } from "react-redux";
+import { openNewPostForm, setEditPost } from "src/store/post";
 
 export const PostCard = ({
+  _id,
   title,
   topic,
   image,
@@ -35,7 +39,22 @@ export const PostCard = ({
   likes,
   createdAt,
 }: PostInfo) => {
+  const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
+
+  const onClickUpdate = () => {
+    dispatch(
+      setEditPost({
+        _id,
+        title,
+        topic,
+        image,
+        description,
+        user: user._id,
+      })
+    );
+    dispatch(openNewPostForm());
+  };
 
   return (
     <PostCardContainer>
@@ -50,19 +69,24 @@ export const PostCard = ({
             hasFollower={hasFollower(user, currentUser?._id as string)}
           />
         </div>
-        <Menu>
-          <MenuButton>
-            <i className="text-xl fa-solid fa-ellipsis-vertical"></i>
-          </MenuButton>
-          <MenuList>
-            <MenuItem icon={<i className="fa-solid fa-pen-to-square"></i>}>
-              Editar
-            </MenuItem>
-            <MenuItem icon={<i className="fa-solid fa-trash"></i>}>
-              Eliminar
-            </MenuItem>
-          </MenuList>
-        </Menu>
+        {currentUser?._id === user._id && (
+          <Menu>
+            <MenuButton>
+              <i className="text-xl fa-solid fa-ellipsis-vertical"></i>
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                onClick={onClickUpdate}
+                icon={<i className="fa-solid fa-pen-to-square"></i>}
+              >
+                Editar
+              </MenuItem>
+              <MenuItem icon={<i className="fa-solid fa-trash"></i>}>
+                Eliminar
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
       </CardHeader>
 
       <CardBody>
