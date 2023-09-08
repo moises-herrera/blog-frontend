@@ -40,13 +40,13 @@ export const SettingForm = () => {
     setUserAvatar(user?.avatar || null);
   };
 
-  function onUploadAvatar(files: FileList | null) {
+  const onUploadAvatar = (files: FileList | null) => {
     const avatarFile = files?.[0];
     setValue("avatar", avatarFile);
     if (avatarFile) {
       convertImageToBase64(avatarFile, setUserAvatar);
     }
-  }
+  };
 
   const {
     reset,
