@@ -17,11 +17,8 @@ export const UsersList = ({ users }: UsersListProps) => {
           {user._id !== currentUser?._id && (
             <UserCard user={user}>
               <FollowButton
-                title={
-                  !hasFollower(user, currentUser?._id as string)
-                    ? "Seguir"
-                    : "No seguir"
-                }
+                userId={user._id}
+                hasFollower={hasFollower(user, currentUser?._id as string)}
               />
             </UserCard>
           )}

@@ -1,6 +1,7 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { hasFollower } from "src/helpers";
 import {
   FollowButton,
   UserCard,
@@ -13,18 +14,14 @@ import { getFollowers, getFollowing } from "src/store/users";
 
 export const RightSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useTypedSelector(({ auth }) => auth);
+  const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const { followers, following, followersLoading, followingLoading } =
     useTypedSelector(({ users }) => users);
 
   useEffect(() => {
-    dispatch(getFollowers(user?._id as string));
-    dispatch(getFollowing(user?._id as string));
+    dispatch(getFollowers(currentUser?._id as string));
+    dispatch(getFollowing(currentUser?._id as string));
   }, []);
-
-  const onClickFollow = () => {};
-
-  const onClickUnfollow = () => {};
 
   return (
     <Sidebar align="right" cssClass="hidden lg:block">
@@ -47,7 +44,10 @@ export const RightSidebar = () => {
         {!followingLoading ? (
           following.map((user) => (
             <UserCard key={user.username} user={user}>
-              <FollowButton title="No seguir" onOpen={onClickUnfollow} />
+              <FollowButton
+                userId={user._id}
+                hasFollower={hasFollower(user, currentUser?._id as string)}
+              />
             </UserCard>
           ))
         ) : (
@@ -61,7 +61,10 @@ export const RightSidebar = () => {
         {!followersLoading ? (
           followers.map((user) => (
             <UserCard key={user.username} user={user}>
-              <FollowButton title="Seguir" onOpen={onClickFollow} />
+              <FollowButton
+                userId={user._id}
+                hasFollower={hasFollower(user, currentUser?._id as string)}
+              />
             </UserCard>
           ))
         ) : (
