@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   ButtonGroup,
   CardBody,
   CardFooter,
@@ -11,10 +10,16 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { getDateFormattedFromString, getFullName } from "src/helpers";
+import {
+  getDateFormattedFromString,
+  getFullName,
+  hasFollower,
+} from "src/helpers";
 import { PostInfo } from "src/interfaces";
 import { PostCardContainer } from ".";
 import postImage from "src/assets/images/upload-image.png";
+import { FollowButton } from "src/shared/components";
+import { useTypedSelector } from "src/store";
 
 export const PostCard = ({
   title,
@@ -26,6 +31,8 @@ export const PostCard = ({
   likes,
   createdAt,
 }: PostInfo) => {
+  const { user: currentUser } = useTypedSelector(({ auth }) => auth);
+
   return (
     <PostCardContainer>
       <CardHeader className="flex justify-between">
@@ -34,9 +41,10 @@ export const PostCard = ({
             <Avatar name={getFullName(user)} src={user.avatar} />
             <Heading size="xs">@{user.username}</Heading>
           </div>
-          <Button variant="form" fontSize="12px" width="40px" height="26px">
-            Seguir
-          </Button>
+          <FollowButton
+            userId={user._id}
+            hasFollower={hasFollower(user, currentUser?._id as string)}
+          />
         </div>
         <button>
           <i className="fa-solid fa-ellipsis-vertical"></i>
@@ -62,7 +70,7 @@ export const PostCard = ({
           >
             {title}
           </Heading>
-          <Text maxHeight="200px" noOfLines={6}>
+          <Text maxHeight="200px" noOfLines={6} textAlign="justify">
             {description}
           </Text>
         </Stack>
