@@ -10,11 +10,17 @@ export interface PostState {
   /** Loading state. */
   isLoadingFollowing: boolean;
 
-  /** Posts following list. */
+  /** Posts suggested list. */
   postSuggestedList: PostInfo[];
 
   /** Loading state. */
   isLoadingSuggested: boolean;
+
+  /** User's posts. */
+  userPosts: PostInfo[];
+
+  /** Loading state. */
+  isLoadingUserPosts: boolean;
 
   /** Whether the new post form is visible. */
   isNewPostFormVisible: boolean;
