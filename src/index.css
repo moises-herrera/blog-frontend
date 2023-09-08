@@ -46,5 +46,5 @@ body {
 }
 
 .users-list {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col w-full gap-4;
 }
