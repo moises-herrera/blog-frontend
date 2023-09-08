@@ -1,9 +1,42 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { ChangePassword, ConfirmEmail, StandardResponse } from "src/interfaces";
+import { blogApi } from "src/api";
+import {
+  ChangePassword,
+  ConfirmEmail,
+  StandardResponse,
+  UpdateUser,
+  User,
+} from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 
 const { VITE_API_URL } = import.meta.env;
+
+/**
+ * Update a user.
+ *
+ * @param userData The user data to update.
+ * @returns A thunk that dispatches an action.
+ */
+export const updateUser = createAsyncThunk<User, UpdateUser, AsyncThunkConfig>(
+  "updateUser",
+  async ({ id, userData }, { rejectWithValue }) => {
+    try {
+      const { data } = await blogApi.put<User>(`/user/${id}`, userData);
+
+      return data;
+    } catch (error) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Ha ocurrido un error.";
+
+      return rejectWithValue({
+        message,
+      });
+    }
+  }
+);
 
 export const confirmEmail = createAsyncThunk<
   StandardResponse,
