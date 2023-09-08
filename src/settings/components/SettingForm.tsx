@@ -9,8 +9,7 @@ import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { updateUser } from "src/store/auth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { getFormDataFromObject } from "src/helpers/form-data-helper";
-import { convertImageToBase64 } from "src/helpers/convert-image";
+import { getFormDataFromObject, convertImageToBase64 } from "src/helpers";
 import { useMessageToast } from "src/hooks";
 
 export const SettingForm = () => {
@@ -21,7 +20,7 @@ export const SettingForm = () => {
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const [userAvatar, setUserAvatar] = useState<string | ArrayBuffer | null>(
-    user?.avatar ? (user?.avatar as string) : null
+    (user?.avatar as string) || null
   );
 
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +35,19 @@ export const SettingForm = () => {
     ...user,
     password: "",
   };
+  const onCancelChanges = () => {
+    reset(formDefaultValues);
+    setUserAvatar(user?.avatar || null);
+  };
+
+  function onUploadAvatar(files: FileList | null) {
+    const avatarFile = files?.[0];
+    setValue("avatar", avatarFile);
+    if (avatarFile) {
+      convertImageToBase64(avatarFile, setUserAvatar);
+    }
+  }
+
   const {
     reset,
     setValue,
@@ -75,15 +87,10 @@ export const SettingForm = () => {
             alt="avatar"
             cursor="pointer"
             onClick={onUploadImage}
-            src={userAvatar ? (userAvatar as string) : avatarPlaceholder}
+            src={(userAvatar as string) || avatarPlaceholder}
           />
           <Input
-            onChange={({ target: { files } }) => {
-              setValue("avatar", files?.[0]);
-              if (files?.[0]) {
-                convertImageToBase64(files?.[0], setUserAvatar);
-              }
-            }}
+            onChange={({ target: { files } }) => onUploadAvatar(files)}
             className="hidden"
             type="file"
             accept="image/png,image/jpg,image/jpeg"
@@ -136,7 +143,7 @@ export const SettingForm = () => {
               />
             </FormControlContainer>
             <div className="flex justify-center space-x-8">
-              <Button type="button" variant="form" onClick={() => reset()}>
+              <Button type="button" variant="form" onClick={onCancelChanges}>
                 Cancelar
               </Button>
 
