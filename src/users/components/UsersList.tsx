@@ -13,9 +13,9 @@ export const UsersList = ({ users }: UsersListProps) => {
   return (
     <div className="users-list mt-4">
       {users.map((user) => (
-        <>
+        <div key={user.username}>
           {user._id !== currentUser?._id && (
-            <UserCard key={user.username} user={user}>
+            <UserCard user={user}>
               <FollowButton
                 title={
                   !hasFollower(user, currentUser?._id as string)
@@ -25,7 +25,7 @@ export const UsersList = ({ users }: UsersListProps) => {
               />
             </UserCard>
           )}
-        </>
+        </div>
       ))}
     </div>
   );

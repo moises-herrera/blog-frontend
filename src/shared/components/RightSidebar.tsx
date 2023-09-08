@@ -1,13 +1,24 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { FollowButton, UserCard, Sidebar } from "src/shared/components";
 import { useTypedSelector } from "src/store";
+import { AppDispatch } from "src/store/types";
+import { getFollowers, getFollowing } from "src/store/users";
 
 interface Props {
   onOpen: () => void;
 }
 
 export const RightSidebar = ({ onOpen }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useTypedSelector(({ auth }) => auth);
   const { followers, following } = useTypedSelector(({ users }) => users);
+
+  useEffect(() => {
+    dispatch(getFollowers(user?._id as string));
+    dispatch(getFollowing(user?._id as string));
+  }, []);
 
   return (
     <Sidebar align="right" cssClass="hidden lg:block">

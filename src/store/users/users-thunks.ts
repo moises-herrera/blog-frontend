@@ -60,7 +60,7 @@ export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
  * @returns A thunk that dispatches an action.
  */
 export const getFollowing = createAsyncThunk<User[], string, AsyncThunkConfig>(
-  "getFollowers",
+  "getFollowing",
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await blogApi.get<User[]>(`/user/${id}/following`);
