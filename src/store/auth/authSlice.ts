@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "src/interfaces";
-import { confirmEmail, loginUser, registerUser, validateAccessToken } from ".";
-import { changePassword } from "src/store/auth";
+import {
+  confirmEmail,
+  loginUser,
+  registerUser,
+  validateAccessToken,
+  changePassword,
+} from ".";
+import { updateUser } from ".";
 
 const initialState: AuthState = {
   user: null,
@@ -83,6 +89,21 @@ export const authSlice = createSlice({
     builder.addCase(validateAccessToken.rejected, (state, { payload }) => {
       state.status = "not-authenticated";
       state.user = null;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(updateUser.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+    });
+    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.user = payload;
+      state.errorMessage = null;
+      state.successMessage = "Datos actualizados";
+    });
+    builder.addCase(updateUser.rejected, (state, { payload }) => {
+      state.isLoading = false;
       state.errorMessage = payload?.message;
     });
 
