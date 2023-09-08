@@ -15,6 +15,7 @@ import { PostForm } from ".";
 export const PostFormModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isNewPostFormVisible } = useTypedSelector(({ post }) => post);
+  const { user } = useTypedSelector(({ auth }) => auth);
 
   const onCloseModal = () => {
     dispatch(closeNewPostForm());
@@ -35,7 +36,7 @@ export const PostFormModal = () => {
       >
         <ModalCloseButton />
         <ModalHeader fontSize="16px" textAlign="center">
-          @username
+          @{user?.username}
         </ModalHeader>
         <ModalBody padding="0">
           <PostForm />
