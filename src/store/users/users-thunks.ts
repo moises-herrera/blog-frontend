@@ -28,3 +28,53 @@ export const getUsers = createAsyncThunk<User[], void, AsyncThunkConfig>(
     }
   }
 );
+
+/**
+ * Get all followers.
+ *
+ * @returns A thunk that dispatches an action.
+ */
+export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
+  "getFollowers",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await blogApi.get<User[]>(`/user/${id}/followers`);
+
+      return data;
+    } catch (error) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Ha ocurrido un error.";
+
+      return rejectWithValue({
+        message,
+      });
+    }
+  }
+);
+
+/**
+ * Get the accounts that the user follows.
+ *
+ * @returns A thunk that dispatches an action.
+ */
+export const getFollowing = createAsyncThunk<User[], string, AsyncThunkConfig>(
+  "getFollowers",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await blogApi.get<User[]>(`/user/${id}/following`);
+
+      return data;
+    } catch (error) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Ha ocurrido un error.";
+
+      return rejectWithValue({
+        message,
+      });
+    }
+  }
+);
