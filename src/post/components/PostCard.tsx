@@ -7,6 +7,10 @@ import {
   CardHeader,
   Heading,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -46,9 +50,19 @@ export const PostCard = ({
             hasFollower={hasFollower(user, currentUser?._id as string)}
           />
         </div>
-        <button>
-          <i className="fa-solid fa-ellipsis-vertical"></i>
-        </button>
+        <Menu>
+          <MenuButton>
+            <i className="text-xl fa-solid fa-ellipsis-vertical"></i>
+          </MenuButton>
+          <MenuList>
+            <MenuItem icon={<i className="fa-solid fa-pen-to-square"></i>}>
+              Editar
+            </MenuItem>
+            <MenuItem icon={<i className="fa-solid fa-trash"></i>}>
+              Eliminar
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </CardHeader>
 
       <CardBody>
