@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PostState } from "src/interfaces";
-import { createPost, updatePost } from ".";
+import {
+  createPost,
+  getPostsFollowing,
+  getPostsSuggested,
+  updatePost,
+} from ".";
 
 const initialState: PostState = {
-  posts: [],
-  isLoading: false,
+  postFollowingList: [],
+  isLoadingFollowing: false,
+  postSuggestedList: [],
+  isLoadingSuggested: false,
   isLoadingPostForm: false,
   isNewPostFormVisible: false,
   successMessage: null,
@@ -32,6 +39,30 @@ export const postSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getPostsFollowing.pending, (state) => {
+      state.isLoadingFollowing = true;
+    });
+    builder.addCase(getPostsFollowing.fulfilled, (state, { payload }) => {
+      state.postFollowingList = payload;
+      state.isLoadingFollowing = false;
+    });
+    builder.addCase(getPostsFollowing.rejected, (state, { payload }) => {
+      state.isLoadingFollowing = false;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(getPostsSuggested.pending, (state) => {
+      state.isLoadingSuggested = true;
+    });
+    builder.addCase(getPostsSuggested.fulfilled, (state, { payload }) => {
+      state.postSuggestedList = payload;
+      state.isLoadingSuggested = false;
+    });
+    builder.addCase(getPostsSuggested.rejected, (state, { payload }) => {
+      state.isLoadingSuggested = false;
+      state.errorMessage = payload?.message;
+    });
+
     builder.addCase(createPost.pending, (state) => {
       state.isLoadingPostForm = true;
     });

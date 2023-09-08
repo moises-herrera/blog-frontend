@@ -1,14 +1,20 @@
-import { Post } from ".";
+import { PostInfo } from ".";
 
 /**
  * Represents the state of the post in the store.
  */
 export interface PostState {
-  /** Posts list. */
-  posts: Post[];
+  /** Posts following list. */
+  postFollowingList: PostInfo[];
 
   /** Loading state. */
-  isLoading: boolean;
+  isLoadingFollowing: boolean;
+
+  /** Posts following list. */
+  postSuggestedList: PostInfo[];
+
+  /** Loading state. */
+  isLoadingSuggested: boolean;
 
   /** Whether the new post form is visible. */
   isNewPostFormVisible: boolean;

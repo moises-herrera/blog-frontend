@@ -14,6 +14,7 @@ import {
 import { getDateFormattedFromString, getFullName } from "src/helpers";
 import { PostInfo } from "src/interfaces";
 import { PostCardContainer } from ".";
+import postImage from "src/assets/images/upload-image.png";
 
 export const PostCard = ({
   title,
@@ -44,7 +45,7 @@ export const PostCard = ({
 
       <CardBody>
         <Box className="flex justify-center mb-5">
-          <Image src={image} alt={title} borderRadius={20} />
+          <Image src={image || postImage} alt={title} borderRadius={20} />
         </Box>
 
         <div className="flex justify-between text-secondary-300 text-sm">
