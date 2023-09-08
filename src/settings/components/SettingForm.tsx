@@ -1,5 +1,5 @@
 import { Box, Image, Input, Button } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 //New imports
 import { useTypedSelector } from "src/store";
@@ -8,19 +8,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormControlContainer } from "src/shared/components";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { updateUser } from "src/store/auth";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
+import { getFormDataFromObject } from "src/helpers/form-data-helper";
+import { convertImageToBase64 } from "src/helpers/convert-image";
+import { useMessageToast } from "src/hooks";
 
 export const SettingForm = () => {
+  const { displaySuccessMessage, displayError } = useMessageToast();
+  const { user, errorMessage } = useTypedSelector(({ auth }) => auth);
+  const [userAvatar, setUserAvatar] = useState<string | ArrayBuffer | null>(
+    user?.avatar ? (user?.avatar as string) : null
+  );
+  const dispatch = useDispatch<AppDispatch>();
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
   const onUploadImage = (): void => {
     profileImageInputRef.current?.click();
   };
   //Gabriel
-  const { user } = useTypedSelector(({ auth }) => auth);
   const formDefaultValues = {
     ...user,
     password: "",
   };
   const {
+    reset,
     setValue,
     handleSubmit,
     register,
@@ -31,7 +43,20 @@ export const SettingForm = () => {
   });
 
   const onSubmitForm: SubmitHandler<SettingSchemaType> = (data) => {
-    console.log(data);
+    const userData = getFormDataFromObject(data);
+    dispatch(
+      updateUser({
+        id: user?._id as string,
+        userData: userData,
+      })
+    );
+    // useEffect(() => {
+    //   if (errorMessage) {
+    //     displayError(errorMessage);
+    //   } else {
+    //     displaySuccessMessage("Bien hecho");
+    //   }
+    // }, [errorMessage, displayError, displaySuccessMessage]);
   };
 
   return (
@@ -45,10 +70,15 @@ export const SettingForm = () => {
             alt="avatar"
             cursor="pointer"
             onClick={onUploadImage}
-            src={user?.avatar || avatarPlaceholder}
+            src={userAvatar ? (userAvatar as string) : avatarPlaceholder}
           />
           <Input
-            onChange={({ target: { files } }) => setValue("avatar", files?.[0])}
+            onChange={({ target: { files } }) => {
+              setValue("avatar", files?.[0]);
+              if (files?.[0]) {
+                convertImageToBase64(files?.[0], setUserAvatar);
+              }
+            }}
             className="hidden"
             type="file"
             accept="image/png,image/jpg,image/jpeg"
@@ -101,7 +131,7 @@ export const SettingForm = () => {
               />
             </FormControlContainer>
             <div className="flex justify-center space-x-8">
-              <Button type="button" variant="form">
+              <Button type="button" variant="form" onClick={() => reset()}>
                 Cancelar
               </Button>
 
