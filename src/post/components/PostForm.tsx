@@ -53,13 +53,7 @@ export const PostForm = () => {
           <Textarea backgroundColor="white" rows={6} resize="none" />
         </FormControl>
 
-        <Button
-          type="submit"
-          width={117}
-          borderRadius={10}
-          marginX="auto"
-          variant="brand"
-        >
+        <Button type="submit" marginX="auto" variant="form">
           Publicar
         </Button>
       </form>
