@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { blogApi } from "src/api";
-import { Post, StandardResponse } from "src/interfaces";
+import { StandardResponse } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -12,7 +12,7 @@ import { AsyncThunkConfig } from "src/store/types";
  */
 export const createPost = createAsyncThunk<
   StandardResponse,
-  Partial<Post>,
+  FormData,
   AsyncThunkConfig
 >("createPost", async (postData, { rejectWithValue }) => {
   try {

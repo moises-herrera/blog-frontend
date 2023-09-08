@@ -6,7 +6,7 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./PostForm.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PostSchema, PostSchemaType } from "../validations";
@@ -21,6 +21,8 @@ import {
   createPost,
 } from "src/store/post";
 import { useMessageToast } from "src/hooks";
+import { convertImageToBase64, getFormDataFromObject } from "src/helpers";
+import postImagePlaceholder from "src/assets/images/upload-image.png";
 
 export const PostForm = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,10 +33,12 @@ export const PostForm = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
   });
   const { displaySuccessMessage, displayError } = useMessageToast();
+  const [imageFile, setImageFile] = useState<ArrayBuffer | string | null>(null);
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const clearSuccess = useCallback(() => {
@@ -60,23 +64,33 @@ export const PostForm = () => {
     clearError,
   ]);
 
-  const onUploadImage = (): void => {
+  const onClickImage = (): void => {
     profileImageInputRef.current?.click();
   };
 
+  const onUploadPostImage = ({
+    target: { files },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    const imageFile = files?.[0];
+    setValue("image", imageFile);
+    if (imageFile) {
+      convertImageToBase64(imageFile, setImageFile);
+    }
+  };
+
   const onSubmitForm: SubmitHandler<PostSchemaType> = (data) => {
-    dispatch(createPost(data));
+    const postData = getFormDataFromObject(data);
+    dispatch(createPost(postData));
   };
 
   return (
     <div className="post-form-container">
       <Box className="flex justify-center mb-5">
         <Image
-          src=""
+          src={(imageFile as string) || postImagePlaceholder}
           alt="Post image"
-          fallbackSrc="src/assets/images/upload-image.png"
           borderRadius={20}
-          onClick={onUploadImage}
+          onClick={onClickImage}
           cursor="pointer"
           className="w-[400px]"
         />
@@ -85,6 +99,7 @@ export const PostForm = () => {
           type="file"
           accept="image/png,image/jpg,image/jpeg"
           ref={profileImageInputRef}
+          onChange={onUploadPostImage}
         />
       </Box>
 
