@@ -9,8 +9,8 @@ import {
 import { SignUpSchema, SignUpSchemaType } from "src/auth/validations";
 import { ModalData } from "src/interfaces";
 import { useDispatch } from "react-redux";
-import { registerUser } from "src/store/auth";
-import { useEffect } from "react";
+import { clearErrorMessage, registerUser } from "src/store/auth";
+import { useCallback, useEffect } from "react";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
@@ -27,11 +27,15 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
     resolver: zodResolver(SignUpSchema),
   });
 
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
   useEffect(() => {
     if (errorMessage) {
-      displayError(errorMessage);
+      displayError(errorMessage, 5000, clearError);
     }
-  }, [errorMessage, displayError]);
+  }, [errorMessage, displayError, clearError]);
 
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
     dispatch(registerUser(data));
