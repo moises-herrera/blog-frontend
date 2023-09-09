@@ -71,10 +71,12 @@ export const PostCard = ({
               <Heading size="xs">@{user.username}</Heading>
             </div>
           </Link>
-          <FollowButton
-            userId={user._id}
-            hasFollower={hasFollower(user, currentUser?._id as string)}
-          />
+          {currentUser?._id !== user._id && (
+            <FollowButton
+              userId={user._id}
+              hasFollower={hasFollower(user, currentUser?._id as string)}
+            />
+          )}
         </div>
         {currentUser?._id === user._id && (
           <Menu>
