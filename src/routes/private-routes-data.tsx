@@ -13,7 +13,7 @@ export const privateRoutesData: RouteData[] = [
     element: <Feed />,
   },
   {
-    path: "/profile",
+    path: "/profile/:username",
     element: <Profile />,
   },
   {

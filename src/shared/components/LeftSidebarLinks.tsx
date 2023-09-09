@@ -3,9 +3,11 @@ import { NavLink } from ".";
 import { linkItems } from "src/shared/services";
 import { openNewPostForm } from "src/store/post";
 import { closeLeftSidebar } from "src/store/ui";
+import { useTypedSelector } from "src/store";
 
 export const LeftSidebarLinks = () => {
   const dispatch = useDispatch();
+  const { user } = useTypedSelector(({ auth }) => auth);
 
   const onClickNavLink = (): void => {
     dispatch(closeLeftSidebar());
@@ -21,7 +23,14 @@ export const LeftSidebarLinks = () => {
       <ul className="flex flex-col gap-2">
         {linkItems.slice(0, 2).map(({ ...props }) => (
           <li key={props.path} onClick={onClickNavLink}>
-            <NavLink {...props} />
+            <NavLink
+              {...props}
+              path={
+                props.path.includes(":username")
+                  ? props.path.replace(":username", user?.username as string)
+                  : props.path
+              }
+            />
           </li>
         ))}
 

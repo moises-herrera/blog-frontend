@@ -10,7 +10,7 @@ export const linkItems: LinkItem[] = [
     icon: "fa-solid fa-house",
   },
   {
-    path: "/profile",
+    path: "/profile/:username",
     label: "Perfil",
     icon: "fa-solid fa-circle-user",
   },
