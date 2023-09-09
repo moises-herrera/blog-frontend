@@ -50,7 +50,7 @@ export const postSlice = createSlice({
     },
     updateUserPost: (state, { payload }) => {
       state.userPosts = state.userPosts.map((post) =>
-        post._id === payload.id ? payload : post
+        post._id === payload._id ? payload : post
       );
     },
     openDeleteModal: (state, { payload }) => {
@@ -60,7 +60,13 @@ export const postSlice = createSlice({
     closeDeleteModal: (state) => {
       state.isDeleteModalVisible = false;
       state.deletePostId = null;
-    }
+    },
+    clearDeleteResponse: (state) => {
+      state.deleteMessage = null;
+    },
+    clearDeleteErrorResponse: (state) => {
+      state.deleteError = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsFollowing.pending, (state) => {
@@ -116,7 +122,14 @@ export const postSlice = createSlice({
     });
     builder.addCase(updatePost.fulfilled, (state, { payload }) => {
       state.isLoadingPostForm = false;
-      state.editPost = payload.data;
+      state.userPosts = state.userPosts.map((post) =>
+        post._id === payload.data?._id
+          ? {
+              ...payload.data,
+              user: post.user,
+            }
+          : post
+      );
       state.successMessage = payload.message;
     });
     builder.addCase(updatePost.rejected, (state, { payload }) => {
@@ -129,11 +142,16 @@ export const postSlice = createSlice({
     });
     builder.addCase(deletePost.fulfilled, (state, { payload }) => {
       state.isLoadingDeletePost = false;
-      state.successMessage = payload.message;
+      state.deleteMessage = payload.message;
+      state.userPosts = state.userPosts.filter(
+        (post) => post._id !== state.deletePostId
+      );
+      state.isDeleteModalVisible = false;
+      state.deletePostId = null;
     });
     builder.addCase(deletePost.rejected, (state, { payload }) => {
       state.isLoadingDeletePost = false;
-      state.errorMessage = payload?.message;
+      state.deleteError = payload?.message;
     });
   },
 });
@@ -148,4 +166,6 @@ export const {
   updateUserPost,
   openDeleteModal,
   closeDeleteModal,
+  clearDeleteResponse,
+  clearDeleteErrorResponse,
 } = postSlice.actions;

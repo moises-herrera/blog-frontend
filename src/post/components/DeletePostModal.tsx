@@ -12,8 +12,8 @@ import { useDispatch } from "react-redux";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
 import {
-  clearErrorMessage,
-  clearSuccessMessage,
+  clearDeleteErrorResponse,
+  clearDeleteResponse,
   closeDeleteModal,
   deletePost,
 } from "src/store/post";
@@ -25,15 +25,14 @@ export const DeletePostModal = () => {
     isDeleteModalVisible,
     deletePostId,
     isLoadingDeletePost,
-    successMessage,
-    errorMessage,
+    deleteMessage,
+    deleteError,
   } = useTypedSelector(({ post }) => post);
   const cancelRef = useRef(null);
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
     dispatch(deletePost(deletePostId as string));
-    onClose();
   };
 
   const onClose = () => {
@@ -41,22 +40,22 @@ export const DeletePostModal = () => {
   };
 
   const clearSuccess = useCallback(() => {
-    dispatch(clearSuccessMessage());
+    dispatch(clearDeleteResponse());
   }, [dispatch]);
 
   const clearError = useCallback(() => {
-    dispatch(clearErrorMessage());
+    dispatch(clearDeleteErrorResponse());
   }, [dispatch]);
 
   useEffect(() => {
-    if (successMessage) {
-      displaySuccessMessage(successMessage, 5000, clearSuccess);
-    } else if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+    if (deleteMessage) {
+      displaySuccessMessage(deleteMessage, 5000, clearSuccess);
+    } else if (deleteError) {
+      displayError(deleteError, 5000, clearError);
     }
   }, [
-    successMessage,
-    errorMessage,
+    deleteMessage,
+    deleteError,
     displaySuccessMessage,
     displayError,
     clearSuccess,

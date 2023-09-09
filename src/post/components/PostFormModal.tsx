@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "src/store";
-import { closeNewPostForm, setEditPost, updateUserPost } from "src/store/post";
+import { closeNewPostForm, setEditPost } from "src/store/post";
 import { AppDispatch } from "src/store/types";
 import { PostForm } from ".";
 import { Post } from "src/interfaces";
@@ -23,7 +23,6 @@ export const PostFormModal = () => {
   const onCloseModal = () => {
     dispatch(closeNewPostForm());
     if (editPost) {
-      dispatch(updateUserPost(editPost));
       dispatch(setEditPost(null));
     }
   };

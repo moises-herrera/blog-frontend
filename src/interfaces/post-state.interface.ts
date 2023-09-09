@@ -40,6 +40,12 @@ export interface PostState {
   /** Whether the delete modal is visible. */
   isDeleteModalVisible: boolean;
 
+  /** Delete post message. */
+  deleteMessage?: string | null;
+
+  /** Delete post error message. */
+  deleteError?: string | null;
+
   /** Delete post id. */
   deletePostId?: string | null;
 
