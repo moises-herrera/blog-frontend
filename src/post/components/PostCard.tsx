@@ -26,7 +26,7 @@ import { FollowButton } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
-import { openNewPostForm, setEditPost } from "src/store/post";
+import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 
 export const PostCard = ({
   _id,
@@ -56,6 +56,10 @@ export const PostCard = ({
     dispatch(openNewPostForm());
   };
 
+  const onClickDelete = () => {
+    dispatch(openDeleteModal(_id as string));
+  };
+
   return (
     <PostCardContainer>
       <CardHeader className="flex justify-between">
@@ -81,7 +85,10 @@ export const PostCard = ({
               >
                 Editar
               </MenuItem>
-              <MenuItem icon={<i className="fa-solid fa-trash"></i>}>
+              <MenuItem
+                onClick={onClickDelete}
+                icon={<i className="fa-solid fa-trash"></i>}
+              >
                 Eliminar
               </MenuItem>
             </MenuList>
