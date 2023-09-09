@@ -46,10 +46,12 @@ export const ResetPassword = () => {
 
   useEffect(() => {
     if (successMessage) {
-      displaySuccessMessage(successMessage, 5000, clearSuccess);
+      displaySuccessMessage(successMessage);
+      clearSuccess();
       navigate("/");
     } else if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+      displayError(errorMessage);
+      clearError();
     }
   }, [
     successMessage,

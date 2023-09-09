@@ -1,5 +1,5 @@
 import { PostInfo } from "src/interfaces";
-import { PostCard } from "src/post/components";
+import { DeletePostModal, PostCard } from "src/post/components";
 
 interface FeedContentProps {
   posts: PostInfo[];
@@ -11,6 +11,8 @@ export const FeedContent = ({ posts }: FeedContentProps) => {
       {posts.map((post) => (
         <PostCard key={post._id} {...post} />
       ))}
+
+      <DeletePostModal />
     </div>
   );
 };

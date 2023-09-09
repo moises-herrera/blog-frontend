@@ -7,10 +7,6 @@ import {
   CardHeader,
   Heading,
   Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -22,7 +18,7 @@ import {
 import { PostInfo } from "src/interfaces";
 import { PostCardContainer } from ".";
 import postImage from "src/assets/images/upload-image.png";
-import { FollowButton } from "src/shared/components";
+import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
@@ -71,31 +67,18 @@ export const PostCard = ({
               <Heading size="xs">@{user.username}</Heading>
             </div>
           </Link>
-          <FollowButton
-            userId={user._id}
-            hasFollower={hasFollower(user, currentUser?._id as string)}
-          />
+          {currentUser?._id !== user._id && (
+            <FollowButton
+              userId={user._id}
+              hasFollower={hasFollower(user, currentUser?._id as string)}
+            />
+          )}
         </div>
         {currentUser?._id === user._id && (
-          <Menu>
-            <MenuButton>
-              <i className="text-xl fa-solid fa-ellipsis-vertical"></i>
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                onClick={onClickUpdate}
-                icon={<i className="fa-solid fa-pen-to-square"></i>}
-              >
-                Editar
-              </MenuItem>
-              <MenuItem
-                onClick={onClickDelete}
-                icon={<i className="fa-solid fa-trash"></i>}
-              >
-                Eliminar
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <SettingsMenu
+            onClickUpdate={onClickUpdate}
+            onClickDelete={onClickDelete}
+          />
         )}
       </CardHeader>
 
