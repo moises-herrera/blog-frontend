@@ -27,6 +27,7 @@ import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
+import { Link } from "react-router-dom";
 
 export const PostCard = ({
   _id,
@@ -64,10 +65,12 @@ export const PostCard = ({
     <PostCardContainer>
       <CardHeader className="flex justify-between">
         <div className="flex items-center gap-8">
-          <div className="flex items-center space-x-2">
-            <Avatar name={getFullName(user)} src={user.avatar} />
-            <Heading size="xs">@{user.username}</Heading>
-          </div>
+          <Link to={`/profile/${user.username}`}>
+            <div className="flex items-center space-x-2">
+              <Avatar name={getFullName(user)} src={user.avatar} />
+              <Heading size="xs">@{user.username}</Heading>
+            </div>
+          </Link>
           <FollowButton
             userId={user._id}
             hasFollower={hasFollower(user, currentUser?._id as string)}
