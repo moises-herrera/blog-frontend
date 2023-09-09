@@ -1,7 +1,7 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { hasFollower } from "src/helpers";
+import { User } from "src/interfaces";
 import {
   FollowButton,
   UserCard,
@@ -44,10 +44,7 @@ export const RightSidebar = () => {
         {!followingLoading ? (
           following.map((user) => (
             <UserCard key={user.username} user={user}>
-              <FollowButton
-                userId={user._id}
-                hasFollower={hasFollower(user, currentUser?._id as string)}
-              />
+              <FollowButton user={user} currentUser={currentUser as User} />
             </UserCard>
           ))
         ) : (
@@ -61,10 +58,7 @@ export const RightSidebar = () => {
         {!followersLoading ? (
           followers.map((user) => (
             <UserCard key={user.username} user={user}>
-              <FollowButton
-                userId={user._id}
-                hasFollower={hasFollower(user, currentUser?._id as string)}
-              />
+              <FollowButton user={user} currentUser={currentUser as User} />
             </UserCard>
           ))
         ) : (
