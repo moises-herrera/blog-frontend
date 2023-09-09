@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PostState } from "src/interfaces";
 import {
   createPost,
+  deletePost,
   getPostsFollowing,
   getPostsSuggested,
   getUserPosts,
@@ -20,6 +21,9 @@ const initialState: PostState = {
   successMessage: null,
   errorMessage: null,
   editPost: null,
+  isDeleteModalVisible: false,
+  deletePostId: null,
+  isLoadingDeletePost: false,
 };
 
 export const postSlice = createSlice({
@@ -49,6 +53,14 @@ export const postSlice = createSlice({
         post._id === payload.id ? payload : post
       );
     },
+    openDeleteModal: (state, { payload }) => {
+      state.isDeleteModalVisible = true;
+      state.deletePostId = payload;
+    },
+    closeDeleteModal: (state) => {
+      state.isDeleteModalVisible = false;
+      state.deletePostId = null;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsFollowing.pending, (state) => {
@@ -111,6 +123,18 @@ export const postSlice = createSlice({
       state.isLoadingPostForm = false;
       state.errorMessage = payload?.message;
     });
+
+    builder.addCase(deletePost.pending, (state) => {
+      state.isLoadingDeletePost = true;
+    });
+    builder.addCase(deletePost.fulfilled, (state, { payload }) => {
+      state.isLoadingDeletePost = false;
+      state.successMessage = payload.message;
+    });
+    builder.addCase(deletePost.rejected, (state, { payload }) => {
+      state.isLoadingDeletePost = false;
+      state.errorMessage = payload?.message;
+    });
   },
 });
 
@@ -122,4 +146,6 @@ export const {
   clearErrorMessage,
   setEditPost,
   updateUserPost,
+  openDeleteModal,
+  closeDeleteModal,
 } = postSlice.actions;

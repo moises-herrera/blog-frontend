@@ -156,3 +156,30 @@ export const updatePost = createAsyncThunk<
     });
   }
 });
+
+/**
+ * Delete a post.
+ *
+ * @param updatePostData The post data.
+ * @returns A thunk that dispatches an action.
+ */
+export const deletePost = createAsyncThunk<
+  StandardResponse,
+  string,
+  AsyncThunkConfig
+>("deletePost", async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.delete<StandardResponse>(`/post/${id}`);
+
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});

@@ -36,4 +36,13 @@ export interface PostState {
 
   /** Edit post active. */
   editPost?: Post | null;
+
+  /** Whether the delete modal is visible. */
+  isDeleteModalVisible: boolean;
+
+  /** Delete post id. */
+  deletePostId?: string | null;
+
+  /** Loading state. */
+  isLoadingDeletePost: boolean;
 }
