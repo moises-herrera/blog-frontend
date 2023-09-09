@@ -5,6 +5,7 @@ import { removeToken } from "src/helpers";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { onLogout } from "src/store/auth";
+import { APP_NAME } from "src/constants";
 
 export const LeftSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +21,7 @@ export const LeftSidebar = () => {
       cssClass={`lg:block ${isLeftSidebarOpen ? "block w-screen" : "hidden"}`}
     >
       <div className="my-10 text-center">
-        <h2 className="text-5xl font-bold text-accent-500">Blog.</h2>
+        <h2 className="text-5xl font-bold text-accent-500">{APP_NAME}</h2>
       </div>
 
       <InputGroup className="mb-5">

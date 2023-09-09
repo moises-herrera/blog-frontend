@@ -1,4 +1,5 @@
 import { Modal, ModalContent, ModalBody, Image } from "@chakra-ui/react";
+import { APP_NAME } from "src/constants";
 import { ModalData } from "src/interfaces";
 
 interface ModalContainFormProps extends ModalData {
@@ -40,7 +41,9 @@ export const ModalContainForm = ({
               }`}
             >
               <div className="my-10 text-center">
-                <h2 className="text-5xl font-bold text-[#FF5050]">Blog.</h2>
+                <h2 className="text-5xl font-bold text-[#FF5050]">
+                  {APP_NAME}
+                </h2>
               </div>
               <div className="text-center text-[20px] lg:text-[30px] font-extrabold text-[#E0E0E0] mb-10 px-0 lg:px-6 xl:px-52">
                 <p>{title}</p>
