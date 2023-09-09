@@ -6,6 +6,7 @@ import {
   getPostsFollowing,
   getPostsSuggested,
   getUserPosts,
+  searchPosts,
   updatePost,
 } from ".";
 
@@ -16,6 +17,8 @@ const initialState: PostState = {
   isLoadingSuggested: false,
   userPosts: [],
   isLoadingUserPosts: false,
+  searchPosts: [],
+  isLoadingSearchPosts: false,
   isLoadingPostForm: false,
   isNewPostFormVisible: false,
   successMessage: null,
@@ -105,6 +108,18 @@ export const postSlice = createSlice({
     });
     builder.addCase(getUserPosts.rejected, (state, { payload }) => {
       state.isLoadingUserPosts = false;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(searchPosts.pending, (state) => {
+      state.isLoadingSearchPosts = true;
+    });
+    builder.addCase(searchPosts.fulfilled, (state, { payload }) => {
+      state.searchPosts = payload;
+      state.isLoadingSearchPosts = false;
+    });
+    builder.addCase(searchPosts.rejected, (state, { payload }) => {
+      state.isLoadingSearchPosts = false;
       state.errorMessage = payload?.message;
     });
 
