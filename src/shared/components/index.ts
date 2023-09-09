@@ -14,3 +14,4 @@ export * from "./UserCard";
 export * from "./FormControlContainer";
 export * from "./Loading";
 export * from "./SettingsMenu";
+export * from "./ConfirmMessage";

@@ -1,13 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
-  Button,
-} from "@chakra-ui/react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
@@ -18,6 +9,7 @@ import {
   deletePost,
 } from "src/store/post";
 import { AppDispatch } from "src/store/types";
+import { ConfirmMessage } from "src/shared/components";
 
 export const DeletePostModal = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +20,6 @@ export const DeletePostModal = () => {
     deleteMessage,
     deleteError,
   } = useTypedSelector(({ post }) => post);
-  const cancelRef = useRef(null);
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
@@ -49,9 +40,11 @@ export const DeletePostModal = () => {
 
   useEffect(() => {
     if (deleteMessage) {
-      displaySuccessMessage(deleteMessage, 5000, clearSuccess);
+      displaySuccessMessage(deleteMessage);
+      clearSuccess();
     } else if (deleteError) {
-      displayError(deleteError, 5000, clearError);
+      displayError(deleteError);
+      clearError();
     }
   }, [
     deleteMessage,
@@ -63,36 +56,14 @@ export const DeletePostModal = () => {
   ]);
 
   return (
-    <AlertDialog
+    <ConfirmMessage
+      title="Eliminar publicación"
+      message="¿Estás seguro de que quieres eliminar esta publicación?"
+      confirmText="Eliminar"
       isOpen={isDeleteModalVisible}
-      leastDestructiveRef={cancelRef}
       onClose={onClose}
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Eliminar publicación
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            ¿Estás seguro de que quieres eliminar esta publicación?
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={onDelete}
-              ml={3}
-              isLoading={isLoadingDeletePost}
-            >
-              Eliminar
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
+      onConfirm={onDelete}
+      isLoading={isLoadingDeletePost}
+    />
   );
 };

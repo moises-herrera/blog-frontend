@@ -7,7 +7,7 @@ import {
   CommentsModal,
 } from "src/shared/components";
 import { useDisclosure } from "@chakra-ui/react";
-import { DeletePostModal, PostFormModal } from "src/post/components";
+import { PostFormModal } from "src/post/components";
 
 export const PrivateRoutes = () => {
   const { isOpen, onClose } = useDisclosure();
@@ -27,7 +27,6 @@ export const PrivateRoutes = () => {
       <RightSidebar />
 
       <PostFormModal />
-      <DeletePostModal />
       <CommentsModal isOpen={isOpen} onClose={onClose} title="Seguir" />
     </main>
   );
