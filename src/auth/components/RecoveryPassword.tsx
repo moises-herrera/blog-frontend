@@ -39,9 +39,11 @@ export const RecoveryPassword = ({ isOpen, onClose }: ModalData) => {
 
   useEffect(() => {
     if (notification) {
-      displaySuccessMessage(notification, 5000, clearError);
+      displaySuccessMessage(notification);
+      clearSuccess();
     } else if (error) {
-      displayError(error, 5000, clearError);
+      displayError(error);
+      clearError();
     }
   }, [
     notification,
