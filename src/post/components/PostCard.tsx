@@ -13,6 +13,7 @@ import {
   MenuList,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   getDateFormattedFromString,
@@ -27,21 +28,24 @@ import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
+import { CommentsModal } from "src/shared/components";
 
-export const PostCard = ({
-  _id,
-  title,
-  topic,
-  image,
-  description,
-  user,
-  comments,
-  likes,
-  createdAt,
-}: PostInfo) => {
+export const PostCard = (data: PostInfo) => {
+  console.log(data);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
-
+  const {
+    _id,
+    title,
+    topic,
+    image,
+    description,
+    user,
+    comments,
+    likes,
+    createdAt,
+  } = data;
   const onClickUpdate = () => {
     dispatch(
       setEditPost({
@@ -101,7 +105,7 @@ export const PostCard = ({
           <Image src={image || postImage} alt={title} borderRadius={20} />
         </Box>
 
-        <div className="flex justify-between text-secondary-300 text-sm">
+        <div className="flex justify-between text-sm text-secondary-300">
           <span>#{topic}</span>
           <span>{getDateFormattedFromString(createdAt)}</span>
         </div>
@@ -120,11 +124,10 @@ export const PostCard = ({
           </Text>
         </Stack>
       </CardBody>
-
-      <CardFooter className="flex w-full justify-center">
+      <CardFooter className="flex justify-center w-full">
         <ButtonGroup className="space-x-36">
           <div className="space-x-2">
-            <button>
+            <button onClick={onOpen}>
               <i className="fa-regular fa-comment"></i>
             </button>
             <span>{comments.length}</span>
@@ -137,6 +140,13 @@ export const PostCard = ({
           </div>
         </ButtonGroup>
       </CardFooter>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <CommentsModal
+        onClose={onClose}
+        isOpen={isOpen}
+        infoPost={data}
+        currentUserId={currentUser?._id ? currentUser._id : ""}
+      />
     </PostCardContainer>
   );
 };

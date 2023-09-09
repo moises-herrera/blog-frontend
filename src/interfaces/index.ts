@@ -22,3 +22,6 @@ export * from "./update-user.interface";
 export * from "./change-password.interface";
 export * from "./confirm-email.interface";
 export * from "./update-post.interface";
+export * from "./UserComment";
+export * from "./CommentInfo";
+export * from "./comment-state";

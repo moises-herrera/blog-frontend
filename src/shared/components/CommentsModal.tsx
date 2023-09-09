@@ -1,5 +1,7 @@
 import { CommentCard, FollowButton } from "src/shared/components";
 import { usuarios } from "src/mocks";
+import { PostInfo } from "src/interfaces";
+import { hasFollower, getDateFormattedFromString } from "src/helpers";
 
 import {
   Modal,
@@ -17,10 +19,27 @@ import {
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  currentUserId: string;
+  infoPost: PostInfo;
 }
 
-export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
+export const CommentsModal = ({
+  isOpen,
+  onClose,
+  currentUserId,
+  infoPost: {
+    _id,
+    title,
+    topic,
+    image,
+    description,
+    user,
+    comments,
+    likes,
+    createdAt,
+  },
+}: Props) => {
+  console.log(description);
   return (
     <div>
       <Modal
@@ -41,30 +60,19 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                     rounded={"20px"}
                     boxSize="450px"
                     objectFit="cover"
-                    src="https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg"
+                    src={image}
                     alt="Dan Abramov"
                   />
                 </div>
                 <div className="flex justify-evenly text-[#7B7B7B]">
-                  <p>#Wen developer</p>
-                  <p>31 de Agosto 2023</p>
+                  <p>#{topic}</p>
+                  <p>{getDateFormattedFromString(createdAt)}</p>
                 </div>
                 <div className="flex justify-center text-[#2F2F2F] text-[22px] pt-2 pb-3">
-                  <h2>Metodologia para realizar un producto</h2>
+                  <h2>{title}</h2>
                 </div>
                 <div className="text-[16px] text-[#2F2F2F] felx justify-center px-5 pb-3">
-                  <article>
-                    when an unknown printer took a galley of type and scrambled
-                    it to make a type specimen book. It has survived not only
-                    five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was
-                    popularised in the 1960s with the release of Letraset sheets
-                    containing Lorem Ipsum passages, and more recently with
-                    desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum Lorem Ipsum passages, and more
-                    recently with desktop publishing software like Aldus
-                    PageMaker including versions of Lorem Ipsum
-                  </article>
+                  <article>{description}</article>
                 </div>
               </div>
               <div className="w-full bg-[#2F2F2F] mt-5 lg:w-1/2 h-full">
@@ -81,14 +89,17 @@ export const CommentsModal = ({ isOpen, onClose, title }: Props) => {
                       marginRight={"5px"}
                       size="lg"
                       name="Non"
-                      src="https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg"
+                      src={user?.avatar}
                     />
                     <p className="font-bold text-[20px] text-[#E0E0E0] pl-3">
-                      @Gbariel_Oque
+                      @{user?.username}
                     </p>
                   </div>
                   <div className="flex items-center pr-3">
-                    <FollowButton title={title} />
+                    <FollowButton
+                      userId={user._id}
+                      hasFollower={hasFollower(user, currentUserId as string)}
+                    />
                   </div>
                 </div>
                 <div>

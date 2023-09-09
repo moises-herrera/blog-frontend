@@ -1,13 +1,14 @@
+import { UserComment } from ".";
+
 /**
  * Represents the information of a comment.
  */
-export interface Comment {
+export interface CommentInfo {
   /** Comment content. */
   content: string;
 
-  /** User id. */
-  userId: string;
-
   /** Post id. */
-  postId: string;
+  post: string;
+
+  user: UserComment;
 }
