@@ -1,21 +1,33 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "src/interfaces";
-import { AsyncThunkConfig } from "../types";
+import { AsyncThunkConfig } from "src/store/types";
 import { AxiosError } from "axios";
 import { blogApi } from "src/api";
 
 /**
+ * Get users.
+ *
+ * @param username The username.
+ * @returns A promise of users.
+ */
+const getUsers = async (username?: string) => {
+  const { data } = await blogApi.get<User[]>(`/user?username=${username}`);
+  return data;
+};
+
+/**
  * Get all users.
  *
+ * @param username The username to search.
  * @returns A thunk that dispatches an action.
  */
-export const getUsers = createAsyncThunk<
+export const getAllUsers = createAsyncThunk<
   User[],
-  string | void,
+  string | undefined,
   AsyncThunkConfig
 >("getUsers", async (username = "", { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.get<User[]>(`/user?username=${username}`);
+    const data = await getUsers(username);
 
     return data;
   } catch (error) {
@@ -29,6 +41,31 @@ export const getUsers = createAsyncThunk<
     });
   }
 });
+
+/**
+ * Get a user.
+ *
+ * @param id The username.
+ * @returns A thunk that dispatches an action.
+ */
+export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
+  "getUser",
+  async (username, { rejectWithValue }) => {
+    try {
+      const [user] = await getUsers(username);
+      return user;
+    } catch (error) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Ha ocurrido un error.";
+
+      return rejectWithValue({
+        message,
+      });
+    }
+  }
+);
 
 /**
  * Get all followers.

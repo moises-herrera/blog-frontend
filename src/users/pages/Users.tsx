@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
-import { getUsers } from "src/store/users";
+import { getAllUsers } from "src/store/users";
 import { UsersList } from "src/users/components";
 import "./Users.css";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
@@ -16,11 +16,11 @@ export const Users = () => {
   const [debouncedSearchTerm] = useDebounce(searchTerm, 600);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getUsers(debouncedSearchTerm));
+    dispatch(getAllUsers(debouncedSearchTerm));
   }, [dispatch, debouncedSearchTerm]);
 
   const onSearchUsers = ({

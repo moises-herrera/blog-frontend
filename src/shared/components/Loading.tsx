@@ -19,7 +19,7 @@ export const Loading = ({
         w="100px"
         h="100px"
       />
-      <p className={`text-lg text-white ${textClass}`}>{text}</p>
+      <p className={`text-lg ${textClass || "text-white"}`}>{text}</p>
     </div>
   );
 };

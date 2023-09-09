@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UsersState } from "src/interfaces";
-import { getFollowers, getFollowing, getUsers } from ".";
+import { getFollowers, getFollowing, getUser, getAllUsers } from ".";
 
 const initialState: UsersState = {
   list: [],
@@ -10,6 +10,8 @@ const initialState: UsersState = {
   followersLoading: false,
   following: [],
   followingLoading: false,
+  userProfile: null,
+  userProfileLoading: false,
 };
 
 export const usersSlice = createSlice({
@@ -17,14 +19,14 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getUsers.pending, (state) => {
+    builder.addCase(getAllUsers.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
       state.list = payload;
       state.isLoading = false;
     });
-    builder.addCase(getUsers.rejected, (state, { payload }) => {
+    builder.addCase(getAllUsers.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload?.message;
     });
@@ -50,6 +52,18 @@ export const usersSlice = createSlice({
     });
     builder.addCase(getFollowing.rejected, (state, { payload }) => {
       state.followingLoading = false;
+      state.error = payload?.message;
+    });
+
+    builder.addCase(getUser.pending, (state) => {
+      state.userProfileLoading = true;
+    });
+    builder.addCase(getUser.fulfilled, (state, { payload }) => {
+      state.userProfile = payload;
+      state.userProfileLoading = false;
+    });
+    builder.addCase(getUser.rejected, (state, { payload }) => {
+      state.userProfileLoading = false;
       state.error = payload?.message;
     });
   },
