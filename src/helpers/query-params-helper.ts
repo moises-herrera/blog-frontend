@@ -21,3 +21,15 @@ export const getQueryParams = (search: string): StandardObject => {
       }, {}) || {}
   );
 };
+
+/**
+ * Get query string from object.
+ *
+ * @param object The object.
+ * @returns The query string.
+ */
+export const getQueryStringFromObject = (object: StandardObject): string => {
+  return Object.keys(object)
+    .map((key) => `${key}=${object[key]}`)
+    .join("&");
+};
