@@ -23,6 +23,10 @@ export const Users = () => {
     dispatch(getAllUsers(debouncedSearchTerm));
   }, [dispatch, debouncedSearchTerm]);
 
+  useEffect(() => {
+    document.title = "Usuarios";
+  }, []);
+
   const onSearchUsers = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {

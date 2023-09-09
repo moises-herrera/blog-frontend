@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { APP_NAME } from "src/constants";
 import { FeedContent } from "src/feed/components";
 import { Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
@@ -22,6 +23,8 @@ export const Feed = () => {
   }, [dispatch, following]);
 
   useEffect(() => {
+    document.title = `${APP_NAME}`;
+
     dispatch(getPostsSuggested());
   }, []);
 

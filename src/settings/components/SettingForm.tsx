@@ -76,6 +76,10 @@ export const SettingForm = () => {
     }
   }, [errorMessage, displayError, displaySuccessMessage, successMessage]);
 
+  useEffect(() => {
+    document.title = "Configuración";
+  }, []);
+
   return (
     <div className="w-full h-screen bg-secondary-200 text-primary-500">
       <div className="flex flex-col items-center justify-center h-screen">
