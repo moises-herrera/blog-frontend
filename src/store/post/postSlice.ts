@@ -53,6 +53,9 @@ export const postSlice = createSlice({
         post._id === payload._id ? payload : post
       );
     },
+    setUserPosts: (state, { payload }) => {
+      state.userPosts = payload;
+    },
     openDeleteModal: (state, { payload }) => {
       state.isDeleteModalVisible = true;
       state.deletePostId = payload;
@@ -168,4 +171,5 @@ export const {
   closeDeleteModal,
   clearDeleteResponse,
   clearDeleteErrorResponse,
+  setUserPosts,
 } = postSlice.actions;

@@ -10,12 +10,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import {
-  getDateFormattedFromString,
-  getFullName,
-  hasFollower,
-} from "src/helpers";
-import { PostInfo } from "src/interfaces";
+import { getDateFormattedFromString, getFullName } from "src/helpers";
+import { PostInfo, User } from "src/interfaces";
 import { PostCardContainer } from ".";
 import postImage from "src/assets/images/upload-image.png";
 import { FollowButton, SettingsMenu } from "src/shared/components";
@@ -68,10 +64,7 @@ export const PostCard = ({
             </div>
           </Link>
           {currentUser?._id !== user._id && (
-            <FollowButton
-              userId={user._id}
-              hasFollower={hasFollower(user, currentUser?._id as string)}
-            />
+            <FollowButton user={user} currentUser={currentUser as User} />
           )}
         </div>
         {currentUser?._id === user._id && (

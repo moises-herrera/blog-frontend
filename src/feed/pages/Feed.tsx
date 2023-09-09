@@ -15,9 +15,13 @@ export const Feed = () => {
     postSuggestedList,
     isLoadingSuggested,
   } = useTypedSelector(({ post }) => post);
+  const { following } = useTypedSelector(({ users }) => users);
 
   useEffect(() => {
     dispatch(getPostsFollowing());
+  }, [dispatch, following]);
+
+  useEffect(() => {
     dispatch(getPostsSuggested());
   }, []);
 

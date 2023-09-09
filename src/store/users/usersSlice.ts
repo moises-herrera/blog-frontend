@@ -17,7 +17,61 @@ const initialState: UsersState = {
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    addFollowing: (state, { payload: { user, currentUser } }) => {
+      const userFollowing = {
+        ...user,
+        followers: [...user.followers, currentUser._id],
+      };
+      state.following = [...state.following, userFollowing];
+
+      if (state.followers.some(({ _id }) => _id === user._id)) {
+        state.followers = state.followers.map((data) =>
+          data._id !== user._id ? data : userFollowing
+        );
+      }
+
+      if (
+        state.userProfile &&
+        !state.userProfile?.followers.some((id) => id === currentUser._id)
+      ) {
+        state.userProfile = {
+          ...state.userProfile,
+          followers: [...state.userProfile.followers, currentUser._id],
+        };
+      }
+    },
+    removeFollowing: (state, { payload: { user, currentUser } }) => {
+      const userFollowing = {
+        ...user,
+        followers: user.followers.filter(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (follower: any) => follower !== currentUser._id
+        ),
+      };
+      state.following = state.following.filter(({ _id }) => _id !== user._id);
+
+      if (state.followers.some(({ _id }) => _id === user._id)) {
+        state.followers = state.followers.map((data) => {
+          if (data._id !== user._id) return data;
+
+          return userFollowing;
+        });
+      }
+
+      if (
+        state.userProfile &&
+        state.userProfile?.followers.some((id) => id === currentUser._id)
+      ) {
+        state.userProfile = {
+          ...state.userProfile,
+          followers: state.userProfile.followers.filter(
+            (id) => id !== currentUser._id
+          ),
+        };
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllUsers.pending, (state) => {
       state.isLoading = true;
@@ -68,3 +122,5 @@ export const usersSlice = createSlice({
     });
   },
 });
+
+export const { addFollowing, removeFollowing } = usersSlice.actions;

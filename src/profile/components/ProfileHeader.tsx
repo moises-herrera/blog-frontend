@@ -1,7 +1,7 @@
 import { Avatar, Heading, Text } from "@chakra-ui/react";
 import "./ProfileHeader.css";
 import { FollowButton } from "src/shared/components";
-import { getFullName, hasFollower } from "src/helpers";
+import { getFullName } from "src/helpers";
 import { User } from "src/interfaces";
 import { useTypedSelector } from "src/store";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
@@ -27,8 +27,8 @@ export const ProfileHeader = ({ user }: ProfileHeaderProps) => {
         </div>
         {currentUser?._id !== user._id && (
           <FollowButton
-            userId={user._id}
-            hasFollower={hasFollower(user, currentUser?._id as string)}
+            user={user}
+            currentUser={currentUser as User}
           />
         )}
       </div>
