@@ -13,13 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { getDateFormattedFromString, getFullName } from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
-import { PostCardContainer } from ".";
+import { CommentsModal, DeleteCommentModal, PostCardContainer } from ".";
 import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
-import { CommentsModal } from "src/shared/components";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
@@ -125,12 +124,15 @@ export const PostCard = (data: PostInfo) => {
       </CardFooter>
 
       {isOpen && (
-        <CommentsModal
-          onClose={onClose}
-          isOpen={isOpen}
-          infoPost={data}
-          currentUserId={currentUser?._id || ""}
-        />
+        <>
+          <CommentsModal
+            onClose={onClose}
+            isOpen={isOpen}
+            infoPost={data}
+            currentUserId={currentUser?._id || ""}
+          />
+          <DeleteCommentModal />
+        </>
       )}
     </PostCardContainer>
   );
