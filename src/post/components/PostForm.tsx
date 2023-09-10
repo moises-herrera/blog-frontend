@@ -128,7 +128,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
       >
         <FormControlContainer fieldError={errors.topic}>
           <FormLabel textColor="secondary.300">Tema</FormLabel>
-          <Input backgroundColor="white" {...register("topic")} />
+          <Input autoComplete="off" backgroundColor="white" {...register("topic")} />
         </FormControlContainer>
 
         <FormControlContainer fieldError={errors.title}>

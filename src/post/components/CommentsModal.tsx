@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { CommentCard, LikeButton } from ".";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { Link } from "react-router-dom";
 
 interface CommentsModalProps extends ModalData {
   currentUserId: string;
@@ -97,7 +98,7 @@ export const CommentsModal = ({
               <div className="flex justify-center text-primary-500 text-[22px] pt-2 pb-3 font-semibold">
                 <h2>{title}</h2>
               </div>
-              <p className="text-[16px] text-primary-500 px-5 pb-3">
+              <p className="text-[16px] text-primary-500 px-5 pb-3 text-justify">
                 {description}
               </p>
             </div>
@@ -109,17 +110,19 @@ export const CommentsModal = ({
                 />
               </div>
               <div className="flex justify-between mt-5">
-                <div className="flex items-center">
-                  <Avatar
-                    marginLeft={"10px"}
-                    marginRight={"5px"}
-                    size="lg"
-                    src={user?.avatar || avatarPlaceholder}
-                  />
-                  <p className="font-bold text-[20px] text-secondary-100 pl-3">
-                    @{user?.username}
-                  </p>
-                </div>
+                <Link to={`/profile/${user.username}`}>
+                  <div className="flex items-center">
+                    <Avatar
+                      marginLeft={"10px"}
+                      marginRight={"5px"}
+                      size="lg"
+                      src={user.avatar || avatarPlaceholder}
+                    />
+                    <p className="font-bold text-[20px] text-secondary-100 pl-3">
+                      @{user.username}
+                    </p>
+                  </div>
+                </Link>
                 <div className="flex items-center pr-3">
                   <FollowButton user={user} currentUser={currentUser as User} />
                 </div>
