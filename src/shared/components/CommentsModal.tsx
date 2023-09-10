@@ -1,7 +1,12 @@
 import { CommentCard, FollowButton } from "src/shared/components";
-import { usuarios } from "src/mocks";
 import { PostInfo } from "src/interfaces";
 import { hasFollower, getDateFormattedFromString } from "src/helpers";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { AppDispatch } from "src/store/types";
+import { createComment, getComments } from "src/store/comment";
+import { useDispatch } from "react-redux";
+import { useTypedSelector } from "src/store";
+import { useEffect } from "react";
 
 import {
   Modal,
@@ -14,6 +19,7 @@ import {
   Input,
   InputRightElement,
   InputGroup,
+  Button,
 } from "@chakra-ui/react";
 
 interface Props {
@@ -22,6 +28,9 @@ interface Props {
   currentUserId: string;
   infoPost: PostInfo;
 }
+type InputForm = {
+  comment: string;
+};
 
 export const CommentsModal = ({
   isOpen,
@@ -34,12 +43,35 @@ export const CommentsModal = ({
     image,
     description,
     user,
-    comments,
-    likes,
+    //comments,
+    //likes,
     createdAt,
   },
 }: Props) => {
-  console.log(description);
+  const { comments } = useTypedSelector(({ comment }) => comment);
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm<InputForm>();
+  const dispatch = useDispatch<AppDispatch>();
+  const onSubmit: SubmitHandler<InputForm> = (data) => {
+    const datacomment = {
+      content: data.comment,
+      user: currentUserId,
+      post: _id,
+    };
+    dispatch(createComment(datacomment));
+
+    reset();
+  };
+
+  useEffect(() => {
+    dispatch(getComments(_id));
+  }, []);
   return (
     <div>
       <Modal
@@ -106,13 +138,17 @@ export const CommentsModal = ({
                   <div className="text-[#E0E0E0] font-bold text-[30px] pl-3 pt-3 p-4">
                     Comentarios
                   </div>
+
                   <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[550px]">
-                    {usuarios.map((item, index) => (
-                      <div key={index}>
+                    {comments.map((comment) => (
+                      <div key={comment._id}>
                         <CommentCard
-                          user={item.user}
-                          comment={item.comment}
-                          img={item.img}
+                          user={comment.user.username}
+                          comment={comment.content}
+                          img={comment.user.avatar}
+                          userId={user._id}
+                          commentId={comment.user._id}
+                          commenkey={comment._id}
                         />
                       </div>
                     ))}
@@ -121,17 +157,34 @@ export const CommentsModal = ({
 
                 <div className="flex pt-8 mx-3">
                   <i className="pt-2 pr-3 text-2xl text-white fa-solid fa-heart"></i>
-                  <InputGroup className="mb-5">
-                    <InputRightElement pointerEvents="none">
-                      <i className="text-[#ffffff] text-2xl fa-solid fa-paper-plane pt-1"></i>
-                    </InputRightElement>
-                    <Input
-                      textColor={"#ffffff"}
-                      type="text"
-                      placeholder="Comentar"
-                      height={"50px"}
-                    />
-                  </InputGroup>
+                  <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+                    <InputGroup className="mb-5">
+                      <InputRightElement>
+                        <Button
+                          marginTop={"10px"}
+                          background={"none"}
+                          type="submit"
+                        >
+                          <i className="text-[#ffffff] text-2xl fa-solid fa-paper-plane"></i>
+                        </Button>
+                      </InputRightElement>
+                      <div className="flex flex-col w-full">
+                        <Input
+                          defaultValue={""}
+                          textColor={"#ffffff"}
+                          type="text"
+                          placeholder="Comentar"
+                          height={"50px"}
+                          {...register("comment", { required: true })}
+                        />
+                        {errors.comment && (
+                          <span className="text-white">
+                            El comentario es requerido
+                          </span>
+                        )}
+                      </div>
+                    </InputGroup>
+                  </form>
                 </div>
               </div>
             </div>

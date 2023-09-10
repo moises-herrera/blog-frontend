@@ -31,7 +31,6 @@ import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 import { CommentsModal } from "src/shared/components";
 
 export const PostCard = (data: PostInfo) => {
-  console.log(data);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
@@ -140,13 +139,15 @@ export const PostCard = (data: PostInfo) => {
           </div>
         </ButtonGroup>
       </CardFooter>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <CommentsModal
-        onClose={onClose}
-        isOpen={isOpen}
-        infoPost={data}
-        currentUserId={currentUser?._id ? currentUser._id : ""}
-      />
+
+      {isOpen && (
+        <CommentsModal
+          onClose={onClose}
+          isOpen={isOpen}
+          infoPost={data}
+          currentUserId={currentUser?._id ? currentUser._id : ""}
+        />
+      )}
     </PostCardContainer>
   );
 };

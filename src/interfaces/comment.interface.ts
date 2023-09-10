@@ -4,6 +4,7 @@ import { UserComment } from ".";
  * Represents the information of a comment.
  */
 export interface CommentInfo {
+  _id: string;
   /** Comment content. */
   content: string;
 

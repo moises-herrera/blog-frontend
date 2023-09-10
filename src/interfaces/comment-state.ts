@@ -1,6 +1,7 @@
-import { UserComment } from ".";
+import { CommentInfo } from ".";
 export interface CommentState {
-  comments: UserComment[];
+  comments: CommentInfo[];
   isLoadingComments: boolean;
   error?: string | null;
+  successMessage?: string | null;
 }
