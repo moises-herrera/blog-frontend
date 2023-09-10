@@ -3,20 +3,21 @@ import { FollowButton, Loading, SearchInput, UserCard } from ".";
 import { useTypedSelector } from "src/store";
 import { useSearch } from "src/hooks";
 import { getFollowers } from "src/store/users";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 export const FollowersList = () => {
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const { followers, followersLoading } = useTypedSelector(
     ({ users }) => users
   );
+  const currentUserId = useMemo(() => currentUser?._id, [currentUser?._id]);
   const searchResults = useCallback(
     (filter: string) =>
       getFollowers({
-        id: currentUser?._id as string,
+        id: currentUserId as string,
         username: filter,
       }),
-    [currentUser]
+    [currentUserId]
   );
 
   const { onSearch } = useSearch<User, GetFollowers>({
