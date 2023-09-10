@@ -10,7 +10,7 @@ export const Search = () => {
     ({ post }) => post
   );
   const { onSearch } = useSearch<PostInfo, string>({
-    value: null,
+    value: "",
     action: searchPosts,
   });
 
