@@ -22,6 +22,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { CommentCard, LikeButton } from ".";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
 interface CommentsModalProps extends ModalData {
   currentUserId: string;
@@ -73,10 +74,10 @@ export const CommentsModal = ({
       motionPreset="slideInBottom"
     >
       <ModalOverlay />
-      <ModalContent background="primary.500">
+      <ModalContent background="primary.500" borderRadius={20}>
         <ModalBody margin={"0px"} padding={"0px"}>
           <div className="flex flex-col w-full h-full sm:flex-row">
-            <div className="hidden w-full bg-white style-contain-comments lg:w-1/2 lg:block">
+            <div className="hidden w-full bg-white rounded-l-[20px] lg:w-1/2 lg:block">
               <CloseButton onClick={onClose} />
               {image && (
                 <div className="flex justify-center">
@@ -96,25 +97,24 @@ export const CommentsModal = ({
               <div className="flex justify-center text-primary-500 text-[22px] pt-2 pb-3 font-semibold">
                 <h2>{title}</h2>
               </div>
-              <p className="text-[16px] text-primary-500 felx justify-center px-5 pb-3">
+              <p className="text-[16px] text-primary-500 px-5 pb-3">
                 {description}
               </p>
             </div>
-            <div className="w-full bg-primary-500 mt-5 lg:w-1/2 h-full">
+            <div className="w-full bg-primary-500 rounded-r-[20px] lg:w-1/2 h-full">
               <div className="block lg:hidden">
                 <CloseButton
                   className="text-secondary-100 pl-3 text-xl pb-3"
                   onClick={onClose}
                 />
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between mt-5">
                 <div className="flex items-center">
                   <Avatar
                     marginLeft={"10px"}
                     marginRight={"5px"}
                     size="lg"
-                    name="Non"
-                    src={user?.avatar}
+                    src={user?.avatar || avatarPlaceholder}
                   />
                   <p className="font-bold text-[20px] text-secondary-100 pl-3">
                     @{user?.username}
