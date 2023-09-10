@@ -1,3 +1,6 @@
+/**
+ * Represents the information of a comment.
+ */
 export interface Comment {
   /** Comment id. */
   _id: string;

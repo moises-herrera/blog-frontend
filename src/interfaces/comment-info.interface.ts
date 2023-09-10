@@ -13,5 +13,6 @@ export interface CommentInfo {
   /** Post id. */
   post: string;
 
+  /** User information. */
   user: UserComment;
 }
