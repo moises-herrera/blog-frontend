@@ -11,7 +11,7 @@ interface SearchInputProps {
 export const SearchInput = ({
   placeholder = "Buscar",
   onSearch,
-  backgroundColor = "black",
+  backgroundColor = "transparent",
   textColor = "white",
   iconClassName = "text-white",
 }: SearchInputProps) => {
