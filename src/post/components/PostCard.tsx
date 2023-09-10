@@ -121,8 +121,8 @@ export const PostCard = ({
           <div className="space-x-2">
             <LikeButton
               postId={_id}
-              userId={user._id}
-              userLiked={postHasLike(likes, user._id)}
+              userId={currentUser?._id as string}
+              userLiked={postHasLike(likes, currentUser?._id as string)}
             />
             <span>{likes.length}</span>
           </div>
