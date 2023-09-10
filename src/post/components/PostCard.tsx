@@ -11,7 +11,11 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { getDateFormattedFromString, getFullName } from "src/helpers";
+import {
+  getDateFormattedFromString,
+  getFullName,
+  postHasLike,
+} from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
 import { CommentsModal, DeleteCommentModal, PostCardContainer } from ".";
 import { FollowButton, SettingsMenu } from "src/shared/components";
@@ -21,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { LikeButton } from ".";
 
 export const PostCard = (data: PostInfo) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -115,9 +120,11 @@ export const PostCard = (data: PostInfo) => {
             <span>{comments.length}</span>
           </div>
           <div className="space-x-2">
-            <button>
-              <i className="fa-regular fa-heart"></i>
-            </button>
+            <LikeButton
+              postId={_id}
+              userId={currentUser?._id as string}
+              userLiked={postHasLike(likes, currentUser?._id as string)}
+            />
             <span>{likes.length}</span>
           </div>
         </ButtonGroup>

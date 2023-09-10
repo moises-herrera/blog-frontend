@@ -73,6 +73,104 @@ export const postSlice = createSlice({
     clearDeleteErrorResponse: (state) => {
       state.deleteError = null;
     },
+    addLike: (state, { payload: { postId, userId } }) => {
+      if (state.searchResults.some((post) => post._id === postId)) {
+        state.searchResults = state.searchResults.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: [...post.likes, userId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postFollowingList.some((post) => post._id === postId)) {
+        state.postFollowingList = state.postFollowingList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: [...post.likes, userId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postSuggestedList.some((post) => post._id === postId)) {
+        state.postSuggestedList = state.postSuggestedList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: [...post.likes, userId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.userPosts.some((post) => post._id === postId)) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: [...post.likes, userId],
+            };
+          }
+          return post;
+        });
+      }
+    },
+    removeLike: (state, { payload: { postId, userId } }) => {
+      if (state.searchResults.some((post) => post._id === postId)) {
+        state.searchResults = state.searchResults.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: post.likes.filter((like) => like !== userId),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postFollowingList.some((post) => post._id === postId)) {
+        state.postFollowingList = state.postFollowingList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: post.likes.filter((like) => like !== userId),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postSuggestedList.some((post) => post._id === postId)) {
+        state.postSuggestedList = state.postSuggestedList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: post.likes.filter((like) => like !== userId),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.userPosts.some((post) => post._id === postId)) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              likes: post.likes.filter((like) => like !== userId),
+            };
+          }
+          return post;
+        });
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsFollowing.pending, (state) => {
@@ -189,4 +287,6 @@ export const {
   clearDeleteResponse,
   clearDeleteErrorResponse,
   setUserPosts,
+  addLike,
+  removeLike,
 } = postSlice.actions;
