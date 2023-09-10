@@ -25,7 +25,6 @@ export const PrivateRoutes = () => {
         </Routes>
       </MainContainer>
       <RightSidebar />
-
       <PostFormModal />
       <CommentsModal isOpen={isOpen} onClose={onClose} title="Seguir" />
     </main>

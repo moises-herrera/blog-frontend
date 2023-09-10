@@ -21,7 +21,7 @@ export const LeftSidebarLinks = () => {
   return (
     <nav className="flex flex-col text-lg text-white">
       <ul className="flex flex-col gap-2">
-        {linkItems.slice(0, 2).map(({ ...props }) => (
+        {linkItems.slice(0, 3).map(({ ...props }) => (
           <li key={props.path} onClick={onClickNavLink}>
             <NavLink
               {...props}
@@ -41,7 +41,7 @@ export const LeftSidebarLinks = () => {
           <span>Nuevo Post</span>
         </button>
 
-        {linkItems.slice(2).map(({ ...props }) => (
+        {linkItems.slice(3).map(({ ...props }) => (
           <li key={props.path} onClick={onClickNavLink}>
             <NavLink {...props} />
           </li>
