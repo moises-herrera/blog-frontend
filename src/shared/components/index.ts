@@ -16,3 +16,5 @@ export * from "./Loading";
 export * from "./SettingsMenu";
 export * from "./ConfirmMessage";
 export * from "./SearchInput";
+export * from "./FollowersList";
+export * from "./FollowingList";
