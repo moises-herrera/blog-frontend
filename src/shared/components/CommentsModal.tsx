@@ -1,6 +1,10 @@
-import { CommentCard, FollowButton } from "src/shared/components";
-import { PostInfo } from "src/interfaces";
-import { hasFollower, getDateFormattedFromString } from "src/helpers";
+import {
+  CommentCard,
+  FollowButton,
+  FormControlContainer,
+} from "src/shared/components";
+import { Comment, ModalData, PostInfo, User } from "src/interfaces";
+import { getDateFormattedFromString } from "src/helpers";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AppDispatch } from "src/store/types";
 import { createComment, getComments } from "src/store/comment";
@@ -22,13 +26,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
+interface CommentsModalProps extends ModalData {
   currentUserId: string;
   infoPost: PostInfo;
 }
-type InputForm = {
+
+type CommentForm = {
   comment: string;
 };
 
@@ -36,35 +39,25 @@ export const CommentsModal = ({
   isOpen,
   onClose,
   currentUserId,
-  infoPost: {
-    _id,
-    title,
-    topic,
-    image,
-    description,
-    user,
-    //comments,
-    //likes,
-    createdAt,
-  },
-}: Props) => {
+  infoPost: { _id, title, topic, image, description, user, createdAt },
+}: CommentsModalProps) => {
+  const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const { comments } = useTypedSelector(({ comment }) => comment);
 
   const {
     reset,
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm<InputForm>();
+  } = useForm<CommentForm>();
   const dispatch = useDispatch<AppDispatch>();
-  const onSubmit: SubmitHandler<InputForm> = (data) => {
-    const datacomment = {
-      content: data.comment,
+  const onSubmit: SubmitHandler<CommentForm> = ({ comment }) => {
+    const commentData: Partial<Comment> = {
+      content: comment,
       user: currentUserId,
       post: _id,
     };
-    dispatch(createComment(datacomment));
+    dispatch(createComment(commentData));
 
     reset();
   };
@@ -87,15 +80,17 @@ export const CommentsModal = ({
             <div className="flex flex-col w-full h-full sm:flex-row">
               <div className="hidden w-full bg-white style-contain-comments lg:w-1/2 lg:block">
                 <CloseButton onClick={onClose} />
-                <div className="flex justify-center">
-                  <Image
-                    rounded={"20px"}
-                    boxSize="450px"
-                    objectFit="cover"
-                    src={image}
-                    alt="Dan Abramov"
-                  />
-                </div>
+                {image && (
+                  <div className="flex justify-center">
+                    <Image
+                      rounded={"20px"}
+                      boxSize="450px"
+                      objectFit="cover"
+                      src={image}
+                      alt={title}
+                    />
+                  </div>
+                )}
                 <div className="flex justify-evenly text-[#7B7B7B]">
                   <p>#{topic}</p>
                   <p>{getDateFormattedFromString(createdAt)}</p>
@@ -129,8 +124,8 @@ export const CommentsModal = ({
                   </div>
                   <div className="flex items-center pr-3">
                     <FollowButton
-                      userId={user._id}
-                      hasFollower={hasFollower(user, currentUserId as string)}
+                      user={user}
+                      currentUser={currentUser as User}
                     />
                   </div>
                 </div>
@@ -169,19 +164,18 @@ export const CommentsModal = ({
                         </Button>
                       </InputRightElement>
                       <div className="flex flex-col w-full">
-                        <Input
-                          defaultValue={""}
-                          textColor={"#ffffff"}
-                          type="text"
-                          placeholder="Comentar"
-                          height={"50px"}
-                          {...register("comment", { required: true })}
-                        />
-                        {errors.comment && (
-                          <span className="text-white">
-                            El comentario es requerido
-                          </span>
-                        )}
+                        <FormControlContainer fieldError={errors.comment}>
+                          <Input
+                            defaultValue={""}
+                            textColor={"#ffffff"}
+                            type="text"
+                            placeholder="Comentar"
+                            height={"50px"}
+                            {...register("comment", {
+                              required: "El comentario es requerido",
+                            })}
+                          />
+                        </FormControlContainer>
                       </div>
                     </InputGroup>
                   </form>
