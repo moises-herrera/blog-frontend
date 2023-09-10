@@ -46,13 +46,18 @@ export const CommentCard = ({
       <div className="flex flex-col w-full text-white">
         <div className="flex justify-between w-full pr-4">
           <p className="font-bold text-[16px]">{username}</p>
-          <SettingsMenu
-            variant="dark"
-            canUpdate={false}
-            canDelete={hasPermissions || isOwner}
-            onClickUpdate={() => {}}
-            onClickDelete={onClickDelete}
-          />
+          <>
+            {hasPermissions ||
+              (isOwner && (
+                <SettingsMenu
+                  variant="dark"
+                  canUpdate={false}
+                  canDelete={hasPermissions || isOwner}
+                  onClickUpdate={() => {}}
+                  onClickDelete={onClickDelete}
+                />
+              ))}
+          </>
         </div>
         <p className="pr-3 text-[14px]">{content}</p>
       </div>

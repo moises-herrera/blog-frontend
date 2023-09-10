@@ -9,7 +9,6 @@ import {
   Image,
   Stack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   getDateFormattedFromString,
@@ -17,18 +16,23 @@ import {
   postHasLike,
 } from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
-import { CommentsModal, DeleteCommentModal, PostCardContainer } from ".";
+import { PostCardContainer } from ".";
 import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
-import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
+import {
+  openDeleteModal,
+  openNewPostForm,
+  setEditPost,
+  setPostInfoActive,
+} from "src/store/post";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { LikeButton } from ".";
+import { openCommentsModal } from "src/store/comment";
 
 export const PostCard = (data: PostInfo) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const {
@@ -42,6 +46,7 @@ export const PostCard = (data: PostInfo) => {
     likes,
     createdAt,
   } = data;
+
   const onClickUpdate = () => {
     dispatch(
       setEditPost({
@@ -54,6 +59,11 @@ export const PostCard = (data: PostInfo) => {
       })
     );
     dispatch(openNewPostForm());
+  };
+
+  const onOpenCommentsModal = () => {
+    dispatch(openCommentsModal());
+    dispatch(setPostInfoActive(data));
   };
 
   const onClickDelete = () => {
@@ -114,7 +124,7 @@ export const PostCard = (data: PostInfo) => {
       <CardFooter className="flex justify-center w-full">
         <ButtonGroup className="space-x-36">
           <div className="space-x-2">
-            <button onClick={onOpen}>
+            <button onClick={onOpenCommentsModal}>
               <i className="fa-regular fa-comment"></i>
             </button>
             <span>{comments.length}</span>
@@ -129,18 +139,6 @@ export const PostCard = (data: PostInfo) => {
           </div>
         </ButtonGroup>
       </CardFooter>
-
-      {isOpen && (
-        <>
-          <CommentsModal
-            onClose={onClose}
-            isOpen={isOpen}
-            infoPost={data}
-            currentUserId={currentUser?._id || ""}
-          />
-          <DeleteCommentModal />
-        </>
-      )}
     </PostCardContainer>
   );
 };

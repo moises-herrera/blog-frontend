@@ -7,3 +7,4 @@ export * from "./CommentCard";
 export * from "./CommentsModal";
 export * from "./DeleteCommentModal";
 export * from "./LikeButton";
+export * from "./CommentsModalContainer";

@@ -7,6 +7,7 @@ const initialState: CommentState = {
   isLoadingComments: false,
   error: null,
   successMessage: null,
+  isCommentsModalVisible: false,
   isDeleteModalVisible: false,
   isLoadingDeleteComment: false,
   deleteMessage: null,
@@ -17,6 +18,12 @@ export const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
+    openCommentsModal: (state) => {
+      state.isCommentsModalVisible = true;
+    },
+    closeCommentsModal: (state) => {
+      state.isCommentsModalVisible = false;
+    },
     openDeleteModal: (state, { payload }) => {
       state.isDeleteModalVisible = true;
       state.deleteCommentData = payload;
@@ -82,4 +89,6 @@ export const {
   closeDeleteModal,
   clearDeleteError,
   clearDeleteResponse,
+  openCommentsModal,
+  closeCommentsModal,
 } = commentSlice.actions;

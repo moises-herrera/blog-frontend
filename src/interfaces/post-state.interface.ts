@@ -57,4 +57,7 @@ export interface PostState {
 
   /** Loading state. */
   isLoadingDeletePost: boolean;
+
+  /** Post info active. */
+  postInfoActive?: PostInfo | null;
 }

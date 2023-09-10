@@ -27,6 +27,7 @@ const initialState: PostState = {
   isDeleteModalVisible: false,
   deletePostId: null,
   isLoadingDeletePost: false,
+  postInfoActive: null,
 };
 
 export const postSlice = createSlice({
@@ -72,6 +73,12 @@ export const postSlice = createSlice({
     },
     clearDeleteErrorResponse: (state) => {
       state.deleteError = null;
+    },
+    setPostInfoActive: (state, { payload }) => {
+      state.postInfoActive = payload;
+    },
+    clearPostInfoActive: (state) => {
+      state.postInfoActive = null;
     },
     addLike: (state, { payload: { postId, userId } }) => {
       if (state.searchResults.some((post) => post._id === postId)) {
@@ -120,6 +127,13 @@ export const postSlice = createSlice({
           }
           return post;
         });
+      }
+
+      if (state.postInfoActive && state.postInfoActive?._id === postId) {
+        state.postInfoActive = {
+          ...state.postInfoActive,
+          likes: [...state.postInfoActive.likes, userId],
+        };
       }
     },
     removeLike: (state, { payload: { postId, userId } }) => {
@@ -170,6 +184,13 @@ export const postSlice = createSlice({
           return post;
         });
       }
+
+      if (state.postInfoActive && state.postInfoActive?._id === postId) {
+        state.postInfoActive = {
+          ...state.postInfoActive,
+          likes: state.postInfoActive.likes.filter((like) => like !== userId),
+        };
+      }
     },
     addComment: (state, { payload: { postId, commentId } }) => {
       if (state.searchResults.some((post) => post._id === postId)) {
@@ -218,6 +239,13 @@ export const postSlice = createSlice({
           }
           return post;
         });
+      }
+
+      if (state.postInfoActive && state.postInfoActive?._id === postId) {
+        state.postInfoActive = {
+          ...state.postInfoActive,
+          comments: [...state.postInfoActive.comments, commentId],
+        };
       }
     },
     removeComment: (state, { payload: { postId, commentId } }) => {
@@ -275,6 +303,15 @@ export const postSlice = createSlice({
           }
           return post;
         });
+      }
+
+      if (state.postInfoActive && state.postInfoActive?._id === postId) {
+        state.postInfoActive = {
+          ...state.postInfoActive,
+          comments: state.postInfoActive.comments.filter(
+            (comment) => comment !== commentId
+          ),
+        };
       }
     },
   },
@@ -397,4 +434,6 @@ export const {
   removeLike,
   addComment,
   removeComment,
+  setPostInfoActive,
+  clearPostInfoActive,
 } = postSlice.actions;

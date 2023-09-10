@@ -26,7 +26,6 @@ import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { Link } from "react-router-dom";
 
 interface CommentsModalProps extends ModalData {
-  currentUserId: string;
   infoPost: PostInfo;
 }
 
@@ -37,12 +36,10 @@ type CommentForm = {
 export const CommentsModal = ({
   isOpen,
   onClose,
-  currentUserId,
   infoPost: { _id, title, topic, image, description, user, createdAt, likes },
 }: CommentsModalProps) => {
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const { comments } = useTypedSelector(({ comment }) => comment);
-
   const {
     reset,
     register,
@@ -54,7 +51,7 @@ export const CommentsModal = ({
   const onSubmit: SubmitHandler<CommentForm> = ({ comment }) => {
     const commentData: Partial<Comment> = {
       content: comment,
-      user: currentUserId,
+      user: currentUser?._id as string,
       post: _id,
     };
     dispatch(createComment(commentData));
@@ -109,7 +106,7 @@ export const CommentsModal = ({
                   onClick={onClose}
                 />
               </div>
-              <div className="flex justify-between mt-5">
+              <div className="flex justify-between mt-5 px-1">
                 <Link to={`/profile/${user.username}`}>
                   <div className="flex items-center">
                     <Avatar
