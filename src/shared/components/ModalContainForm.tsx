@@ -1,6 +1,7 @@
 import { Modal, ModalContent, ModalBody, Image } from "@chakra-ui/react";
 import { APP_NAME } from "src/constants";
 import { ModalData } from "src/interfaces";
+import mainImage from "src/assets/images/main-image.jpg";
 
 interface ModalContainFormProps extends ModalData {
   title: string;
@@ -30,8 +31,8 @@ export const ModalContainForm = ({
                 <Image
                   boxSize="100%"
                   objectFit="cover"
-                  src="https://bit.ly/dan-abramov"
-                  alt="Dan Abramov"
+                  src={mainImage}
+                  alt="Photographer"
                 />
               </div>
             )}
