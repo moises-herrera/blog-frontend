@@ -22,6 +22,12 @@ export interface PostState {
   /** Loading state. */
   isLoadingUserPosts: boolean;
 
+  /** Search posts. */
+  searchResults: PostInfo[];
+
+  /** Loading state. */
+  isLoadingSearch: boolean;
+
   /** Whether the new post form is visible. */
   isNewPostFormVisible: boolean;
 

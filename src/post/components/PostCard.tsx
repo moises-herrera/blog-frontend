@@ -13,13 +13,13 @@ import {
 import { getDateFormattedFromString, getFullName } from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
 import { PostCardContainer } from ".";
-import postImage from "src/assets/images/upload-image.png";
 import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 import { Link } from "react-router-dom";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
 export const PostCard = ({
   _id,
@@ -59,7 +59,10 @@ export const PostCard = ({
         <div className="flex items-center gap-8">
           <Link to={`/profile/${user.username}`}>
             <div className="flex items-center space-x-2">
-              <Avatar name={getFullName(user)} src={user.avatar} />
+              <Avatar
+                name={getFullName(user)}
+                src={user.avatar || avatarPlaceholder}
+              />
               <Heading size="xs">@{user.username}</Heading>
             </div>
           </Link>
@@ -76,9 +79,11 @@ export const PostCard = ({
       </CardHeader>
 
       <CardBody>
-        <Box className="flex justify-center mb-5">
-          <Image src={image || postImage} alt={title} borderRadius={20} />
-        </Box>
+        {image && (
+          <Box className="flex justify-center mb-5">
+            <Image src={image} alt={title} borderRadius={20} />
+          </Box>
+        )}
 
         <div className="flex justify-between text-secondary-300 text-sm">
           <span>#{topic}</span>

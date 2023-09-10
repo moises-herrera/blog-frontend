@@ -17,7 +17,7 @@ export const MainContainer = ({ children }: MainContainerProps) => {
   };
 
   return (
-    <div className="lg:pl-[350px] lg:pr-[350px] h-full w-full min-w-min ">
+    <div className="lg:pl-[350px] lg:pr-[350px] h-full w-full min-w-min">
       <button
         type="button"
         onClick={onToggleLeftSidebar}

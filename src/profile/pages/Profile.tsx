@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FeedContent } from "src/feed/components";
+import { getFullName } from "src/helpers";
 import { ProfileHeader } from "src/profile/components";
 import { Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
@@ -26,6 +27,12 @@ export const Profile = () => {
   useEffect(() => {
     if (username) dispatch(getUser(username));
   }, [dispatch, username]);
+
+  useEffect(() => {
+    if (userProfile) {
+      document.title = `${getFullName(userProfile)} (@${userProfile.username})`;
+    }
+  }, [userProfile]);
 
   return (
     <section className="section-content">
