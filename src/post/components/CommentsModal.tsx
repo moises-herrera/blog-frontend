@@ -48,6 +48,7 @@ export const CommentsModal = ({
     formState: { errors },
   } = useForm<CommentForm>();
   const dispatch = useDispatch<AppDispatch>();
+
   const onSubmit: SubmitHandler<CommentForm> = ({ comment }) => {
     const commentData: Partial<Comment> = {
       content: comment,
@@ -131,16 +132,17 @@ export const CommentsModal = ({
                 <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[550px]">
                   {comments.map(
                     ({
-                      _id,
+                      _id: commentId,
                       content,
                       user: { _id: commentAuthorId, username, avatar },
                     }) => (
                       <CommentCard
-                        key={_id}
-                        commentId={_id}
+                        key={commentId}
+                        commentId={commentId}
                         username={username}
                         avatar={avatar}
                         content={content}
+                        postId={_id}
                         postAuthorId={user._id}
                         commentAuthorId={commentAuthorId}
                       />

@@ -3,6 +3,7 @@ import { AsyncThunkConfig } from "src/store/types";
 import { blogApi } from "src/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { addComment } from "../post";
 
 export const getComments = createAsyncThunk<
   CommentInfo[],
@@ -28,9 +29,10 @@ export const createComment = createAsyncThunk<
   CommentInfo,
   Partial<Comment>,
   AsyncThunkConfig
->("createComment", async (postData, { rejectWithValue }) => {
+>("createComment", async (postData, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await blogApi.post<CommentInfo>("/comment", postData);
+    dispatch(addComment({ postId: data.post, commentId: data._id }));
 
     return data;
   } catch (error) {

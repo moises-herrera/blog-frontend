@@ -171,6 +171,112 @@ export const postSlice = createSlice({
         });
       }
     },
+    addComment: (state, { payload: { postId, commentId } }) => {
+      if (state.searchResults.some((post) => post._id === postId)) {
+        state.searchResults = state.searchResults.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: [...post.comments, commentId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postFollowingList.some((post) => post._id === postId)) {
+        state.postFollowingList = state.postFollowingList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: [...post.comments, commentId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postSuggestedList.some((post) => post._id === postId)) {
+        state.postSuggestedList = state.postSuggestedList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: [...post.comments, commentId],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.userPosts.some((post) => post._id === postId)) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: [...post.comments, commentId],
+            };
+          }
+          return post;
+        });
+      }
+    },
+    removeComment: (state, { payload: { postId, commentId } }) => {
+      if (state.searchResults.some((post) => post._id === postId)) {
+        state.searchResults = state.searchResults.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment !== commentId
+              ),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postFollowingList.some((post) => post._id === postId)) {
+        state.postFollowingList = state.postFollowingList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment !== commentId
+              ),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.postSuggestedList.some((post) => post._id === postId)) {
+        state.postSuggestedList = state.postSuggestedList.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment !== commentId
+              ),
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.userPosts.some((post) => post._id === postId)) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment !== commentId
+              ),
+            };
+          }
+          return post;
+        });
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsFollowing.pending, (state) => {
@@ -289,4 +395,6 @@ export const {
   setUserPosts,
   addLike,
   removeLike,
+  addComment,
+  removeComment,
 } = postSlice.actions;

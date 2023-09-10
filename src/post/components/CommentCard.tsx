@@ -10,6 +10,7 @@ interface Props {
   username: string;
   content: string;
   avatar: string;
+  postId: string;
   postAuthorId: string;
   commentAuthorId: string;
 }
@@ -19,6 +20,7 @@ export const CommentCard = ({
   username,
   content,
   avatar,
+  postId,
   postAuthorId,
   commentAuthorId,
 }: Props) => {
@@ -28,7 +30,12 @@ export const CommentCard = ({
   const isOwner = currentUser?._id === postAuthorId;
 
   const onClickDelete = () => {
-    dispatch(openDeleteModal(commentId));
+    dispatch(
+      openDeleteModal({
+        postId,
+        commentId,
+      })
+    );
   };
 
   return (

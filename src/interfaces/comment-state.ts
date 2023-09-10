@@ -1,4 +1,4 @@
-import { CommentInfo } from ".";
+import { CommentInfo, DeleteComment } from ".";
 
 /**
  * Comment state in the Redux store.
@@ -19,8 +19,8 @@ export interface CommentState {
   /** Whether the delete modal is visible. */
   isDeleteModalVisible: boolean;
 
-  /** The comment id to delete. */
-  deleteCommentId?: string | null;
+  /** The comment to delete. */
+  deleteCommentData?: DeleteComment | null;
 
   /** Whether the delete comment is loading. */
   isLoadingDeleteComment: boolean;

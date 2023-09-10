@@ -26,3 +26,4 @@ export * from "./user-comment.interface";
 export * from "./comment.interface";
 export * from "./comment-state";
 export * from "./get-followers.interface";
+export * from "./delete-comment.interface";

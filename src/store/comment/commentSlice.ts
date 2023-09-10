@@ -19,11 +19,11 @@ export const commentSlice = createSlice({
   reducers: {
     openDeleteModal: (state, { payload }) => {
       state.isDeleteModalVisible = true;
-      state.deleteCommentId = payload;
+      state.deleteCommentData = payload;
     },
     closeDeleteModal: (state) => {
       state.isDeleteModalVisible = false;
-      state.deleteCommentId = null;
+      state.deleteCommentData = null;
     },
     clearDeleteResponse: (state) => {
       state.deleteMessage = null;
@@ -64,16 +64,15 @@ export const commentSlice = createSlice({
       state.isLoadingDeleteComment = false;
       state.deleteMessage = payload.message;
       state.comments = state.comments.filter(
-        ({ _id }) => _id !== state.deleteCommentId
+        ({ _id }) => _id !== state.deleteCommentData?.commentId
       );
       state.isDeleteModalVisible = false;
-      state.deleteCommentId = null;
+      state.deleteCommentData = null;
     });
     builder.addCase(deleteComment.rejected, (state, { payload }) => {
       state.isLoadingDeleteComment = false;
       state.deleteError = payload?.message;
       state.isDeleteModalVisible = false;
-      state.deleteCommentId = null;
     });
   },
 });

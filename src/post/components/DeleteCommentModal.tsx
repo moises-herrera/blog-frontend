@@ -8,13 +8,14 @@ import {
   closeDeleteModal,
   deleteComment,
 } from "src/store/comment";
+import { removeComment } from "src/store/post";
 import { AppDispatch } from "src/store/types";
 
 export const DeleteCommentModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     isDeleteModalVisible,
-    deleteCommentId,
+    deleteCommentData,
     isLoadingDeleteComment,
     deleteMessage,
     deleteError,
@@ -22,7 +23,10 @@ export const DeleteCommentModal = () => {
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
-    dispatch(deleteComment(deleteCommentId as string));
+    if (deleteCommentData) {
+      dispatch(deleteComment(deleteCommentData.commentId));
+      dispatch(removeComment(deleteCommentData));
+    }
   };
 
   const onClose = () => {
