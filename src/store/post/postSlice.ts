@@ -170,6 +170,8 @@ export const postSlice = createSlice({
     builder.addCase(deletePost.rejected, (state, { payload }) => {
       state.isLoadingDeletePost = false;
       state.deleteError = payload?.message;
+      state.isDeleteModalVisible = false;
+      state.deletePostId = null;
     });
   },
 });

@@ -9,6 +9,8 @@ const initialState: CommentState = {
   successMessage: null,
   isDeleteModalVisible: false,
   isLoadingDeleteComment: false,
+  deleteMessage: null,
+  deleteError: null,
 };
 
 export const commentSlice = createSlice({
@@ -22,6 +24,12 @@ export const commentSlice = createSlice({
     closeDeleteModal: (state) => {
       state.isDeleteModalVisible = false;
       state.deleteCommentId = null;
+    },
+    clearDeleteResponse: (state) => {
+      state.deleteMessage = null;
+    },
+    clearDeleteError: (state) => {
+      state.deleteError = null;
     },
   },
   extraReducers: (builder) => {
@@ -51,17 +59,26 @@ export const commentSlice = createSlice({
     });
 
     builder.addCase(deleteComment.pending, (state) => {
-      state.isLoadingComments = true;
+      state.isLoadingDeleteComment = true;
     });
     builder.addCase(deleteComment.fulfilled, (state, { payload }) => {
-      state.isLoadingComments = false;
-      state.successMessage = payload.message;
+      state.isLoadingDeleteComment = false;
+      state.deleteMessage = payload.message;
+      state.isDeleteModalVisible = false;
+      state.deleteCommentId = null;
     });
     builder.addCase(deleteComment.rejected, (state, { payload }) => {
-      state.isLoadingComments = false;
-      state.error = payload?.message;
+      state.isLoadingDeleteComment = false;
+      state.deleteError = payload?.message;
+      state.isDeleteModalVisible = false;
+      state.deleteCommentId = null;
     });
   },
 });
 
-export const { openDeleteModal, closeDeleteModal } = commentSlice.actions;
+export const {
+  openDeleteModal,
+  closeDeleteModal,
+  clearDeleteError,
+  clearDeleteResponse,
+} = commentSlice.actions;

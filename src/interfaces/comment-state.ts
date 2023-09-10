@@ -24,4 +24,10 @@ export interface CommentState {
 
   /** Whether the delete comment is loading. */
   isLoadingDeleteComment: boolean;
+
+  /** Delete message. */
+  deleteMessage?: string | null;
+
+  /** Delete error message. */
+  deleteError?: string | null;
 }

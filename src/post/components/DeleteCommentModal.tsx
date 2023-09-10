@@ -1,13 +1,25 @@
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useMessageToast } from "src/hooks";
 import { ConfirmMessage } from "src/shared/components";
 import { useTypedSelector } from "src/store";
-import { closeDeleteModal, deleteComment } from "src/store/comment";
+import {
+  clearDeleteResponse,
+  closeDeleteModal,
+  deleteComment,
+} from "src/store/comment";
 import { AppDispatch } from "src/store/types";
 
 export const DeleteCommentModal = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isDeleteModalVisible, deleteCommentId, isLoadingDeleteComment } =
-    useTypedSelector(({ comment }) => comment);
+  const {
+    isDeleteModalVisible,
+    deleteCommentId,
+    isLoadingDeleteComment,
+    deleteMessage,
+    deleteError,
+  } = useTypedSelector(({ comment }) => comment);
+  const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
     dispatch(deleteComment(deleteCommentId as string));
@@ -16,6 +28,31 @@ export const DeleteCommentModal = () => {
   const onClose = () => {
     dispatch(closeDeleteModal());
   };
+
+  const clearSuccess = useCallback(() => {
+    dispatch(clearDeleteResponse());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearDeleteResponse());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (deleteMessage) {
+      displaySuccessMessage(deleteMessage);
+      clearSuccess();
+    } else if (deleteError) {
+      displayError(deleteError);
+      clearError();
+    }
+  }, [
+    deleteMessage,
+    deleteError,
+    displaySuccessMessage,
+    displayError,
+    clearSuccess,
+    clearError,
+  ]);
 
   return (
     <ConfirmMessage
