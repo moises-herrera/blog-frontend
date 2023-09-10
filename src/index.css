@@ -48,3 +48,9 @@ body {
 .users-list {
   @apply flex flex-col w-full gap-4;
 }
+
+.feed-empty {
+  height: calc(100vh - 150px);
+
+  @apply flex flex-col w-full items-center justify-center;
+}
