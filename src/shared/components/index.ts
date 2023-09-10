@@ -15,3 +15,4 @@ export * from "./FormControlContainer";
 export * from "./Loading";
 export * from "./SettingsMenu";
 export * from "./ConfirmMessage";
+export * from "./SearchInput";

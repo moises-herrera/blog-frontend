@@ -35,9 +35,9 @@ export const Users = () => {
 
   return (
     <section className="section-content p-8 !py-12">
-      <h2 className="text-3xl font-semibold">Usuarios</h2>
+      <h2 className="text-3xl font-semibold mb-4">Usuarios</h2>
 
-      <InputGroup className="mt-4">
+      <InputGroup>
         <InputLeftElement pointerEvents="none">
           <i className="text-gray-400 fa-solid fa-magnifying-glass"></i>
         </InputLeftElement>
