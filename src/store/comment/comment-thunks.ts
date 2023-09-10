@@ -1,5 +1,5 @@
 import { Comment, CommentInfo, StandardResponse } from "src/interfaces";
-import { AsyncThunkConfig } from "../types";
+import { AsyncThunkConfig } from "src/store/types";
 import { blogApi } from "src/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
@@ -10,8 +10,8 @@ export const getComments = createAsyncThunk<
   AsyncThunkConfig
 >("getComments", async (id, { rejectWithValue }) => {
   try {
-    const respons = await blogApi.get<CommentInfo[]>(`/comment?postId=${id}`);
-    return respons.data;
+    const { data } = await blogApi.get<CommentInfo[]>(`/comment?postId=${id}`);
+    return data;
   } catch (error) {
     const message =
       error instanceof AxiosError
@@ -25,12 +25,12 @@ export const getComments = createAsyncThunk<
 });
 
 export const createComment = createAsyncThunk<
-  Comment,
+  CommentInfo,
   Partial<Comment>,
   AsyncThunkConfig
 >("createComment", async (postData, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.post<Comment>("/comment", postData);
+    const { data } = await blogApi.post<CommentInfo>("/comment", postData);
 
     return data;
   } catch (error) {
@@ -51,8 +51,8 @@ export const deleteComment = createAsyncThunk<
   AsyncThunkConfig
 >("deleteComment", async (id, { rejectWithValue }) => {
   try {
-    const respons = await blogApi.delete<StandardResponse>(`/comment/${id}`);
-    return respons.data;
+    const { data } = await blogApi.delete<StandardResponse>(`/comment/${id}`);
+    return data;
   } catch (error) {
     const message =
       error instanceof AxiosError

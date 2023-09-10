@@ -38,7 +38,6 @@ export const commentSlice = createSlice({
     });
     builder.addCase(getComments.fulfilled, (state, { payload }) => {
       state.isLoadingComments = false;
-      //state.comments = [...state.comments, ...payload];
       state.comments = payload;
     });
     builder.addCase(getComments.rejected, (state, { payload }) => {
@@ -51,7 +50,7 @@ export const commentSlice = createSlice({
     });
     builder.addCase(createComment.fulfilled, (state, { payload }) => {
       state.isLoadingComments = false;
-      [...state.comments, payload];
+      state.comments = [...state.comments, payload];
     });
     builder.addCase(createComment.rejected, (state, { payload }) => {
       state.isLoadingComments = false;
@@ -64,6 +63,9 @@ export const commentSlice = createSlice({
     builder.addCase(deleteComment.fulfilled, (state, { payload }) => {
       state.isLoadingDeleteComment = false;
       state.deleteMessage = payload.message;
+      state.comments = state.comments.filter(
+        ({ _id }) => _id !== state.deleteCommentId
+      );
       state.isDeleteModalVisible = false;
       state.deleteCommentId = null;
     });
