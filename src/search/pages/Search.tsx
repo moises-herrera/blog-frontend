@@ -1,31 +1,18 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { FeedContent } from "src/feed/components";
 import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
-import { AppDispatch } from "src/store/types";
-import { useDebounce } from "use-debounce";
 import { searchPosts } from "src/store/post";
+import { useSearch } from "src/hooks";
+import { PostInfo } from "src/interfaces";
 
 export const Search = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { searchResults, isLoadingSearch } = useTypedSelector(
     ({ post }) => post
   );
-  const [searchTerm, setSearchTerm] = useState<string | null>(null);
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 600);
-
-  useEffect(() => {
-    if (debouncedSearchTerm !== null) {
-      dispatch(searchPosts(debouncedSearchTerm));
-    }
-  }, [dispatch, debouncedSearchTerm]);
-
-  const onSearch = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(value);
-  };
+  const { onSearch } = useSearch<PostInfo, string>({
+    value: null,
+    action: searchPosts,
+  });
 
   return (
     <div className="section-content p-8 !py-12">
