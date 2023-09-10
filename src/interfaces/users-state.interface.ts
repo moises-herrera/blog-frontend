@@ -24,4 +24,10 @@ export interface UsersState {
 
   /** Whether the following are loading. */
   followingLoading: boolean;
+
+  /** User profile. */
+  userProfile: User | null;
+
+  /** Whether the user profile is loading. */
+  userProfileLoading: boolean;
 }

@@ -5,7 +5,8 @@ import {
   MainContainer,
   RightSidebar,
 } from "src/shared/components";
-import { DeletePostModal, PostFormModal } from "src/post/components";
+import { PostFormModal } from "src/post/components";
+
 export const PrivateRoutes = () => {
   return (
     <main className="flex w-full h-full">
@@ -20,9 +21,7 @@ export const PrivateRoutes = () => {
         </Routes>
       </MainContainer>
       <RightSidebar />
-
       <PostFormModal />
-      <DeletePostModal />
     </main>
   );
 };

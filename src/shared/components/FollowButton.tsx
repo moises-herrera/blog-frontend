@@ -1,20 +1,33 @@
 import { Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { blogApi } from "src/api";
-import { StandardResponse } from "src/interfaces";
+import { hasFollower } from "src/helpers";
+import { StandardResponse, User } from "src/interfaces";
+import { useTypedSelector } from "src/store";
+import { setUserPosts } from "src/store/post";
+import { AppDispatch } from "src/store/types";
+import { addFollowing, removeFollowing } from "src/store/users";
 
 interface Props {
-  userId: string;
-  hasFollower: boolean;
+  user: User;
+  currentUser: User;
 }
 
-export const FollowButton = ({ userId, hasFollower }: Props) => {
-  const [hasFollowerState, setHasFollowerState] = useState<boolean>(hasFollower);
+export const FollowButton = ({ user, currentUser }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { userProfile } = useTypedSelector(({ users }) => users);
+  const { userPosts } = useTypedSelector(({ post }) => post);
+  const [hasFollowerState, setHasFollowerState] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const text = hasFollowerState ? "No seguir" : "Seguir";
-  const requestPath = hasFollower
-    ? `/user/${userId}/unfollow`
-    : `/user/${userId}/follow`;
+  const requestPath = hasFollowerState
+    ? `/user/${user._id}/unfollow`
+    : `/user/${user._id}/follow`;
+
+  useEffect(() => {
+    setHasFollowerState(hasFollower(user, currentUser._id));
+  }, [user, currentUser._id]);
 
   const onClickButton = async () => {
     setIsLoading(true);
@@ -23,6 +36,38 @@ export const FollowButton = ({ userId, hasFollower }: Props) => {
 
     setIsLoading(false);
     setHasFollowerState(!hasFollowerState);
+
+    dispatch(
+      hasFollowerState
+        ? removeFollowing({
+            user,
+            currentUser,
+          })
+        : addFollowing({
+            user,
+            currentUser,
+          })
+    );
+
+    if (userProfile?._id) {
+      const newUserPosts = userPosts.map((post) => {
+        if (post.user._id === user._id) {
+          return {
+            ...post,
+            user: {
+              ...post.user,
+              followers: hasFollowerState
+                ? post.user.followers.filter((id) => id !== currentUser._id)
+                : [...post.user.followers, currentUser],
+            },
+          };
+        }
+
+        return post;
+      });
+
+      dispatch(setUserPosts(newUserPosts));
+    }
   };
 
   return (

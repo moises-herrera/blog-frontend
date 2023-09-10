@@ -1,4 +1,3 @@
-import { hasFollower } from "src/helpers";
 import { User } from "src/interfaces";
 import { FollowButton, UserCard } from "src/shared/components";
 import { useTypedSelector } from "src/store";
@@ -17,8 +16,8 @@ export const UsersList = ({ users }: UsersListProps) => {
           {user._id !== currentUser?._id && (
             <UserCard user={user}>
               <FollowButton
-                userId={user._id}
-                hasFollower={hasFollower(user, currentUser?._id as string)}
+                user={user}
+                currentUser={currentUser as User}
               />
             </UserCard>
           )}

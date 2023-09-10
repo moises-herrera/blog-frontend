@@ -1,23 +1,15 @@
-import {
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
-  Button,
-} from "@chakra-ui/react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
 import {
-  clearErrorMessage,
-  clearSuccessMessage,
+  clearDeleteErrorResponse,
+  clearDeleteResponse,
   closeDeleteModal,
   deletePost,
 } from "src/store/post";
 import { AppDispatch } from "src/store/types";
+import { ConfirmMessage } from "src/shared/components";
 
 export const DeletePostModal = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,15 +17,13 @@ export const DeletePostModal = () => {
     isDeleteModalVisible,
     deletePostId,
     isLoadingDeletePost,
-    successMessage,
-    errorMessage,
+    deleteMessage,
+    deleteError,
   } = useTypedSelector(({ post }) => post);
-  const cancelRef = useRef(null);
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
     dispatch(deletePost(deletePostId as string));
-    onClose();
   };
 
   const onClose = () => {
@@ -41,22 +31,24 @@ export const DeletePostModal = () => {
   };
 
   const clearSuccess = useCallback(() => {
-    dispatch(clearSuccessMessage());
+    dispatch(clearDeleteResponse());
   }, [dispatch]);
 
   const clearError = useCallback(() => {
-    dispatch(clearErrorMessage());
+    dispatch(clearDeleteErrorResponse());
   }, [dispatch]);
 
   useEffect(() => {
-    if (successMessage) {
-      displaySuccessMessage(successMessage, 5000, clearSuccess);
-    } else if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+    if (deleteMessage) {
+      displaySuccessMessage(deleteMessage);
+      clearSuccess();
+    } else if (deleteError) {
+      displayError(deleteError);
+      clearError();
     }
   }, [
-    successMessage,
-    errorMessage,
+    deleteMessage,
+    deleteError,
     displaySuccessMessage,
     displayError,
     clearSuccess,
@@ -64,36 +56,14 @@ export const DeletePostModal = () => {
   ]);
 
   return (
-    <AlertDialog
+    <ConfirmMessage
+      title="Eliminar publicación"
+      message="¿Estás seguro de que quieres eliminar esta publicación?"
+      confirmText="Eliminar"
       isOpen={isDeleteModalVisible}
-      leastDestructiveRef={cancelRef}
       onClose={onClose}
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Eliminar publicación
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            ¿Estás seguro de que quieres eliminar esta publicación?
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={onDelete}
-              ml={3}
-              isLoading={isLoadingDeletePost}
-            >
-              Eliminar
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
+      onConfirm={onDelete}
+      isLoading={isLoadingDeletePost}
+    />
   );
 };

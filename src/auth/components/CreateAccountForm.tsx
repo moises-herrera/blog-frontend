@@ -20,7 +20,7 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const { status, errorMessage } = useTypedSelector(({ auth }) => auth);
   const { displayError } = useMessageToast();
   const {
-    handleSubmit,      
+    handleSubmit,
     register,
     formState: { errors },
   } = useForm<SignUpSchemaType>({
@@ -33,12 +33,13 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
 
   useEffect(() => {
     if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+      displayError(errorMessage);
+      clearError();
     }
   }, [errorMessage, displayError, clearError]);
 
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
-    
+
     dispatch(registerUser(data));
   };
 

@@ -98,6 +98,32 @@ export const getUserPosts = createAsyncThunk<
 });
 
 /**
+ * Search posts.
+ *
+ * @param search The search.
+ * @returns A thunk that dispatches an action.
+ */
+export const searchPosts = createAsyncThunk<
+  PostInfo[],
+  string,
+  AsyncThunkConfig
+>("searchPosts", async (search, { rejectWithValue }) => {
+  try {
+    const posts = await getPosts({ search });
+    return posts;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
  * Create a new post.
  *
  * @param postData The post data.

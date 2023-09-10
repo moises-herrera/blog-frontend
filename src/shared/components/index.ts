@@ -13,3 +13,8 @@ export * from "./Sidebar";
 export * from "./UserCard";
 export * from "./FormControlContainer";
 export * from "./Loading";
+export * from "./SettingsMenu";
+export * from "./ConfirmMessage";
+export * from "./SearchInput";
+export * from "./FollowersList";
+export * from "./FollowingList";

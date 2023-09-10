@@ -33,7 +33,8 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
 
   useEffect(() => {
     if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+      displayError(errorMessage);
+      clearError();
     }
   }, [errorMessage, displayError, clearError]);
 

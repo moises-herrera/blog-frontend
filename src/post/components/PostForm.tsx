@@ -58,9 +58,11 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
 
   useEffect(() => {
     if (successMessage) {
-      displaySuccessMessage(successMessage, 5000, clearSuccess);
+      displaySuccessMessage(successMessage);
+      clearSuccess();
     } else if (errorMessage) {
-      displayError(errorMessage, 5000, clearError);
+      displayError(errorMessage);
+      clearError();
     }
   }, [
     successMessage,
