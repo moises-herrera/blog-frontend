@@ -1,12 +1,16 @@
 import { Box, Image, Input, Button } from "@chakra-ui/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useTypedSelector } from "src/store";
 import { SettingSchema, SettingSchemaType } from "src/settings/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormControlContainer } from "src/shared/components";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
-import { updateUser } from "src/store/auth";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+  updateUser,
+} from "src/store/auth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { getFormDataFromObject, convertImageToBase64 } from "src/helpers";
@@ -68,13 +72,31 @@ export const SettingForm = () => {
       })
     );
   };
+
+  const clearSuccess = useCallback(() => {
+    dispatch(clearSuccessMessage());
+  }, [dispatch]);
+
+  const clearError = useCallback(() => {
+    dispatch(clearErrorMessage());
+  }, [dispatch]);
+
   useEffect(() => {
     if (successMessage) {
       displaySuccessMessage(successMessage);
+      clearSuccess();
     } else if (errorMessage) {
       displayError(errorMessage);
+      clearError();
     }
-  }, [errorMessage, displayError, displaySuccessMessage, successMessage]);
+  }, [
+    errorMessage,
+    displayError,
+    displaySuccessMessage,
+    successMessage,
+    clearSuccess,
+    clearError,
+  ]);
 
   useEffect(() => {
     document.title = "Configuración";
