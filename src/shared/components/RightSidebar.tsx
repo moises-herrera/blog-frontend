@@ -24,7 +24,7 @@ export const RightSidebar = () => {
   }, []);
 
   return (
-    <Sidebar align="right" cssClass="hidden lg:block">
+    <Sidebar align="right" cssClass="hidden lg:block lg:border-l lg:border-gray-500">
       <div className="pt-10">
         <InputGroup className="mb-5">
           <InputLeftElement pointerEvents="none">

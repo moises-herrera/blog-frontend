@@ -1,4 +1,3 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { LeftSidebarLinks, Sidebar } from ".";
 import { useTypedSelector } from "src/store";
 import { removeToken } from "src/helpers";
@@ -6,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { onLogout } from "src/store/auth";
 import { APP_NAME } from "src/constants";
+import { NavLink } from "react-router-dom";
 
 export const LeftSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,22 +18,15 @@ export const LeftSidebar = () => {
 
   return (
     <Sidebar
-      cssClass={`lg:block ${isLeftSidebarOpen ? "block w-screen" : "hidden"}`}
+      cssClass={`lg:block lg:border-r lg:border-gray-500 ${
+        isLeftSidebarOpen ? "block w-screen" : "hidden"
+      }`}
     >
-      <div className="my-10 text-center">
-        <h2 className="text-5xl font-bold text-accent-500">{APP_NAME}</h2>
-      </div>
-
-      <InputGroup className="mb-5">
-        <InputLeftElement pointerEvents="none">
-          <i className="text-white fa-solid fa-magnifying-glass"></i>
-        </InputLeftElement>
-        <Input
-          type="text"
-          placeholder="Buscar tema de interes"
-          textColor={"#ffffff"}
-        />
-      </InputGroup>
+      <NavLink to="/">
+        <div className="my-10 text-center">
+          <h2 className="text-5xl font-bold text-accent-500">{APP_NAME}</h2>
+        </div>
+      </NavLink>
 
       <LeftSidebarLinks />
 
