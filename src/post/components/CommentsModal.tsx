@@ -89,11 +89,11 @@ export const CommentsModal = ({
                   />
                 </div>
               )}
-              <div className="flex justify-evenly text-secondary-300">
+              <div className="mt-3 flex justify-evenly text-secondary-300">
                 <p>#{topic}</p>
                 <p>{getDateFormattedFromString(createdAt)}</p>
               </div>
-              <div className="flex justify-center text-primary-500 text-[22px] pt-2 pb-3">
+              <div className="flex justify-center text-primary-500 text-[22px] pt-2 pb-3 font-semibold">
                 <h2>{title}</h2>
               </div>
               <p className="text-[16px] text-primary-500 felx justify-center px-5 pb-3">
