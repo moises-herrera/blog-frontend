@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "src/interfaces";
+import { GetFollowers, User } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 import { AxiosError } from "axios";
 import { blogApi } from "src/api";
@@ -73,25 +73,28 @@ export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
  * @param id The user id.
  * @returns A thunk that dispatches an action.
  */
-export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
-  "getFollowers",
-  async (id, { rejectWithValue }) => {
-    try {
-      const { data } = await blogApi.get<User[]>(`/user/${id}/followers`);
+export const getFollowers = createAsyncThunk<
+  User[],
+  GetFollowers,
+  AsyncThunkConfig
+>("getFollowers", async ({ id, username }, { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.get<User[]>(
+      `/user/${id}/followers?username=${username}`
+    );
 
-      return data;
-    } catch (error) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Ha ocurrido un error.";
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
 
-      return rejectWithValue({
-        message,
-      });
-    }
+    return rejectWithValue({
+      message,
+    });
   }
-);
+});
 
 /**
  * Get the accounts that the user follows.
@@ -99,22 +102,25 @@ export const getFollowers = createAsyncThunk<User[], string, AsyncThunkConfig>(
  * @param id The user id.
  * @returns A thunk that dispatches an action.
  */
-export const getFollowing = createAsyncThunk<User[], string, AsyncThunkConfig>(
-  "getFollowing",
-  async (id, { rejectWithValue }) => {
-    try {
-      const { data } = await blogApi.get<User[]>(`/user/${id}/following`);
+export const getFollowing = createAsyncThunk<
+  User[],
+  GetFollowers,
+  AsyncThunkConfig
+>("getFollowing", async ({ id, username }, { rejectWithValue }) => {
+  try {
+    const { data } = await blogApi.get<User[]>(
+      `/user/${id}/following?username=${username}`
+    );
 
-      return data;
-    } catch (error) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Ha ocurrido un error.";
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
 
-      return rejectWithValue({
-        message,
-      });
-    }
+    return rejectWithValue({
+      message,
+    });
   }
-);
+});
