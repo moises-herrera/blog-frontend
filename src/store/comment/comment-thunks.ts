@@ -25,8 +25,8 @@ export const getComments = createAsyncThunk<
 });
 
 export const createComment = createAsyncThunk<
-  Partial<Comment>,
   Comment,
+  Partial<Comment>,
   AsyncThunkConfig
 >("createComment", async (postData, { rejectWithValue }) => {
   try {
