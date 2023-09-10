@@ -10,7 +10,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { getDateFormattedFromString, getFullName } from "src/helpers";
+import {
+  getDateFormattedFromString,
+  getFullName,
+  postHasLike,
+} from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
 import { PostCardContainer } from ".";
 import { FollowButton, SettingsMenu } from "src/shared/components";
@@ -20,6 +24,7 @@ import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { LikeButton } from ".";
 
 export const PostCard = ({
   _id,
@@ -114,9 +119,11 @@ export const PostCard = ({
             <span>{comments.length}</span>
           </div>
           <div className="space-x-2">
-            <button>
-              <i className="fa-regular fa-heart"></i>
-            </button>
+            <LikeButton
+              postId={_id}
+              userId={user._id}
+              userLiked={postHasLike(likes, user._id)}
+            />
             <span>{likes.length}</span>
           </div>
         </ButtonGroup>
