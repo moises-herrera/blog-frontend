@@ -19,6 +19,7 @@ import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
 import { Link } from "react-router-dom";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
 export const PostCard = ({
   _id,
@@ -58,7 +59,10 @@ export const PostCard = ({
         <div className="flex items-center gap-8">
           <Link to={`/profile/${user.username}`}>
             <div className="flex items-center space-x-2">
-              <Avatar name={getFullName(user)} src={user.avatar} />
+              <Avatar
+                name={getFullName(user)}
+                src={user.avatar || avatarPlaceholder}
+              />
               <Heading size="xs">@{user.username}</Heading>
             </div>
           </Link>
