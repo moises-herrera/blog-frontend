@@ -13,7 +13,6 @@ import {
 import { getDateFormattedFromString, getFullName } from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
 import { PostCardContainer } from ".";
-import postImage from "src/assets/images/upload-image.png";
 import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
@@ -76,9 +75,11 @@ export const PostCard = ({
       </CardHeader>
 
       <CardBody>
-        <Box className="flex justify-center mb-5">
-          <Image src={image || postImage} alt={title} borderRadius={20} />
-        </Box>
+        {image && (
+          <Box className="flex justify-center mb-5">
+            <Image src={image} alt={title} borderRadius={20} />
+          </Box>
+        )}
 
         <div className="flex justify-between text-secondary-300 text-sm">
           <span>#{topic}</span>
