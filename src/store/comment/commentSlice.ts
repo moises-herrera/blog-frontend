@@ -1,18 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CommentState } from "src/interfaces";
-import { getComments, createComment, deleteComment } from "./comment-thunks";
+import { getComments, createComment, deleteComment } from ".";
 
 const initialState: CommentState = {
   comments: [],
   isLoadingComments: false,
   error: null,
   successMessage: null,
+  isDeleteModalVisible: false,
+  isLoadingDeleteComment: false,
 };
 
 export const commentSlice = createSlice({
   name: "comment",
   initialState,
-  reducers: {},
+  reducers: {
+    openDeleteModal: (state, { payload }) => {
+      state.isDeleteModalVisible = true;
+      state.deleteCommentId = payload;
+    },
+    closeDeleteModal: (state) => {
+      state.isDeleteModalVisible = false;
+      state.deleteCommentId = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getComments.pending, (state) => {
       state.isLoadingComments = true;
@@ -52,3 +63,5 @@ export const commentSlice = createSlice({
     });
   },
 });
+
+export const { openDeleteModal, closeDeleteModal } = commentSlice.actions;
