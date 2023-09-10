@@ -165,6 +165,7 @@ export const CommentsModal = ({
                     <div className="flex flex-col w-full">
                       <FormControlContainer fieldError={errors.comment}>
                         <Input
+                          autoComplete="off"
                           defaultValue={""}
                           textColor="white"
                           type="text"
