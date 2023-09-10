@@ -21,24 +21,31 @@ import { FollowButton, SettingsMenu } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
-import { openDeleteModal, openNewPostForm, setEditPost } from "src/store/post";
+import {
+  openDeleteModal,
+  openNewPostForm,
+  setEditPost,
+  setPostInfoActive,
+} from "src/store/post";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { LikeButton } from ".";
+import { openCommentsModal } from "src/store/comment";
 
-export const PostCard = ({
-  _id,
-  title,
-  topic,
-  image,
-  description,
-  user,
-  comments,
-  likes,
-  createdAt,
-}: PostInfo) => {
+export const PostCard = (data: PostInfo) => {
   const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
+  const {
+    _id,
+    title,
+    topic,
+    image,
+    description,
+    user,
+    comments,
+    likes,
+    createdAt,
+  } = data;
 
   const onClickUpdate = () => {
     dispatch(
@@ -54,8 +61,13 @@ export const PostCard = ({
     dispatch(openNewPostForm());
   };
 
+  const onOpenCommentsModal = () => {
+    dispatch(openCommentsModal());
+    dispatch(setPostInfoActive(data));
+  };
+
   const onClickDelete = () => {
-    dispatch(openDeleteModal(_id as string));
+    dispatch(openDeleteModal(_id));
   };
 
   return (
@@ -90,7 +102,7 @@ export const PostCard = ({
           </Box>
         )}
 
-        <div className="flex justify-between text-secondary-300 text-sm">
+        <div className="flex justify-between text-sm text-secondary-300">
           <span>#{topic}</span>
           <span>{getDateFormattedFromString(createdAt)}</span>
         </div>
@@ -109,11 +121,10 @@ export const PostCard = ({
           </Text>
         </Stack>
       </CardBody>
-
-      <CardFooter className="flex w-full justify-center">
+      <CardFooter className="flex justify-center w-full">
         <ButtonGroup className="space-x-36">
           <div className="space-x-2">
-            <button>
+            <button onClick={onOpenCommentsModal}>
               <i className="fa-regular fa-comment"></i>
             </button>
             <span>{comments.length}</span>

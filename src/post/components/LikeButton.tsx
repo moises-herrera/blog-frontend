@@ -8,9 +8,15 @@ interface LikeButtonProps {
   postId: string;
   userId: string;
   userLiked: boolean;
+  iconDefaultColor?: string;
 }
 
-export const LikeButton = ({ postId, userId, userLiked }: LikeButtonProps) => {
+export const LikeButton = ({
+  postId,
+  userId,
+  userLiked,
+  iconDefaultColor = "text-black",
+}: LikeButtonProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const requestPath = !userLiked
@@ -37,7 +43,9 @@ export const LikeButton = ({ postId, userId, userLiked }: LikeButtonProps) => {
     >
       <i
         className={`${
-          !userLiked ? "fa-regular text-black" : "fa-solid text-red-500"
+          !userLiked
+            ? `fa-regular ${iconDefaultColor}`
+            : "fa-solid text-red-500"
         } fa-heart`}
       ></i>
     </button>

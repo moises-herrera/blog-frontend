@@ -1,7 +1,9 @@
+import { UserComment } from ".";
+
 /**
  * Represents the information of a comment.
  */
-export interface Comment {
+export interface CommentInfo {
   /** Comment id. */
   _id: string;
 
@@ -11,6 +13,6 @@ export interface Comment {
   /** Post id. */
   post: string;
 
-  /** User id. */
-  user: string;
+  /** User information. */
+  user: UserComment;
 }

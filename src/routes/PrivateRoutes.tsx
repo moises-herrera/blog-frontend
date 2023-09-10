@@ -4,14 +4,10 @@ import {
   LeftSidebar,
   MainContainer,
   RightSidebar,
-  CommentsModal,
 } from "src/shared/components";
-import { useDisclosure } from "@chakra-ui/react";
-import { PostFormModal } from "src/post/components";
+import { PostFormModal, CommentsModalContainer } from "src/post/components";
 
 export const PrivateRoutes = () => {
-  const { isOpen, onClose } = useDisclosure();
-
   return (
     <main className="flex w-full h-full">
       <LeftSidebar />
@@ -26,7 +22,8 @@ export const PrivateRoutes = () => {
       </MainContainer>
       <RightSidebar />
       <PostFormModal />
-      <CommentsModal isOpen={isOpen} onClose={onClose} title="Seguir" />
+
+      <CommentsModalContainer />
     </main>
   );
 };

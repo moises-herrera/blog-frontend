@@ -1,6 +1,4 @@
 export * from "./ButtonComponent";
-export * from "./CommentCard";
-export * from "./CommentsModal";
 export * from "./FollowButton";
 export * from "./InputComponent";
 export * from "./LeftSidebar";
