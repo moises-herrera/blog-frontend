@@ -10,6 +10,7 @@ export const appTheme = extendTheme({
   },
   colors: {
     primary: {
+      400: "#4C4B4B",
       500: "#2F2F2F",
     },
     accent: {
@@ -50,6 +51,34 @@ export const appTheme = extendTheme({
             borderLeft: "none",
             borderRight: "none",
             borderBottom: "1px solid #FF5050",
+          },
+        },
+      },
+    },
+    Menu: {
+      variants: {
+        dark: {
+          list: {
+            backgroundColor: "primary.500",
+            color: "secondary.100",
+            border: "1px solid #E0E0E0",
+          },
+          item: {
+            backgroundColor: "primary.500",
+            _hover: {
+              bg: "primary.400",
+            },
+            _focus: {
+              bg: "primary.400",
+            },
+          },
+          button: {
+            backgroundColor: "primary.500",
+          },
+          divider: {
+            my: "4",
+            borderColor: "secondary.100",
+            borderBottom: "1px solid #E0E0E0",
           },
         },
       },
