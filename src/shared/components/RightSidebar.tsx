@@ -7,8 +7,10 @@ export const RightSidebar = () => {
       align="right"
       cssClass="hidden lg:block lg:border-l lg:border-gray-500 pt-10 pb-3"
     >
-      <FollowingList />
-      <FollowersList />
+      <div className="space-y-5">
+        <FollowingList />
+        <FollowersList />
+      </div>
     </Sidebar>
   );
 };
