@@ -16,3 +16,5 @@ export * from "./ConfirmMessage";
 export * from "./SearchInput";
 export * from "./FollowersList";
 export * from "./FollowingList";
+export * from "./FollowersModal";
+export * from "./FollowingModal";

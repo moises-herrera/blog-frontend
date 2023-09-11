@@ -4,6 +4,8 @@ import {
   LeftSidebar,
   MainContainer,
   RightSidebar,
+  FollowersModal,
+  FollowingModal,
 } from "src/shared/components";
 import { PostFormModal, CommentsModalContainer } from "src/post/components";
 
@@ -24,6 +26,8 @@ export const PrivateRoutes = () => {
       <PostFormModal />
 
       <CommentsModalContainer />
+      <FollowersModal />
+      <FollowingModal />
     </main>
   );
 };
