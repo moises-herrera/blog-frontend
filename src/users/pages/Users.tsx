@@ -37,7 +37,7 @@ export const Users = () => {
       <h2 className="text-3xl font-semibold mb-4">Usuarios</h2>
 
       <SearchInput
-        placeholder="Buscar tema de interés"
+        placeholder="Buscar usuarios"
         onSearch={onSearchUsers}
         backgroundColor="white"
         textColor="black"
