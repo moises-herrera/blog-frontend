@@ -11,15 +11,15 @@ interface UserCardProps {
 
 export const UserCard = ({ children, user }: UserCardProps) => {
   return (
-    <div className="flex max-w-full bg-white rounded-lg justify-between p-3">
-      <Link to={`/profile/${user.username}`}>
-        <div className="flex items-center gap-3">
+    <div className="flex items-center max-w-full bg-white rounded-lg justify-between p-3">
+      <Link to={`/profile/${user.username}`} className="w-3/5">
+        <div className="flex items-center gap-3 w-full">
           <Avatar
             size="md"
             name={getFullName(user)}
             src={user.avatar || avatarPlaceholder}
           />
-          <p>@{user.username}</p>
+          <p className="truncate">@{user.username}</p>
         </div>
       </Link>
       <div className="flex items-center max-w-full">{children}</div>
