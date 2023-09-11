@@ -70,16 +70,15 @@ export const CommentCard = ({
             />
           </p>
           <>
-            {hasPermissions ||
-              (isOwner && (
-                <SettingsMenu
-                  variant="dark"
-                  canUpdate={false}
-                  canDelete={hasPermissions || isOwner}
-                  onClickUpdate={() => {}}
-                  onClickDelete={onClickDelete}
-                />
-              ))}
+            {(hasPermissions || isOwner) && (
+              <SettingsMenu
+                variant="dark"
+                canUpdate={false}
+                canDelete={hasPermissions || isOwner}
+                onClickUpdate={() => {}}
+                onClickDelete={onClickDelete}
+              />
+            )}
           </>
         </div>
         <p className="pr-3 text-[14px]">{content}</p>
