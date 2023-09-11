@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { SettingsMenu } from "src/shared/components";
 import { openDeleteModal } from "src/store/comment";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
 interface Props {
   commentId: string;
@@ -41,7 +42,7 @@ export const CommentCard = ({
   return (
     <div className="flex mb-4">
       <div className="px-4">
-        <Avatar size="md" src={avatar} />
+        <Avatar size="md" src={avatar || avatarPlaceholder} />
       </div>
       <div className="flex flex-col w-full text-white">
         <div className="flex justify-between w-full pr-4">
