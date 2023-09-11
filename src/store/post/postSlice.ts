@@ -370,10 +370,12 @@ export const postSlice = createSlice({
     builder.addCase(createPost.fulfilled, (state, { payload }) => {
       state.isLoadingPostForm = false;
       state.successMessage = payload.message;
+      state.isNewPostFormVisible = false;
     });
     builder.addCase(createPost.rejected, (state, { payload }) => {
       state.isLoadingPostForm = false;
       state.errorMessage = payload?.message;
+      state.isNewPostFormVisible = false;
     });
 
     builder.addCase(updatePost.pending, (state) => {

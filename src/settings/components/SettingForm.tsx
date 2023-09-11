@@ -107,6 +107,7 @@ export const SettingForm = () => {
       <Box className="flex justify-center mb-5">
         <Image
           content="center"
+          objectFit="cover"
           borderRadius="full"
           alt="avatar"
           cursor="pointer"
