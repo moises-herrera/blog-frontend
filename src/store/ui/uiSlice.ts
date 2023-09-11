@@ -3,6 +3,8 @@ import { UiState } from "src/interfaces";
 
 const initialState: UiState = {
   isLeftSidebarOpen: false,
+  isFollowersModalOpen: false,
+  isFollowingModalOpen: false,
 };
 
 export const uiSlice = createSlice({
@@ -15,7 +17,26 @@ export const uiSlice = createSlice({
     closeLeftSidebar: (state) => {
       state.isLeftSidebarOpen = false;
     },
+    openFollowersModal: (state) => {
+      state.isFollowersModalOpen = true;
+    },
+    closeFollowersModal: (state) => {
+      state.isFollowersModalOpen = false;
+    },
+    openFollowingModal: (state) => {
+      state.isFollowingModalOpen = true;
+    },
+    closeFollowingModal: (state) => {
+      state.isFollowingModalOpen = false;
+    },
   },
 });
 
-export const { toggleLeftSidebar, closeLeftSidebar } = uiSlice.actions;
+export const {
+  toggleLeftSidebar,
+  closeLeftSidebar,
+  openFollowersModal,
+  closeFollowersModal,
+  openFollowingModal,
+  closeFollowingModal,
+} = uiSlice.actions;
