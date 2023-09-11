@@ -45,15 +45,15 @@ export const getAllUsers = createAsyncThunk<
 /**
  * Get a user.
  *
- * @param id The username.
+ * @param username The username.
  * @returns A thunk that dispatches an action.
  */
 export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
   "getUser",
   async (username, { rejectWithValue }) => {
     try {
-      const [user] = await getUsers(username);
-      return user;
+      const { data } = await blogApi.get<User>(`/user/${username}`);
+      return data;
     } catch (error) {
       const message =
         error instanceof AxiosError
