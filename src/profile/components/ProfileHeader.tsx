@@ -1,6 +1,6 @@
 import { Avatar, Heading, Text } from "@chakra-ui/react";
 import "./ProfileHeader.css";
-import { FollowButton } from "src/shared/components";
+import { FollowButton, Username } from "src/shared/components";
 import { getFullName } from "src/helpers";
 import { User } from "src/interfaces";
 import { useTypedSelector } from "src/store";
@@ -23,13 +23,15 @@ export const ProfileHeader = ({ user }: ProfileHeaderProps) => {
         />
         <div className="flex flex-col">
           <Heading size="lg">{getFullName(user)}</Heading>
-          <Text>@{user.username}</Text>
+          <Text>
+            <Username
+              username={user.username}
+              isAccountVerified={user.isAccountVerified}
+            />
+          </Text>
         </div>
         {currentUser?._id !== user._id && (
-          <FollowButton
-            user={user}
-            currentUser={currentUser as User}
-          />
+          <FollowButton user={user} currentUser={currentUser as User} />
         )}
       </div>
       <div className="flex flex-col items-center pl-2">

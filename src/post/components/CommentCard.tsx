@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { SettingsMenu } from "src/shared/components";
+import { SettingsMenu, Username } from "src/shared/components";
 import { closeCommentsModal, openDeleteModal } from "src/store/comment";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ interface Props {
   postId: string;
   postAuthorId: string;
   commentAuthorId: string;
+  isAccountVerified: boolean;
 }
 
 export const CommentCard = ({
@@ -25,6 +26,7 @@ export const CommentCard = ({
   postId,
   postAuthorId,
   commentAuthorId,
+  isAccountVerified,
 }: Props) => {
   const navigate = useNavigate();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
@@ -62,7 +64,10 @@ export const CommentCard = ({
             onClick={onNavigateToProfile}
             className="font-bold text-[16px] cursor-pointer"
           >
-            @{username}
+            <Username
+              username={username}
+              isAccountVerified={isAccountVerified}
+            />
           </p>
           <>
             {hasPermissions ||

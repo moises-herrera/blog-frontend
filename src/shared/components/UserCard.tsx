@@ -3,6 +3,7 @@ import { User } from "src/interfaces";
 import { getFullName } from "src/helpers";
 import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { Username } from ".";
 
 interface UserCardProps {
   user: User;
@@ -19,7 +20,12 @@ export const UserCard = ({ children, user }: UserCardProps) => {
             name={getFullName(user)}
             src={user.avatar || avatarPlaceholder}
           />
-          <p className="truncate">@{user.username}</p>
+          <p className="truncate">
+            <Username
+              username={user.username}
+              isAccountVerified={user.isAccountVerified}
+            />
+          </p>
         </div>
       </Link>
       <div className="flex items-center max-w-full">{children}</div>

@@ -18,3 +18,4 @@ export * from "./FollowersList";
 export * from "./FollowingList";
 export * from "./FollowersModal";
 export * from "./FollowingModal";
+export * from "./Username";

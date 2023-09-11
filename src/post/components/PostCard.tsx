@@ -17,7 +17,7 @@ import {
 } from "src/helpers";
 import { PostInfo, User } from "src/interfaces";
 import { PostCardContainer } from ".";
-import { FollowButton, SettingsMenu } from "src/shared/components";
+import { FollowButton, SettingsMenu, Username } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
@@ -80,7 +80,12 @@ export const PostCard = (data: PostInfo) => {
                 name={getFullName(user)}
                 src={user.avatar || avatarPlaceholder}
               />
-              <Heading size="xs">@{user.username}</Heading>
+              <Heading size="xs">
+                <Username
+                  username={user.username}
+                  isAccountVerified={user.isAccountVerified}
+                />
+              </Heading>
             </div>
           </Link>
           {currentUser?._id !== user._id && (

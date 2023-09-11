@@ -1,4 +1,8 @@
-import { FollowButton, FormControlContainer } from "src/shared/components";
+import {
+  FollowButton,
+  FormControlContainer,
+  Username,
+} from "src/shared/components";
 import { Comment, ModalData, PostInfo, User } from "src/interfaces";
 import { getDateFormattedFromString, postHasLike } from "src/helpers";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -116,7 +120,10 @@ export const CommentsModal = ({
                       src={user.avatar || avatarPlaceholder}
                     />
                     <p className="font-bold text-[20px] text-secondary-100 pl-3">
-                      @{user.username}
+                      <Username
+                        username={user.username}
+                        isAccountVerified={user.isAccountVerified}
+                      />
                     </p>
                   </div>
                 </Link>
@@ -145,6 +152,7 @@ export const CommentsModal = ({
                         postId={_id}
                         postAuthorId={user._id}
                         commentAuthorId={commentAuthorId}
+                        isAccountVerified={user.isAccountVerified}
                       />
                     )
                   )}
