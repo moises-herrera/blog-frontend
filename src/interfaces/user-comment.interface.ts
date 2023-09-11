@@ -16,4 +16,7 @@ export interface UserComment {
 
   /** Avatar. */
   avatar: string;
+
+  /** If is an account verified. */
+  isAccountVerified: boolean;
 }

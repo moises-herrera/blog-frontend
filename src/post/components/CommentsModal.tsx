@@ -141,7 +141,12 @@ export const CommentsModal = ({
                     ({
                       _id: commentId,
                       content,
-                      user: { _id: commentAuthorId, username, avatar },
+                      user: {
+                        _id: commentAuthorId,
+                        username,
+                        avatar,
+                        isAccountVerified,
+                      },
                     }) => (
                       <CommentCard
                         key={commentId}
@@ -152,7 +157,7 @@ export const CommentsModal = ({
                         postId={_id}
                         postAuthorId={user._id}
                         commentAuthorId={commentAuthorId}
-                        isAccountVerified={user.isAccountVerified}
+                        isAccountVerified={isAccountVerified}
                       />
                     )
                   )}
