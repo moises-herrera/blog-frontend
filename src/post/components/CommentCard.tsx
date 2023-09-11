@@ -3,8 +3,9 @@ import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { SettingsMenu } from "src/shared/components";
-import { openDeleteModal } from "src/store/comment";
+import { closeCommentsModal, openDeleteModal } from "src/store/comment";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   commentId: string;
@@ -25,10 +26,16 @@ export const CommentCard = ({
   postAuthorId,
   commentAuthorId,
 }: Props) => {
+  const navigate = useNavigate();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const dispatch = useDispatch<AppDispatch>();
   const hasPermissions = currentUser?._id === commentAuthorId;
   const isOwner = currentUser?._id === postAuthorId;
+
+  const onNavigateToProfile = () => {
+    navigate(`/profile/${username}`);
+    dispatch(closeCommentsModal());
+  };
 
   const onClickDelete = () => {
     dispatch(
@@ -42,11 +49,21 @@ export const CommentCard = ({
   return (
     <div className="flex mb-4">
       <div className="px-4">
-        <Avatar size="md" src={avatar || avatarPlaceholder} />
+        <Avatar
+          size="md"
+          src={avatar || avatarPlaceholder}
+          onClick={onNavigateToProfile}
+          className="cursor-pointer"
+        />
       </div>
       <div className="flex flex-col w-full text-white">
         <div className="flex justify-between w-full pr-4">
-          <p className="font-bold text-[16px]">{username}</p>
+          <p
+            onClick={onNavigateToProfile}
+            className="font-bold text-[16px] cursor-pointer"
+          >
+            @{username}
+          </p>
           <>
             {hasPermissions ||
               (isOwner && (
