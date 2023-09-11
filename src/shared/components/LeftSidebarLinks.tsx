@@ -2,7 +2,11 @@ import { useDispatch } from "react-redux";
 import { NavLink } from ".";
 import { linkItems } from "src/shared/services";
 import { openNewPostForm } from "src/store/post";
-import { closeLeftSidebar } from "src/store/ui";
+import {
+  closeLeftSidebar,
+  openFollowersModal,
+  openFollowingModal,
+} from "src/store/ui";
 import { useTypedSelector } from "src/store";
 
 export const LeftSidebarLinks = () => {
@@ -15,7 +19,15 @@ export const LeftSidebarLinks = () => {
 
   const onClickNewPost = (): void => {
     dispatch(openNewPostForm());
-    dispatch(closeLeftSidebar());
+    onClickNavLink();
+  };
+
+  const onClickFollowers = (): void => {
+    dispatch(openFollowersModal());
+  };
+
+  const onClickFollowing = (): void => {
+    dispatch(openFollowingModal());
   };
 
   return (
@@ -34,11 +46,25 @@ export const LeftSidebarLinks = () => {
           </li>
         ))}
 
-        <button onClick={onClickNewPost} className="flex items-center gap-2">
+        <button onClick={onClickNewPost} className="sidebar-button">
           <span>
             <i className="fa-solid fa-square-plus"></i>
           </span>
           <span>Nuevo Post</span>
+        </button>
+
+        <button onClick={onClickFollowers} className="sidebar-button lg:hidden">
+          <span>
+            <i className="fa-solid fa-user-check"></i>
+          </span>
+          <span>Seguidores</span>
+        </button>
+
+        <button onClick={onClickFollowing} className="sidebar-button lg:hidden">
+          <span>
+            <i className="fa-solid fa-user"></i>
+          </span>
+          <span>Seguidos</span>
         </button>
 
         {linkItems.slice(3).map(({ ...props }) => (
