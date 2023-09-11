@@ -76,7 +76,7 @@ export const CommentsModal = ({
         <ModalBody margin={"0px"} padding={"0px"}>
           <div className="flex flex-col w-full h-full sm:flex-row">
             <div className="hidden w-full bg-white rounded-l-[20px] lg:w-1/2 lg:block">
-              <CloseButton onClick={onClose} />
+              <CloseButton onClick={onClose} className="ml-1" />
               {image && (
                 <div className="flex justify-center">
                   <Image
@@ -102,7 +102,7 @@ export const CommentsModal = ({
             <div className="w-full bg-primary-500 rounded-r-[20px] lg:w-1/2 h-full">
               <div className="block lg:hidden">
                 <CloseButton
-                  className="text-secondary-100 pl-3 text-xl pb-3"
+                  className="text-secondary-100 ml-3 mt-3 text-xl"
                   onClick={onClose}
                 />
               </div>
