@@ -112,7 +112,7 @@ export const SettingForm = () => {
           alt="avatar"
           cursor="pointer"
           onClick={onUploadImage}
-          className="w-[150px] md:w-[200px]"
+          boxSize="200px"
           src={(userAvatar as string) || avatarPlaceholder}
         />
         <Input
