@@ -6,6 +6,7 @@ import { AppDispatch } from "src/store/types";
 import { onLogout } from "src/store/auth";
 import { APP_NAME } from "src/constants";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
 
 export const LeftSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,7 +15,16 @@ export const LeftSidebar = () => {
   const onClickLogout = (): void => {
     removeToken();
     dispatch(onLogout(null));
+    document.title = `${APP_NAME}`;
   };
+
+  useEffect(() => {
+    if (isLeftSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isLeftSidebarOpen]);
 
   return (
     <Sidebar

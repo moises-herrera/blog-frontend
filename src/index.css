@@ -58,3 +58,7 @@ body {
 .sidebar-button {
   @apply flex items-center gap-2;
 }
+
+.main-container {
+  @apply lg:pl-[350px] lg:pr-[350px] h-full w-full min-w-min;
+}
