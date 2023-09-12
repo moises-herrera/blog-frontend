@@ -1,4 +1,4 @@
-import { passwordPattern } from "src/helpers";
+import { passwordPattern, usernamePattern } from "src/helpers";
 import { z } from "zod";
 
 /**
@@ -7,7 +7,14 @@ import { z } from "zod";
 export const SettingSchema = z.object({
   firstName: z.string().nonempty("El nombre es requerido"),
   lastName: z.string().nonempty("El apellido es requerido"),
-  username: z.string().nonempty("El usuario es requerido"),
+  username: z
+    .string()
+    .min(4, "El usuario debe tener mínimo 4 carácteres")
+    .max(20, "El usuario debe tener máximo 20 carácteres")
+    .regex(
+      usernamePattern,
+      "El usuario solo puede contener letras, números, guiones bajos y puntos"
+    ),
   avatar: z.any(),
   email: z
     .string()
