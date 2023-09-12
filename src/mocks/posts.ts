@@ -27,6 +27,7 @@ export const posts: PostInfo[] = [
       role: Role.User,
       isEmailVerified: true,
       isAccountVerified: true,
+      isFounder: false,
       followers: [],
     },
     createdAt: new Date(),
