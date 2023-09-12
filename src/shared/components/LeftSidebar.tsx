@@ -42,7 +42,7 @@ export const LeftSidebar = () => {
 
       <button
         onClick={onClickLogout}
-        className="absolute bottom-0 pb-5 space-x-2 text-lg text-white"
+        className="mt-2 space-x-2 text-lg text-white"
       >
         <i className="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Cerrar sesión</span>
