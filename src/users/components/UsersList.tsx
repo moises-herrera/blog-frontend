@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { User } from "src/interfaces";
 import { FollowButton, UserCard } from "src/shared/components";
 import { useTypedSelector } from "src/store";
@@ -12,16 +13,13 @@ export const UsersList = ({ users }: UsersListProps) => {
   return (
     <div className="users-list mt-4">
       {users.map((user) => (
-        <div key={user.username}>
+        <Fragment key={user.username}>
           {user._id !== currentUser?._id && (
             <UserCard user={user}>
-              <FollowButton
-                user={user}
-                currentUser={currentUser as User}
-              />
+              <FollowButton user={user} currentUser={currentUser as User} />
             </UserCard>
           )}
-        </div>
+        </Fragment>
       ))}
     </div>
   );
