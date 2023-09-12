@@ -34,6 +34,9 @@ export interface User {
   /** If the account is verified. */
   isAccountVerified: boolean;
 
+  /** If the user is a founder. */
+  isFounder: boolean;
+
   /** User's followers. */
   followers: string[];
 }

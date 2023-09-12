@@ -19,4 +19,7 @@ export interface UserComment {
 
   /** If is an account verified. */
   isAccountVerified: boolean;
+
+  /** If is a founder. */
+  isFounder: boolean;
 }

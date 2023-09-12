@@ -83,6 +83,7 @@ export const PostCard = (data: PostInfo) => {
               <Heading size="xs">
                 <Username
                   username={user.username}
+                  isFounder={user.isFounder}
                   isAccountVerified={user.isAccountVerified}
                 />
               </Heading>

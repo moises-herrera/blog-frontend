@@ -26,6 +26,7 @@ export const ProfileHeader = ({ user }: ProfileHeaderProps) => {
           <Text>
             <Username
               username={user.username}
+              isFounder={user.isFounder}
               isAccountVerified={user.isAccountVerified}
             />
           </Text>

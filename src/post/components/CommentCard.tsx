@@ -15,6 +15,7 @@ interface Props {
   postId: string;
   postAuthorId: string;
   commentAuthorId: string;
+  isFounder: boolean;
   isAccountVerified: boolean;
 }
 
@@ -26,6 +27,7 @@ export const CommentCard = ({
   postId,
   postAuthorId,
   commentAuthorId,
+  isFounder,
   isAccountVerified,
 }: Props) => {
   const navigate = useNavigate();
@@ -66,6 +68,7 @@ export const CommentCard = ({
           >
             <Username
               username={username}
+              isFounder={isFounder}
               isAccountVerified={isAccountVerified}
             />
           </p>

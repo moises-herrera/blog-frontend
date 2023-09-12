@@ -122,6 +122,7 @@ export const CommentsModal = ({
                     <p className="font-bold text-[20px] text-secondary-100 pl-3">
                       <Username
                         username={user.username}
+                        isFounder={user.isFounder}
                         isAccountVerified={user.isAccountVerified}
                       />
                     </p>
@@ -145,6 +146,7 @@ export const CommentsModal = ({
                         _id: commentAuthorId,
                         username,
                         avatar,
+                        isFounder,
                         isAccountVerified,
                       },
                     }) => (
@@ -157,6 +159,7 @@ export const CommentsModal = ({
                         postId={_id}
                         postAuthorId={user._id}
                         commentAuthorId={commentAuthorId}
+                        isFounder={isFounder}
                         isAccountVerified={isAccountVerified}
                       />
                     )

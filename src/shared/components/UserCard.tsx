@@ -23,6 +23,7 @@ export const UserCard = ({ children, user }: UserCardProps) => {
           <p className="truncate">
             <Username
               username={user.username}
+              isFounder={user.isFounder}
               isAccountVerified={user.isAccountVerified}
             />
           </p>
