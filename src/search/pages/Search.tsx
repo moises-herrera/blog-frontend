@@ -15,16 +15,18 @@ export const Search = () => {
   });
 
   return (
-    <div className="section-content p-8 !py-12">
-      <h2 className="text-3xl font-semibold mb-4">Buscar publicaciones</h2>
+    <div className="section-content px-4 !pt-12">
+      <div className="px-4">
+        <h2 className="text-3xl font-semibold mb-4">Buscar publicaciones</h2>
 
-      <SearchInput
-        placeholder="Buscar tema de interés"
-        onSearch={onSearch}
-        backgroundColor="white"
-        textColor="black"
-        iconClassName="text-gray-400"
-      />
+        <SearchInput
+          placeholder="Buscar tema de interés"
+          onSearch={onSearch}
+          backgroundColor="white"
+          textColor="black"
+          iconClassName="text-gray-400"
+        />
+      </div>
 
       {isLoadingSearch ? (
         <div className="loading-container">
