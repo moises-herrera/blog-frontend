@@ -33,7 +33,7 @@ export const Users = () => {
   };
 
   return (
-    <section className="section-content p-8 !py-12">
+    <section className="section-content px-4 lg:px-8 !pt-12">
       <h2 className="text-3xl font-semibold mb-4">Usuarios</h2>
 
       <SearchInput
