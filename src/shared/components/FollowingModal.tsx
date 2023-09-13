@@ -19,7 +19,7 @@ export const FollowingModal = () => {
   };
 
   return (
-    <Modal isOpen={isFollowingModalOpen} onClose={onCloseModal}>
+    <Modal isOpen={isFollowingModalOpen} onClose={onCloseModal} isCentered>
       <ModalOverlay />
       <ModalContent backgroundColor="primary.500" padding="16px">
         <div className="absolute text-white right-3">
