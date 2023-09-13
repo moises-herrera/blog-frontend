@@ -1,0 +1,7 @@
+.users-container {
+  @apply flex flex-col gap-3 mb-5;
+}
+
+.users-list-title {
+  @apply text-secondary-100 text-[30px] font-bold;
+}
