@@ -45,7 +45,9 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     defaultValues,
   });
   const { displaySuccessMessage, displayError } = useMessageToast();
-  const [imageFile, setImageFile] = useState<ArrayBuffer | string | null>(null);
+  const [imageFile, setImageFile] = useState<ArrayBuffer | string | null>(
+    defaultValues?.image || null
+  );
   const profileImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const clearSuccess = useCallback(() => {
@@ -128,7 +130,11 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
       >
         <FormControlContainer fieldError={errors.topic}>
           <FormLabel textColor="secondary.300">Tema</FormLabel>
-          <Input autoComplete="off" backgroundColor="white" {...register("topic")} />
+          <Input
+            autoComplete="off"
+            backgroundColor="white"
+            {...register("topic")}
+          />
         </FormControlContainer>
 
         <FormControlContainer fieldError={errors.title}>
