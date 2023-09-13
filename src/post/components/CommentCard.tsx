@@ -60,11 +60,11 @@ export const CommentCard = ({
           className="cursor-pointer"
         />
       </div>
-      <div className="flex flex-col w-full text-white">
+      <div className="flex flex-col w-9/12 text-white">
         <div className="flex justify-between w-full pr-4">
           <p
             onClick={onNavigateToProfile}
-            className="font-bold text-[16px] cursor-pointer"
+            className="w-[90%] font-bold text-[16px] cursor-pointer truncate"
           >
             <Username
               username={username}

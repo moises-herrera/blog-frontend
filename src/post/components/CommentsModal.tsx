@@ -110,8 +110,8 @@ export const CommentsModal = ({
                   onClick={onClose}
                 />
               </div>
-              <div className="flex justify-between mt-5 px-1">
-                <Link to={`/profile/${user.username}`}>
+              <div className="flex items-center justify-between mt-5 px-1">
+                <Link to={`/profile/${user.username}`} className="w-[70%]">
                   <div className="flex items-center">
                     <Avatar
                       marginLeft={"10px"}
@@ -119,7 +119,7 @@ export const CommentsModal = ({
                       size="lg"
                       src={user.avatar || avatarPlaceholder}
                     />
-                    <p className="font-bold text-[20px] text-secondary-100 pl-3">
+                    <p className="font-bold text-[20px] text-secondary-100 pl-3 truncate">
                       <Username
                         username={user.username}
                         isFounder={user.isFounder}
@@ -128,7 +128,7 @@ export const CommentsModal = ({
                     </p>
                   </div>
                 </Link>
-                <div className="flex items-center pr-3">
+                <div className="pr-3">
                   <FollowButton user={user} currentUser={currentUser as User} />
                 </div>
               </div>
