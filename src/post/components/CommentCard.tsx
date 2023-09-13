@@ -60,20 +60,22 @@ export const CommentCard = ({
           className="cursor-pointer"
         />
       </div>
-      <div className="flex flex-col w-9/12 text-white">
-        <div className="flex justify-between w-full pr-4">
-          <p
-            onClick={onNavigateToProfile}
-            className="w-[90%] font-bold text-[16px] cursor-pointer truncate"
-          >
-            <Username
-              username={username}
-              isFounder={isFounder}
-              isAccountVerified={isAccountVerified}
-            />
-          </p>
-          <>
-            {(hasPermissions || isOwner) && (
+      <div className="flex flex-col w-full text-white">
+        <div className="w-full grid grid-cols-4 pr-4">
+          <div className="col-span-3">
+            <p
+              onClick={onNavigateToProfile}
+              className="font-bold text-[16px] cursor-pointer truncate"
+            >
+              <Username
+                username={username}
+                isFounder={isFounder}
+                isAccountVerified={isAccountVerified}
+              />
+            </p>
+          </div>
+          {(hasPermissions || isOwner) && (
+            <div className="justify-self-end">
               <SettingsMenu
                 variant="dark"
                 canUpdate={false}
@@ -81,8 +83,8 @@ export const CommentCard = ({
                 onClickUpdate={() => {}}
                 onClickDelete={onClickDelete}
               />
-            )}
-          </>
+            </div>
+          )}
         </div>
         <p className="pr-3 text-[14px]">{content}</p>
       </div>
