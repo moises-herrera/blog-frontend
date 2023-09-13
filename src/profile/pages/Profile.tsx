@@ -8,6 +8,11 @@ import { Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { getUserPosts } from "src/store/post";
 import { AppDispatch } from "src/store/types";
+import {
+  closeFollowersModal,
+  closeFollowingModal,
+  closeLeftSidebar,
+} from "src/store/ui";
 import { getUser } from "src/store/users";
 
 export const Profile = () => {
@@ -19,13 +24,21 @@ export const Profile = () => {
   const { userProfile, userProfileLoading } = useTypedSelector(
     ({ users }) => users
   );
+  const { isFollowersModalOpen, isFollowingModalOpen, isLeftSidebarOpen } =
+    useTypedSelector(({ ui }) => ui);
 
   useEffect(() => {
     if (userProfile) dispatch(getUserPosts(userProfile._id));
   }, [dispatch, userProfile]);
 
   useEffect(() => {
-    if (username) dispatch(getUser(username));
+    if (username) {
+      dispatch(getUser(username));
+
+      if (isFollowersModalOpen) dispatch(closeFollowersModal());
+      if (isFollowingModalOpen) dispatch(closeFollowingModal());
+      if (isLeftSidebarOpen) dispatch(closeLeftSidebar());
+    }
   }, [dispatch, username]);
 
   useEffect(() => {
