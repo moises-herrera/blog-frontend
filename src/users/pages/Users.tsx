@@ -33,7 +33,7 @@ export const Users = () => {
   };
 
   return (
-    <section className="section-content p-8 !py-12">
+    <section className=""section-content px-4 lg:px-8 !pt-12">
       <div className="flex justify-start w-full mb-4 text-3xl font-semibold lg:justify-between">
         <h2 className="">Usuarios</h2>
         <div className="flex flex-col items-center ml-6 lg:ml-0">
