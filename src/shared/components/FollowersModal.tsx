@@ -19,7 +19,7 @@ export const FollowersModal = () => {
   };
 
   return (
-    <Modal isOpen={isFollowersModalOpen} onClose={onCloseModal}>
+    <Modal isOpen={isFollowersModalOpen} onClose={onCloseModal} isCentered>
       <ModalOverlay />
       <ModalContent backgroundColor="primary.500" padding="16px">
         <div className="absolute text-white right-3">

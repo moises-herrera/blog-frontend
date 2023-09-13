@@ -36,6 +36,8 @@ export const ConfirmMessage = ({
       isOpen={isOpen}
       leastDestructiveRef={cancelRef}
       onClose={onClose}
+      isCentered
+      size={{ base: "xs", md: "md" }}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>

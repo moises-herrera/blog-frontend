@@ -80,7 +80,7 @@ export const PostCard = (data: PostInfo) => {
                 name={getFullName(user)}
                 src={user.avatar || avatarPlaceholder}
               />
-              <Heading size="xs">
+              <Heading size="xs" width="70%" isTruncated>
                 <Username
                   username={user.username}
                   isFounder={user.isFounder}

@@ -29,7 +29,7 @@ export const LeftSidebar = () => {
   return (
     <Sidebar
       cssClass={`lg:block lg:border-r lg:border-gray-500 ${
-        isLeftSidebarOpen ? "block w-screen" : "hidden"
+        isLeftSidebarOpen ? "z-50 block w-screen" : "hidden"
       }`}
     >
       <NavLink to="/">

@@ -13,7 +13,7 @@ export const Sidebar = ({
 }: SidebarProps) => {
   return (
     <aside
-      className={`fixed z-50 w-[350px] h-screen bg-primary-500 px-6 ${
+      className={`fixed w-[350px] h-screen bg-primary-500 px-6 ${
         align === "right" ? "right-0" : ""
       } ${cssClass}`}
     >

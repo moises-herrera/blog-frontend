@@ -6,4 +6,4 @@ export const passwordPattern =
   /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$/;
 
 /** Pattern to validate a username. */
-export const usernamePattern = /^[a-z0-9._-]+$/;
+export const usernamePattern = /^[a-zA-Z0-9._-]+$/;
