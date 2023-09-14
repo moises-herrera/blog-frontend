@@ -4,6 +4,7 @@ import { useTypedSelector } from "src/store";
 import { searchPosts } from "src/store/post";
 import { useSearch } from "src/hooks";
 import { PostInfo } from "src/interfaces";
+import { useEffect } from "react";
 
 export const Search = () => {
   const { searchResults, isLoadingSearch } = useTypedSelector(
@@ -13,6 +14,10 @@ export const Search = () => {
     value: "all",
     action: searchPosts,
   });
+
+  useEffect(() => {
+    document.title = "Buscar publicaciones";
+  }, []);
 
   return (
     <div className="section-content px-4 !pt-12">
