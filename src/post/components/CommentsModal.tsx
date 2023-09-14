@@ -1,6 +1,7 @@
 import {
   FollowButton,
   FormControlContainer,
+  Loading,
   Username,
 } from "src/shared/components";
 import { Comment, ModalData, PostInfo, User } from "src/interfaces";
@@ -43,7 +44,9 @@ export const CommentsModal = ({
   infoPost: { _id, title, topic, image, description, user, createdAt, likes },
 }: CommentsModalProps) => {
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
-  const { comments } = useTypedSelector(({ comment }) => comment);
+  const { comments, isLoadingComments } = useTypedSelector(
+    ({ comment }) => comment
+  );
   const {
     reset,
     register,
@@ -138,31 +141,37 @@ export const CommentsModal = ({
                 </div>
 
                 <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[550px]">
-                  {comments.map(
-                    ({
-                      _id: commentId,
-                      content,
-                      user: {
-                        _id: commentAuthorId,
-                        username,
-                        avatar,
-                        isFounder,
-                        isAccountVerified,
-                      },
-                    }) => (
-                      <CommentCard
-                        key={commentId}
-                        commentId={commentId}
-                        username={username}
-                        avatar={avatar}
-                        content={content}
-                        postId={_id}
-                        postAuthorId={user._id}
-                        commentAuthorId={commentAuthorId}
-                        isFounder={isFounder}
-                        isAccountVerified={isAccountVerified}
-                      />
-                    )
+                  {!isLoadingComments ? (
+                    <>
+                      {comments.map(
+                        ({
+                          _id: commentId,
+                          content,
+                          user: {
+                            _id: commentAuthorId,
+                            username,
+                            avatar,
+                            isFounder,
+                            isAccountVerified,
+                          },
+                        }) => (
+                          <CommentCard
+                            key={commentId}
+                            commentId={commentId}
+                            username={username}
+                            avatar={avatar}
+                            content={content}
+                            postId={_id}
+                            postAuthorId={user._id}
+                            commentAuthorId={commentAuthorId}
+                            isFounder={isFounder}
+                            isAccountVerified={isAccountVerified}
+                          />
+                        )
+                      )}
+                    </>
+                  ) : (
+                    <Loading />
                   )}
                 </div>
               </div>

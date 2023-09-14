@@ -21,7 +21,7 @@ export const FeedContent = ({ posts }: FeedContentProps) => {
       ) : (
         <div className="feed-empty">
           <Box className="flex items-center justify-center">
-            <Image src={feedContent} alt="Feed" />
+            <Image src={feedContent} opacity="0.7" alt="Feed" />
           </Box>
         </div>
       )}
