@@ -10,11 +10,17 @@ export interface PostState {
   /** Loading state. */
   isLoadingFollowing: boolean;
 
+  /** Total posts following. */
+  postsFollowingTotal: number;
+
   /** Posts suggested list. */
   postSuggestedList: PostInfo[];
 
   /** Loading state. */
   isLoadingSuggested: boolean;
+
+  /** Total posts suggested. */
+  postsSuggestedTotal: number;
 
   /** User's posts. */
   userPosts: PostInfo[];
@@ -22,11 +28,17 @@ export interface PostState {
   /** Loading state. */
   isLoadingUserPosts: boolean;
 
+  /** Total user's posts. */
+  userPostsTotal: number;
+
   /** Search posts. */
   searchResults: PostInfo[];
 
   /** Loading state. */
   isLoadingSearch: boolean;
+
+  /** Total search results. */
+  totalResults: number;
 
   /** Whether the new post form is visible. */
   isNewPostFormVisible: boolean;

@@ -2,32 +2,36 @@ import { FeedContent } from "src/feed/components";
 import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { searchPosts } from "src/store/post";
-import { useSearch } from "src/hooks";
-import { PaginatedResponse, PostInfo, QueryParams } from "src/interfaces";
-import { useCallback, useEffect } from "react";
+import { useScrollPagination, useSearch } from "src/hooks";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
 
 export const Search = () => {
-  const { searchResults, isLoadingSearch } = useTypedSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { searchResults, isLoadingSearch, totalResults } = useTypedSelector(
     ({ post }) => post
   );
 
-  const onSearchPosts = useCallback(
-    (filter: string) =>
-      searchPosts({
-        search: filter,
-        limit: 10,
-        page: 1,
-      }),
-    []
-  );
-
-  const { onSearch } = useSearch<
-    PaginatedResponse<PostInfo>,
-    QueryParams | undefined
-  >({
+  const { debouncedSearchTerm, onSearch } = useSearch({
     value: "",
-    action: onSearchPosts,
   });
+
+  const { page } = useScrollPagination({
+    isLoading: isLoadingSearch,
+    currentRecords: searchResults.length,
+    total: totalResults,
+  });
+
+  useEffect(() => {
+    dispatch(
+      searchPosts({
+        search: debouncedSearchTerm || "",
+        limit: 10,
+        page,
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, page]);
 
   useEffect(() => {
     document.title = "Buscar publicaciones";
