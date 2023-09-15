@@ -1,29 +1,42 @@
-import { GetFollowers, User } from "src/interfaces";
+import { User } from "src/interfaces";
 import { FollowButton, Loading, SearchInput, UserCard } from ".";
 import { useTypedSelector } from "src/store";
-import { useSearch } from "src/hooks";
+import { useScrollPagination, useSearch } from "src/hooks";
 import { getFollowing } from "src/store/users";
-import { useCallback, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
 
 export const FollowingList = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
-  const { following, followingLoading } = useTypedSelector(
-    ({ users }) => users
-  );
+  const { following, followingLoading, totalFollowing, followingResultsCount } =
+    useTypedSelector(({ users }) => users);
   const currentUserId = useMemo(() => currentUser?._id, [currentUser?._id]);
-  const searchResults = useCallback(
-    (filter: string) =>
+  const { debouncedSearchTerm, onSearch } = useSearch({
+    value: "",
+  });
+  const scrollableDiv = useRef<HTMLDivElement>(null);
+
+  const { page } = useScrollPagination({
+    isLoading: followingLoading,
+    currentRecords: followingResultsCount,
+    total: totalFollowing,
+    elementRef: scrollableDiv,
+  });
+
+  useEffect(() => {
+    dispatch(
       getFollowing({
         id: currentUserId as string,
-        username: filter,
-      }),
-    [currentUserId]
-  );
-
-  const { onSearch } = useSearch<User, GetFollowers>({
-    value: "",
-    action: searchResults,
-  });
+        queryParams: {
+          username: debouncedSearchTerm || "",
+          limit: 10,
+          page,
+        },
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, currentUserId, page]);
 
   return (
     <>
@@ -32,7 +45,10 @@ export const FollowingList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      <div className="users-list h-[310px] overflow-auto scrollable-div">
+      <div
+        className="users-list h-[310px] overflow-auto scrollable-div"
+        ref={scrollableDiv}
+      >
         {!followingLoading ? (
           following.map((user) => (
             <UserCard key={user.username} user={user}>

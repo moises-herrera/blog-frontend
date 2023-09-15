@@ -85,13 +85,14 @@ export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
  * @returns A thunk that dispatches an action.
  */
 export const getFollowers = createAsyncThunk<
-  User[],
+  PaginatedResponse<User>,
   GetFollowers,
   AsyncThunkConfig
->("getFollowers", async ({ id, username }, { rejectWithValue }) => {
+>("getFollowers", async ({ id, queryParams }, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.get<User[]>(
-      `/user/${id}/followers?username=${username}`
+    const queryString = getQueryStringFromObject(queryParams || {});
+    const { data } = await peopleApi.get<PaginatedResponse<User>>(
+      `/user/${id}/followers?${queryString}`
     );
 
     return data;
@@ -114,13 +115,14 @@ export const getFollowers = createAsyncThunk<
  * @returns A thunk that dispatches an action.
  */
 export const getFollowing = createAsyncThunk<
-  User[],
+  PaginatedResponse<User>,
   GetFollowers,
   AsyncThunkConfig
->("getFollowing", async ({ id, username }, { rejectWithValue }) => {
+>("getFollowing", async ({ id, queryParams }, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.get<User[]>(
-      `/user/${id}/following?username=${username}`
+    const queryString = getQueryStringFromObject(queryParams || {});
+    const { data } = await peopleApi.get<PaginatedResponse<User>>(
+      `/user/${id}/following?${queryString}`
     );
 
     return data;
