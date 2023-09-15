@@ -1,22 +1,16 @@
-import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch, AsyncThunkConfig } from "src/store/types";
 
-interface UsePaginationProps<T, V> {
+interface UsePaginationProps {
   isLoading: boolean;
   currentRecords: number;
   total: number;
-  action: (page: number) => AsyncThunkAction<T, V, AsyncThunkConfig>;
 }
 
-export const useScrollPagination = <T, V>({
+export const useScrollPagination = ({
   isLoading,
   currentRecords,
   total,
-  action,
-}: UsePaginationProps<T, V>) => {
-  const dispatch = useDispatch<AppDispatch>();
+}: UsePaginationProps) => {
   const [page, setPage] = useState<number>(1);
   const isLastPage = useMemo(
     () => currentRecords === total,
@@ -41,7 +35,7 @@ export const useScrollPagination = <T, V>({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoading, handleScroll]);
 
-  useEffect(() => {
-    dispatch(action(page));
-  }, [dispatch, action, page]);
+  return {
+    page,
+  };
 };

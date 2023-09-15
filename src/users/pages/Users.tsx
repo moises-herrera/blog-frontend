@@ -1,51 +1,39 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { UsersList } from "src/users/components";
 import "./Users.css";
 import { useScrollPagination, useSearch } from "src/hooks";
 import { getAllUsers } from "src/store/users";
-import { PaginatedResponse, User, QueryParams } from "src/interfaces";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
 
 export const Users = () => {
-  const { list, isLoading, total } = useTypedSelector(({ users }) => users);
-
-  const searchUsers = useCallback(
-    (filter: string) =>
-      getAllUsers({
-        username: filter,
-        excludeCurrentUser: true,
-        limit: 10,
-        page: 1,
-      }),
-    []
+  const dispatch = useDispatch<AppDispatch>();
+  const { list, isLoading, totalUsers, resultsCount } = useTypedSelector(
+    ({ users }) => users
   );
 
-  const getUsers = useCallback(
-    (page: number) =>
+  const { debouncedSearchTerm, onSearch } = useSearch({
+    value: "",
+  });
+
+  const { page } = useScrollPagination({
+    isLoading,
+    currentRecords: list.length,
+    total: resultsCount,
+  });
+
+  useEffect(() => {
+    dispatch(
       getAllUsers({
-        username: "",
+        username: debouncedSearchTerm || "",
         excludeCurrentUser: true,
         limit: 10,
         page,
-      }),
-    []
-  );
-
-  const { onSearch } = useSearch<
-    PaginatedResponse<User>,
-    QueryParams | undefined
-  >({
-    value: null,
-    action: searchUsers,
-  });
-
-  useScrollPagination<PaginatedResponse<User>, QueryParams | undefined>({
-    isLoading,
-    currentRecords: list.length,
-    total: total - 1,
-    action: getUsers,
-  });
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, page]);
 
   useEffect(() => {
     document.title = "Usuarios";
@@ -57,7 +45,7 @@ export const Users = () => {
         <h2>Usuarios</h2>
         <div className="flex flex-col items-center ml-6 lg:ml-0">
           <i className="fa-solid fa-users"></i>
-          <p className="text-[20px] ">{total}</p>
+          <p className="text-[20px]">{totalUsers}</p>
         </div>
       </div>
 

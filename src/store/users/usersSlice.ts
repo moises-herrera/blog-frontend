@@ -5,7 +5,8 @@ import { getFollowers, getFollowing, getUser, getAllUsers } from ".";
 const initialState: UsersState = {
   list: [],
   isLoading: false,
-  total: 0,
+  totalUsers: 0,
+  resultsCount: 0,
   error: "",
   followers: [],
   followersLoading: false,
@@ -79,9 +80,10 @@ export const usersSlice = createSlice({
     });
     builder.addCase(
       getAllUsers.fulfilled,
-      (state, { payload: { data, total, page } }) => {
+      (state, { payload: { data, total, page, resultsCount } }) => {
         state.list = page > 1 ? [...state.list, ...data] : data;
-        state.total = total;
+        state.totalUsers = total;
+        state.resultsCount = resultsCount;
         state.isLoading = false;
       }
     );

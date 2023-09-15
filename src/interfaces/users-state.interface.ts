@@ -11,7 +11,10 @@ export interface UsersState {
   isLoading: boolean;
 
   /** Total users. */
-  total: number;
+  totalUsers: number;
+
+  /** Results count. */
+  resultsCount: number;
 
   /** Error message. */
   error?: string | null;

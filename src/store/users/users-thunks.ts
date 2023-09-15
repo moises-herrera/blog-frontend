@@ -20,7 +20,6 @@ const getUsers = async (
   queryParams?: QueryParams
 ): Promise<PaginatedResponse<User>> => {
   const queryString = getQueryStringFromObject(queryParams || {});
-  console.log(queryString);
   const { data } = await peopleApi.get<PaginatedResponse<User>>(
     `/user?${queryString}`
   );
