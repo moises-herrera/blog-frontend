@@ -36,11 +36,11 @@ const getPosts = async (
  */
 export const getPostsFollowing = createAsyncThunk<
   PaginatedResponse<PostInfo>,
-  void,
+  QueryParams,
   AsyncThunkConfig
->("getPostsFollowing", async (_, { rejectWithValue }) => {
+>("getPostsFollowing", async (queryParams, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ following: true });
+    const posts = await getPosts({ following: true, ...queryParams });
     return posts;
   } catch (error) {
     const message =
@@ -60,11 +60,11 @@ export const getPostsFollowing = createAsyncThunk<
  */
 export const getPostsSuggested = createAsyncThunk<
   PaginatedResponse<PostInfo>,
-  void,
+  QueryParams,
   AsyncThunkConfig
->("getPostsSuggested", async (_, { rejectWithValue }) => {
+>("getPostsSuggested", async (queryParams, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ suggested: true });
+    const posts = await getPosts({ suggested: true, ...queryParams });
     return posts;
   } catch (error) {
     const message =

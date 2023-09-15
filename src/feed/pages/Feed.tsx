@@ -1,31 +1,11 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { APP_NAME } from "src/constants";
-import { FeedContent } from "src/feed/components";
-import { Loading } from "src/shared/components";
-import { useTypedSelector } from "src/store";
-import { getPostsFollowing, getPostsSuggested } from "src/store/post";
-import { AppDispatch } from "src/store/types";
+import { FollowingTab, SuggestedTab } from "src/feed/components";
 
 export const Feed = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const {
-    postFollowingList,
-    isLoadingFollowing,
-    postSuggestedList,
-    isLoadingSuggested,
-  } = useTypedSelector(({ post }) => post);
-  const { following } = useTypedSelector(({ users }) => users);
-
-  useEffect(() => {
-    dispatch(getPostsFollowing());
-  }, [dispatch, following]);
-
   useEffect(() => {
     document.title = `${APP_NAME}`;
-
-    dispatch(getPostsSuggested());
   }, []);
 
   return (
@@ -38,22 +18,10 @@ export const Feed = () => {
 
         <TabPanels>
           <TabPanel>
-            {!isLoadingFollowing ? (
-              <FeedContent posts={postFollowingList} />
-            ) : (
-              <div className="loading-container">
-                <Loading textClass="text-black" />
-              </div>
-            )}
+            <FollowingTab />
           </TabPanel>
           <TabPanel>
-            {!isLoadingSuggested ? (
-              <FeedContent posts={postSuggestedList} />
-            ) : (
-              <div className="loading-container">
-                <Loading textClass="text-black" />
-              </div>
-            )}
+            <SuggestedTab />
           </TabPanel>
         </TabPanels>
       </Tabs>
