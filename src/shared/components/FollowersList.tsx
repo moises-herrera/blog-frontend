@@ -1,5 +1,5 @@
 import { User } from "src/interfaces";
-import { FollowButton, Loading, SearchInput, UserCard } from ".";
+import { FollowButton, SearchInput, UserCard } from ".";
 import { useTypedSelector } from "src/store";
 import { useScrollPagination, useSearch } from "src/hooks";
 import { getFollowers } from "src/store/users";
@@ -20,8 +20,8 @@ export const FollowersList = () => {
 
   const { page } = useScrollPagination({
     isLoading: followersLoading,
-    currentRecords: followersResultsCount,
-    total: currentUser?.followers.length || 0,
+    currentRecords: followers.length,
+    total: followersResultsCount,
     elementRef: scrollableDiv,
   });
 
@@ -49,15 +49,11 @@ export const FollowersList = () => {
         className="users-list h-[310px] overflow-auto scrollable-div"
         ref={scrollableDiv}
       >
-        {!followersLoading ? (
-          followers.map((user) => (
-            <UserCard key={user.username} user={user}>
-              <FollowButton user={user} currentUser={currentUser as User} />
-            </UserCard>
-          ))
-        ) : (
-          <Loading />
-        )}
+        {followers.map((user) => (
+          <UserCard key={user.username} user={user}>
+            <FollowButton user={user} currentUser={currentUser as User} />
+          </UserCard>
+        ))}
       </div>
     </>
   );
