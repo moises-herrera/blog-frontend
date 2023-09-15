@@ -5,6 +5,7 @@ import { getFollowers, getFollowing, getUser, getAllUsers } from ".";
 const initialState: UsersState = {
   list: [],
   isLoading: false,
+  total: 0,
   error: "",
   followers: [],
   followersLoading: false,
@@ -76,10 +77,14 @@ export const usersSlice = createSlice({
     builder.addCase(getAllUsers.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
-      state.list = payload;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      getAllUsers.fulfilled,
+      (state, { payload: { data, total, page } }) => {
+        state.list = page > 1 ? [...state.list, ...data] : data;
+        state.total = total;
+        state.isLoading = false;
+      }
+    );
     builder.addCase(getAllUsers.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload?.message;

@@ -10,6 +10,9 @@ export interface UsersState {
   /** Loading state. */
   isLoading: boolean;
 
+  /** Total users. */
+  total: number;
+
   /** Error message. */
   error?: string | null;
 

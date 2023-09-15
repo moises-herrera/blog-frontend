@@ -1,50 +1,69 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect } from "react";
 import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
-import { AppDispatch } from "src/store/types";
-import { getAllUsers } from "src/store/users";
 import { UsersList } from "src/users/components";
-import { useDebounce } from "use-debounce";
 import "./Users.css";
+import { useScrollPagination, useSearch } from "src/hooks";
+import { getAllUsers } from "src/store/users";
+import { PaginatedResponse, User, QueryParams } from "src/interfaces";
 
 export const Users = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { list, isLoading } = useTypedSelector(({ users }) => users);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 600);
+  const { list, isLoading, total } = useTypedSelector(({ users }) => users);
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+  const searchUsers = useCallback(
+    (filter: string) =>
+      getAllUsers({
+        username: filter,
+        excludeCurrentUser: true,
+        limit: 10,
+        page: 1,
+      }),
+    []
+  );
 
-  useEffect(() => {
-    dispatch(getAllUsers(debouncedSearchTerm));
-  }, [dispatch, debouncedSearchTerm]);
+  const getUsers = useCallback(
+    (page: number) =>
+      getAllUsers({
+        username: "",
+        excludeCurrentUser: true,
+        limit: 10,
+        page,
+      }),
+    []
+  );
+
+  const { onSearch } = useSearch<
+    PaginatedResponse<User>,
+    QueryParams | undefined
+  >({
+    value: null,
+    action: searchUsers,
+  });
+
+  useScrollPagination<PaginatedResponse<User>, QueryParams | undefined>({
+    isLoading,
+    currentRecords: list.length,
+    total: total - 1,
+    action: getUsers,
+  });
 
   useEffect(() => {
     document.title = "Usuarios";
   }, []);
-
-  const onSearchUsers = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(value);
-  };
 
   return (
     <section className="section-content px-4 lg:px-8 !pt-12">
       <div className="flex justify-start w-full mb-4 text-3xl font-semibold lg:justify-between">
         <h2>Usuarios</h2>
         <div className="flex flex-col items-center ml-6 lg:ml-0">
-          <i className="fa-solid fa-users "></i>
-          <p className="text-[20px] ">{list.length}</p>
+          <i className="fa-solid fa-users"></i>
+          <p className="text-[20px] ">{total}</p>
         </div>
       </div>
 
       <SearchInput
         placeholder="Buscar usuarios"
-        onSearch={onSearchUsers}
+        onSearch={onSearch}
         backgroundColor="white"
         textColor="black"
         iconClassName="text-gray-400"

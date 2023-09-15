@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce";
 
 interface UseSearchProps<T, V> {
   value: string | null;
-  action: (value: string) => AsyncThunkAction<T[], V, AsyncThunkConfig>;
+  action: (value: string) => AsyncThunkAction<T, V, AsyncThunkConfig>;
 }
 
 export const useSearch = <T, V>({ value, action }: UseSearchProps<T, V>) => {
