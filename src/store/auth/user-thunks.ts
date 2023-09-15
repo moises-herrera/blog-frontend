@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import {
   ChangePassword,
   ConfirmEmail,
@@ -22,7 +22,7 @@ export const updateUser = createAsyncThunk<User, UpdateUser, AsyncThunkConfig>(
   "updateUser",
   async ({ id, userData }, { rejectWithValue }) => {
     try {
-      const { data } = await blogApi.put<User>(`/user/${id}`, userData);
+      const { data } = await peopleApi.put<User>(`/user/${id}`, userData);
 
       return data;
     } catch (error) {

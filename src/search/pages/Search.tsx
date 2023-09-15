@@ -3,16 +3,30 @@ import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { searchPosts } from "src/store/post";
 import { useSearch } from "src/hooks";
-import { PostInfo } from "src/interfaces";
-import { useEffect } from "react";
+import { PaginatedResponse, PostInfo, QueryParams } from "src/interfaces";
+import { useCallback, useEffect } from "react";
 
 export const Search = () => {
   const { searchResults, isLoadingSearch } = useTypedSelector(
     ({ post }) => post
   );
-  const { onSearch } = useSearch<PostInfo, string>({
-    value: "all",
-    action: searchPosts,
+
+  const onSearchPosts = useCallback(
+    (filter: string) =>
+      searchPosts({
+        search: filter,
+        limit: 10,
+        page: 1,
+      }),
+    []
+  );
+
+  const { onSearch } = useSearch<
+    PaginatedResponse<PostInfo>,
+    QueryParams | undefined
+  >({
+    value: "",
+    action: onSearchPosts,
   });
 
   useEffect(() => {

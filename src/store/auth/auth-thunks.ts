@@ -1,5 +1,5 @@
 import { AuthResponse, User, UserAuth } from "src/interfaces";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { AxiosError } from "axios";
 import { getToken, setToken } from "src/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk<
   "registerUser",
   async (user: Partial<User>, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await blogApi.post<AuthResponse>("/auth/register", user);
+      const { data } = await peopleApi.post<AuthResponse>("/auth/register", user);
 
       setToken(data.accessToken);
 
@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk<User, UserAuth, AsyncThunkConfig>(
   "loginUser",
   async (user: UserAuth, { rejectWithValue }) => {
     try {
-      const { data } = await blogApi.post<AuthResponse>("/auth/login", user);
+      const { data } = await peopleApi.post<AuthResponse>("/auth/login", user);
 
       setToken(data.accessToken);
 
@@ -91,7 +91,7 @@ export const validateAccessToken = createAsyncThunk<
   }
 
   try {
-    const { data } = await blogApi.get<AuthResponse>("/auth/renew-token");
+    const { data } = await peopleApi.get<AuthResponse>("/auth/renew-token");
 
     setToken(data.accessToken);
 

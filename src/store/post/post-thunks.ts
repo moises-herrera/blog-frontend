@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { getQueryStringFromObject } from "src/helpers";
 import {
+  PaginatedResponse,
   Post,
   PostInfo,
-  StandardObject,
+  QueryParams,
   StandardResponse,
   UpdatePost,
 } from "src/interfaces";
@@ -14,12 +15,16 @@ import { AsyncThunkConfig } from "src/store/types";
 /**
  * Get posts.
  *
- * @param filter The filter.
+ * @param queryParams The query params.
  * @returns
  */
-const getPosts = async (filter: StandardObject) => {
-  const query = getQueryStringFromObject(filter);
-  const { data } = await blogApi.get<PostInfo[]>(`/post?${query}`);
+const getPosts = async (
+  queryParams: QueryParams
+): Promise<PaginatedResponse<PostInfo>> => {
+  const queryString = getQueryStringFromObject(queryParams || {});
+  const { data } = await peopleApi.get<PaginatedResponse<PostInfo>>(
+    `/post?${queryString}`
+  );
 
   return data;
 };
@@ -30,12 +35,12 @@ const getPosts = async (filter: StandardObject) => {
  * @returns A thunk that dispatches an action.
  */
 export const getPostsFollowing = createAsyncThunk<
-  PostInfo[],
+  PaginatedResponse<PostInfo>,
   void,
   AsyncThunkConfig
 >("getPostsFollowing", async (_, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ following: "true" });
+    const posts = await getPosts({ following: true });
     return posts;
   } catch (error) {
     const message =
@@ -54,12 +59,12 @@ export const getPostsFollowing = createAsyncThunk<
  * @returns A thunk that dispatches an action.
  */
 export const getPostsSuggested = createAsyncThunk<
-  PostInfo[],
+  PaginatedResponse<PostInfo>,
   void,
   AsyncThunkConfig
 >("getPostsSuggested", async (_, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ suggested: "true" });
+    const posts = await getPosts({ suggested: true });
     return posts;
   } catch (error) {
     const message =
@@ -75,10 +80,12 @@ export const getPostsSuggested = createAsyncThunk<
 
 /**
  * Get user's posts list.
+ *
+ * @param userId The user id.
  * @returns A thunk that dispatches an action.
  */
 export const getUserPosts = createAsyncThunk<
-  PostInfo[],
+  PaginatedResponse<PostInfo>,
   string,
   AsyncThunkConfig
 >("getUserPosts", async (userId, { rejectWithValue }) => {
@@ -100,16 +107,16 @@ export const getUserPosts = createAsyncThunk<
 /**
  * Search posts.
  *
- * @param search The search.
+ * @param queryParams The query params.
  * @returns A thunk that dispatches an action.
  */
 export const searchPosts = createAsyncThunk<
-  PostInfo[],
-  string,
+  PaginatedResponse<PostInfo>,
+  QueryParams,
   AsyncThunkConfig
->("searchPosts", async (search, { rejectWithValue }) => {
+>("searchPosts", async (queryParams, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ search });
+    const posts = await getPosts(queryParams);
     return posts;
   } catch (error) {
     const message =
@@ -135,7 +142,7 @@ export const createPost = createAsyncThunk<
   AsyncThunkConfig
 >("createPost", async (postData, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.post<StandardResponse<Post>>(
+    const { data } = await peopleApi.post<StandardResponse<Post>>(
       "/post",
       postData
     );
@@ -165,7 +172,7 @@ export const updatePost = createAsyncThunk<
   AsyncThunkConfig
 >("updatePost", async ({ id, postData }, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.put<StandardResponse<Post>>(
+    const { data } = await peopleApi.put<StandardResponse<Post>>(
       `/post/${id}`,
       postData
     );
@@ -195,7 +202,7 @@ export const deletePost = createAsyncThunk<
   AsyncThunkConfig
 >("deletePost", async (id, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.delete<StandardResponse>(`/post/${id}`);
+    const { data } = await peopleApi.delete<StandardResponse>(`/post/${id}`);
 
     return data;
   } catch (error) {

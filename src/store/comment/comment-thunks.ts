@@ -1,6 +1,6 @@
 import { Comment, CommentInfo, StandardResponse } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { addComment } from "../post";
@@ -11,7 +11,7 @@ export const getComments = createAsyncThunk<
   AsyncThunkConfig
 >("getComments", async (id, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.get<CommentInfo[]>(`/comment?postId=${id}`);
+    const { data } = await peopleApi.get<CommentInfo[]>(`/comment?postId=${id}`);
     return data;
   } catch (error) {
     const message =
@@ -31,7 +31,7 @@ export const createComment = createAsyncThunk<
   AsyncThunkConfig
 >("createComment", async (postData, { dispatch, rejectWithValue }) => {
   try {
-    const { data } = await blogApi.post<CommentInfo>("/comment", postData);
+    const { data } = await peopleApi.post<CommentInfo>("/comment", postData);
     dispatch(addComment({ postId: data.post, commentId: data._id }));
 
     return data;
@@ -53,7 +53,7 @@ export const deleteComment = createAsyncThunk<
   AsyncThunkConfig
 >("deleteComment", async (id, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.delete<StandardResponse>(`/comment/${id}`);
+    const { data } = await peopleApi.delete<StandardResponse>(`/comment/${id}`);
     return data;
   } catch (error) {
     const message =
