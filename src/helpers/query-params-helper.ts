@@ -1,4 +1,4 @@
-import { StandardObject } from "src/interfaces";
+import { QueryParams, StandardObject } from "src/interfaces";
 
 /**
  * Get query params from url.
@@ -28,7 +28,7 @@ export const getQueryParams = (search: string): StandardObject => {
  * @param object The object.
  * @returns The query string.
  */
-export const getQueryStringFromObject = (object: StandardObject): string => {
+export const getQueryStringFromObject = (object: QueryParams): string => {
   return Object.keys(object)
     .map((key) => `${key}=${object[key]}`)
     .join("&");
