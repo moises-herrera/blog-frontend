@@ -3,12 +3,14 @@ import { AxiosError } from "axios";
 import { peopleApi } from "src/api";
 import { getQueryStringFromObject } from "src/helpers";
 import {
+  GetLikes,
   PaginatedResponse,
   Post,
   PostInfo,
   QueryParams,
   StandardResponse,
   UpdatePost,
+  User,
 } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 
@@ -204,6 +206,35 @@ export const deletePost = createAsyncThunk<
   try {
     const { data } = await peopleApi.delete<StandardResponse>(`/post/${id}`);
 
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
+ * Get users who liked a post.
+ *
+ * @param id The post id.
+ * @param queryParams The query params.
+ */
+export const getPostLikes = createAsyncThunk<
+  PaginatedResponse<User>,
+  GetLikes,
+  AsyncThunkConfig
+>("getPostLikes", async ({ id, queryParams }, { rejectWithValue }) => {
+  try {
+    const queryString = getQueryStringFromObject(queryParams || {});
+    const { data } = await peopleApi.get<PaginatedResponse<User>>(
+      `/post/${id}/like?${queryString}`
+    );
     return data;
   } catch (error) {
     const message =
