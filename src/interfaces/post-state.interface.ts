@@ -1,4 +1,4 @@
-import { Post, PostInfo } from ".";
+import { Post, PostInfo, User } from ".";
 
 /**
  * Represents the state of the post in the store.
@@ -72,4 +72,13 @@ export interface PostState {
 
   /** Post info active. */
   postInfoActive?: PostInfo | null;
+
+  /** Users that liked the active post. */
+  postUserLikes: User[];
+
+  /** Loading state. */
+  isLoadingPostLikes: boolean;
+
+  /** Total post likes. */
+  totalPostLikes: number;
 }

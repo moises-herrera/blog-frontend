@@ -3,6 +3,7 @@ import { PostState } from "src/interfaces";
 import {
   createPost,
   deletePost,
+  getPostLikes,
   getPostsFollowing,
   getPostsSuggested,
   getUserPosts,
@@ -32,6 +33,9 @@ const initialState: PostState = {
   deletePostId: null,
   isLoadingDeletePost: false,
   postInfoActive: null,
+  postUserLikes: [],
+  isLoadingPostLikes: false,
+  totalPostLikes: 0,
 };
 
 export const postSlice = createSlice({
@@ -438,6 +442,18 @@ export const postSlice = createSlice({
       state.deleteError = payload?.message;
       state.isDeleteModalVisible = false;
       state.deletePostId = null;
+    });
+
+    builder.addCase(getPostLikes.pending, (state) => {
+      state.isLoadingPostLikes = true;
+    });
+    builder.addCase(getPostLikes.fulfilled, (state, { payload }) => {
+      state.isLoadingPostLikes = false;
+      state.postUserLikes = payload.data;
+      state.totalPostLikes = payload.resultsCount;
+    });
+    builder.addCase(getPostLikes.rejected, (state) => {
+      state.isLoadingPostLikes = false;
     });
   },
 });
