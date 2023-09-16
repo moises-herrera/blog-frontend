@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { LikeButton } from ".";
 import { openCommentsModal } from "src/store/comment";
+import { openLikesModal } from "src/store/ui";
 
 export const PostCard = (data: PostInfo) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -63,6 +64,11 @@ export const PostCard = (data: PostInfo) => {
 
   const onOpenCommentsModal = () => {
     dispatch(openCommentsModal());
+    dispatch(setPostInfoActive(data));
+  };
+
+  const onOpenLikesModal = () => {
+    dispatch(openLikesModal());
     dispatch(setPostInfoActive(data));
   };
 
@@ -141,7 +147,9 @@ export const PostCard = (data: PostInfo) => {
               userId={currentUser?._id as string}
               userLiked={postHasLike(likes, currentUser?._id as string)}
             />
-            <span>{likes.length}</span>
+            <button onClick={onOpenLikesModal}>
+              <span>{likes.length}</span>
+            </button>
           </div>
         </ButtonGroup>
       </CardFooter>
