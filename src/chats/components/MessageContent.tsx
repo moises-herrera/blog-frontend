@@ -1,4 +1,4 @@
-import { getTimeFormatted } from "src/helpers";
+import { getTimeString } from "src/helpers";
 
 interface MessageContentProps {
   content: {
@@ -24,7 +24,7 @@ export const MessageContent = ({
       >
         <span>{content.text}</span>
         <div className="flex items-end pl-2">
-          <span className="text-xs">{getTimeFormatted(createdAt)}</span>
+          <span className="text-xs">{getTimeString(createdAt)}</span>
         </div>
       </div>
     </div>
