@@ -1,5 +1,6 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   FormControlContainer,
@@ -10,7 +11,7 @@ import { SignUpSchema, SignUpSchemaType } from "src/auth/validations";
 import { ModalData } from "src/interfaces";
 import { useDispatch } from "react-redux";
 import { clearErrorMessage, registerUser } from "src/store/auth";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
@@ -18,6 +19,10 @@ import { AppDispatch } from "src/store/types";
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
   const { status, errorMessage } = useTypedSelector(({ auth }) => auth);
+  const [isvisible, setIsVisible] = useState(false);
+  const onChangeVisible = () => {
+    setIsVisible(!isvisible);
+  };
   const { displayError } = useMessageToast();
   const {
     handleSubmit,
@@ -39,7 +44,6 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   }, [errorMessage, displayError, clearError]);
 
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
-
     dispatch(registerUser(data));
   };
 
@@ -63,18 +67,41 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
           <Input placeholder="Correo" type="email" {...register("email")} />
         </FormControlContainer>
         <FormControlContainer fieldError={errors.password}>
-          <Input
-            placeholder="Contraseña"
-            type="password"
-            {...register("password")}
-          />
+          <InputGroup>
+            <Input
+              placeholder="Contraseña"
+              type={isvisible ? "text" : "password"}
+              {...register("password")}
+            />
+            <InputRightElement>
+              <button onClick={onChangeVisible}>
+                {!isvisible ? (
+                  <i className="fa-solid fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-solid fa-eye"></i>
+                )}
+              </button>
+            </InputRightElement>
+          </InputGroup>
         </FormControlContainer>
         <FormControlContainer fieldError={errors.confirmPassword}>
-          <Input
-            placeholder="Confirmar contraseña"
-            type="password"
-            {...register("confirmPassword")}
-          />
+          <InputGroup>
+            <Input
+              placeholder="Confirmar contraseña"
+              type={isvisible ? "text" : "password"}
+              {...register("password")}
+              {...register("confirmPassword")}
+            />
+            <InputRightElement>
+              <button onClick={onChangeVisible}>
+                {!isvisible ? (
+                  <i className="fa-solid fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-solid fa-eye"></i>
+                )}
+              </button>
+            </InputRightElement>
+          </InputGroup>
         </FormControlContainer>
         <Button type="submit" variant="form" isLoading={status === "checking"}>
           Crear cuenta
