@@ -10,8 +10,7 @@ import { getDateFormattedFromString } from "src/helpers";
 export const ChatItem = (data: ChatData) => {
   const { participants, lastMessage } = data;
   const dispatch = useDispatch<AppDispatch>();
-  const { firstName, lastName, avatar } = participants[0];
-  const fullName = `${firstName} ${lastName}`;
+  const { fullName, avatar } = participants[0];
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onSelectChat = () => {

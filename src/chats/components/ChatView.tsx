@@ -11,7 +11,7 @@ export const ChatView = () => {
       {participant ? (
         <HeaderChat
           avatar={participant.avatar}
-          fullName={`${participant.firstName} ${participant.lastName}`}
+          fullName={participant.fullName}
         />
       ) : (
         <div className="flex items-center justify-center h-full">

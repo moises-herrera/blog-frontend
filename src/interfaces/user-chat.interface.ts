@@ -5,11 +5,8 @@ export interface UserChat {
   /** User id. */
   _id: string;
 
-  /** First name. */
-  firstName: string;
-
-  /** Last name. */
-  lastName: string;
+  /** Full name. */
+  fullName: string;
 
   /** Avatar. */
   avatar: string;
