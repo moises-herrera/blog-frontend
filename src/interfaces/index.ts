@@ -27,3 +27,5 @@ export * from "./comment.interface";
 export * from "./comment-state";
 export * from "./get-followers.interface";
 export * from "./delete-comment.interface";
+export * from "./chat-item";
+export * from "./message";
