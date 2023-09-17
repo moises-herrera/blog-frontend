@@ -1,4 +1,4 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ModalData } from "src/interfaces";
 import {
@@ -10,7 +10,7 @@ import { LoginSchema, LoginSchemaType } from "src/auth/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTypedSelector } from "src/store";
 import { useMessageToast } from "src/hooks";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { clearErrorMessage, loginUser } from "src/store/auth";
@@ -18,6 +18,10 @@ import { clearErrorMessage, loginUser } from "src/store/auth";
 export const LoginForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
   const { errorMessage } = useTypedSelector(({ auth }) => auth);
+  const [isvisible, setIsVisible] = useState(false);
+  const onChangeVisible = () => {
+    setIsVisible(!isvisible);
+  };
   const { displayError } = useMessageToast();
   const {
     handleSubmit,
@@ -53,11 +57,22 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
           <Input placeholder="Correo" type="email" {...register("email")} />
         </FormControlContainer>
         <FormControlContainer fieldError={errors.password}>
-          <Input
-            placeholder="Contraseña"
-            type="password"
-            {...register("password")}
-          />
+          <InputGroup>
+            <Input
+              placeholder="Contraseña"
+              type={isvisible ? "text" : "password"}
+              {...register("password")}
+            />
+            <InputRightElement>
+              <button onClick={onChangeVisible} type="button">
+                {!isvisible ? (
+                  <i className="fa-solid fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-solid fa-eye"></i>
+                )}
+              </button>
+            </InputRightElement>
+          </InputGroup>
         </FormControlContainer>
         <Button type="submit" variant="form">
           Iniciar sesión
