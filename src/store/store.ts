@@ -6,6 +6,7 @@ import { emailSlice } from "src/store/email";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { usersSlice } from "./users";
 import { commentSlice } from "./comment";
+import { chatSlice } from "./chats";
 
 /**
  * Redux store.
@@ -18,6 +19,7 @@ export const store = configureStore({
     email: emailSlice.reducer,
     users: usersSlice.reducer,
     comment: commentSlice.reducer,
+    chats: chatSlice.reducer,
   },
 });
 

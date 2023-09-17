@@ -25,6 +25,11 @@ export const linkItems: LinkItem[] = [
     icon: "fa-solid fa-user-group",
   },
   {
+    path: "/chats",
+    label: "Chats",
+    icon: "fa-regular fa-comment",
+  },
+  {
     path: "/settings",
     label: "Configuración",
     icon: "fa-solid fa-gear",

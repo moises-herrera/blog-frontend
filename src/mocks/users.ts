@@ -316,3 +316,109 @@ export const usuarios = [
     img: "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
   },
 ];
+
+export const datachats = [
+  {
+    _id: "1",
+    firstName: "John",
+    lastName: "Doe",
+  },
+  {
+    _id: "2",
+    firstName: "Jane",
+    lastName: "Smith",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "3",
+    firstName: "Michael",
+    lastName: "Johnson",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "4",
+    firstName: "Emily",
+    lastName: "Brown",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "5",
+    firstName: "William",
+    lastName: "Jones",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "6",
+    firstName: "Olivia",
+    lastName: "Davis",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "7",
+    firstName: "James",
+    lastName: "Wilson",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "8",
+    firstName: "Sophia",
+    lastName: "Martinez",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "9",
+    firstName: "Benjamin",
+    lastName: "Garcia",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "10",
+    firstName: "Mia",
+    lastName: "Rodriguez",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "11",
+    firstName: "Liam",
+    lastName: "Lopez",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "12",
+    firstName: "Ella",
+    lastName: "Hernandez",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "13",
+    firstName: "Alexander",
+    lastName: "Taylor",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "14",
+    firstName: "Ava",
+    lastName: "Brown",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+  {
+    _id: "15",
+    firstName: "Henry",
+    lastName: "Clark",
+    avatar:
+      "https://res.cloudinary.com/defqzorba/image/upload/v1693719376/posts/tomjj3ob1wyaeiox5qoh.jpg",
+  },
+];
