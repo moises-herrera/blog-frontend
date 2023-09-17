@@ -1,13 +1,15 @@
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useTypedSelector } from "src/store";
+
 import { toggleLeftSidebar } from "src/store/ui";
+import { useTypedSelector } from "src/store";
 
 interface MainContainerProps {
   children: React.ReactNode;
 }
 
 export const MainContainer = ({ children }: MainContainerProps) => {
+  const { isRigthSidebarOpen } = useTypedSelector(({ ui }) => ui);
   const { isLeftSidebarOpen } = useTypedSelector(({ ui }) => ui);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -17,7 +19,13 @@ export const MainContainer = ({ children }: MainContainerProps) => {
   };
 
   return (
-    <div className="main-container">
+    <div
+      className={
+        isRigthSidebarOpen
+          ? `main-container`
+          : `h-full w-full min-w-min lg:pl-[350px]`
+      }
+    >
       <button
         type="button"
         onClick={onToggleLeftSidebar}
