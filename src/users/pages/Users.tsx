@@ -1,50 +1,57 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
-import { AppDispatch } from "src/store/types";
-import { getAllUsers } from "src/store/users";
 import { UsersList } from "src/users/components";
-import { useDebounce } from "use-debounce";
 import "./Users.css";
+import { useScrollPagination, useSearch } from "src/hooks";
+import { getAllUsers } from "src/store/users";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
 
 export const Users = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { list, isLoading } = useTypedSelector(({ users }) => users);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 600);
+  const { list, isLoading, totalUsers, resultsCount } = useTypedSelector(
+    ({ users }) => users
+  );
+
+  const { debouncedSearchTerm, onSearch } = useSearch({
+    value: "",
+  });
+
+  const { page } = useScrollPagination({
+    isLoading,
+    currentRecords: list.length,
+    total: resultsCount,
+  });
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getAllUsers(debouncedSearchTerm));
-  }, [dispatch, debouncedSearchTerm]);
+    dispatch(
+      getAllUsers({
+        username: debouncedSearchTerm || "",
+        excludeCurrentUser: true,
+        limit: 10,
+        page,
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, page]);
 
   useEffect(() => {
     document.title = "Usuarios";
   }, []);
-
-  const onSearchUsers = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(value);
-  };
 
   return (
     <section className="section-content px-4 lg:px-8 !pt-12">
       <div className="flex justify-start w-full mb-4 text-3xl font-semibold lg:justify-between">
         <h2>Usuarios</h2>
         <div className="flex flex-col items-center ml-6 lg:ml-0">
-          <i className="fa-solid fa-users "></i>
-          <p className="text-[20px] ">{list.length}</p>
+          <i className="fa-solid fa-users"></i>
+          <p className="text-[20px]">{totalUsers}</p>
         </div>
       </div>
 
       <SearchInput
         placeholder="Buscar usuarios"
-        onSearch={onSearchUsers}
+        onSearch={onSearch}
         backgroundColor="white"
         textColor="black"
         iconClassName="text-gray-400"

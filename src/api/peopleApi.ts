@@ -4,17 +4,17 @@ import { getToken } from 'src/helpers';
 const { VITE_API_URL } = import.meta.env;
 
 /**
- * Blog API instance.
+ * People API instance.
  */
-const blogApi = axios.create({
+const peopleApi = axios.create({
   baseURL: VITE_API_URL,
 });
 
-blogApi.interceptors.request.use((config) => {
+peopleApi.interceptors.request.use((config) => {
   const token = getToken();
   config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });
 
-export default blogApi;
+export default peopleApi;

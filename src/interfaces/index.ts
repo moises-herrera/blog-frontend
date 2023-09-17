@@ -29,3 +29,6 @@ export * from "./get-followers.interface";
 export * from "./delete-comment.interface";
 export * from "./chat-item";
 export * from "./message";
+export * from "./query-params.interface";
+export * from "./paginated-response.interface";
+export * from "./get-likes.interface";

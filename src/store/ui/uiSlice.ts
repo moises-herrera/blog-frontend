@@ -6,6 +6,7 @@ const initialState: UiState = {
   isFollowersModalOpen: false,
   isFollowingModalOpen: false,
   isRigthSidebarOpen: true,
+  isLikeModalOpen: false,
 };
 
 export const uiSlice = createSlice({
@@ -33,6 +34,12 @@ export const uiSlice = createSlice({
     closeFollowingModal: (state) => {
       state.isFollowingModalOpen = false;
     },
+    openLikesModal: (state) => {
+      state.isLikeModalOpen = true;
+    },
+    closeLikesModal: (state) => {
+      state.isLikeModalOpen = false;
+    },
   },
 });
 
@@ -44,4 +51,6 @@ export const {
   closeFollowersModal,
   openFollowingModal,
   closeFollowingModal,
+  openLikesModal,
+  closeLikesModal,
 } = uiSlice.actions;

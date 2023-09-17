@@ -5,10 +5,15 @@ import { getFollowers, getFollowing, getUser, getAllUsers } from ".";
 const initialState: UsersState = {
   list: [],
   isLoading: false,
+  totalUsers: 0,
+  resultsCount: 0,
   error: "",
   followers: [],
+  followersResultsCount: 0,
   followersLoading: false,
   following: [],
+  followingResultsCount: 0,
+  totalFollowing: 0,
   followingLoading: false,
   userProfile: null,
   userProfileLoading: false,
@@ -76,10 +81,15 @@ export const usersSlice = createSlice({
     builder.addCase(getAllUsers.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
-      state.list = payload;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      getAllUsers.fulfilled,
+      (state, { payload: { data, total, page, resultsCount } }) => {
+        state.list = page > 1 ? [...state.list, ...data] : data;
+        state.totalUsers = total;
+        state.resultsCount = resultsCount;
+        state.isLoading = false;
+      }
+    );
     builder.addCase(getAllUsers.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload?.message;
@@ -88,10 +98,14 @@ export const usersSlice = createSlice({
     builder.addCase(getFollowers.pending, (state) => {
       state.followersLoading = true;
     });
-    builder.addCase(getFollowers.fulfilled, (state, { payload }) => {
-      state.followers = payload;
-      state.followersLoading = false;
-    });
+    builder.addCase(
+      getFollowers.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.followers = page > 1 ? [...state.followers, ...data] : data;
+        state.followersResultsCount = resultsCount;
+        state.followersLoading = false;
+      }
+    );
     builder.addCase(getFollowers.rejected, (state, { payload }) => {
       state.followersLoading = false;
       state.error = payload?.message;
@@ -100,10 +114,15 @@ export const usersSlice = createSlice({
     builder.addCase(getFollowing.pending, (state) => {
       state.followingLoading = true;
     });
-    builder.addCase(getFollowing.fulfilled, (state, { payload }) => {
-      state.following = payload;
-      state.followingLoading = false;
-    });
+    builder.addCase(
+      getFollowing.fulfilled,
+      (state, { payload: { data, page, total, resultsCount } }) => {
+        state.following = page > 1 ? [...state.following, ...data] : data;
+        state.totalFollowing = total;
+        state.followingResultsCount = resultsCount;
+        state.followingLoading = false;
+      }
+    );
     builder.addCase(getFollowing.rejected, (state, { payload }) => {
       state.followingLoading = false;
       state.error = payload?.message;
