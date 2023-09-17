@@ -34,11 +34,11 @@ export const ChatContainer = () => {
 
   return (
     <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
-      <div className="flex w-full px-3 pt-16 pb-5 md:pt-3">
+      <div className="flex w-full items-center gap-2 px-3 pt-16 pb-5 md:pt-3">
         <form className="w-full ">
           <InputGroup>
             <InputLeftElement>
-              <button className="ml-[10px]">
+              <button type="button">
                 <i className="fa-solid fa-magnifying-glass"></i>
               </button>
             </InputLeftElement>
@@ -46,12 +46,13 @@ export const ChatContainer = () => {
               onChange={onSearch}
               type="text"
               placeholder="Buscar..."
-              marginLeft={"5px"}
               background={"ffffff"}
             />
           </InputGroup>
         </form>
-        <i className="pl-2 pt-2 text-2xl fa-solid fa-pencil"></i>
+        <button>
+          <i className="text-2xl text-accent-500 fa-solid fa-circle-plus"></i>
+        </button>
       </div>
       <div
         ref={listRef}
