@@ -4,14 +4,18 @@ import not_chat from "src/assets/images/not-chat.svg";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { getMessages, sendMessage } from "src/store/chats";
-import { Textarea } from "@chakra-ui/react";
+import { addNewMessage, getMessages, sendMessage } from "src/store/chats";
+import { Button, Textarea } from "@chakra-ui/react";
 import "./ChatView.css";
+import { Message, SendMessage } from "src/interfaces";
+import { socket } from "src/socket";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
-  const { chatSelected, messages } = useTypedSelector(({ chats }) => chats);
+  const { chatSelected, messages, isSendingMessage } = useTypedSelector(
+    ({ chats }) => chats
+  );
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
 
@@ -21,23 +25,26 @@ export const ChatView = () => {
     setMessage(value);
   };
 
-  const onSendMessage = ({ key }: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (key !== "Enter" || !chatSelected?._id || !message.trim()) return;
+  const onSendMessage = () => {
+    if (!chatSelected?._id || !message.trim()) return;
 
-    dispatch(
-      sendMessage({
-        id: chatSelected._id,
-        message: {
-          content: {
-            text: message,
-          },
+    const data: SendMessage = {
+      id: chatSelected._id,
+      message: {
+        content: {
+          text: message,
         },
-      })
-    );
+      },
+    };
+
+    setMessage("");
+    dispatch(sendMessage(data));
   };
 
   useEffect(() => {
     if (chatSelected?._id) {
+      socket.emit("join", chatSelected._id);
+
       dispatch(
         getMessages({
           id: chatSelected._id,
@@ -49,6 +56,18 @@ export const ChatView = () => {
       );
     }
   }, [dispatch, chatSelected?._id]);
+
+  useEffect(() => {
+    const onNewMessage = (message: Message) => {
+      dispatch(addNewMessage(message));
+    };
+
+    socket.on("message", onNewMessage);
+
+    return () => {
+      socket.off("message", onNewMessage);
+    };
+  }, []);
 
   return (
     <div className="hidden h-screen bg-secondary-200 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l-[1px] border-[#B3B3B3] pl-7 pt-3 pr-7">
@@ -63,10 +82,10 @@ export const ChatView = () => {
               {messages.map(({ _id, content, sender }) => (
                 <p
                   key={_id}
-                  className={`bg-white rounded-md py-2 px-4 ${
+                  className={`rounded-md py-2 px-4 ${
                     sender === user?._id
                       ? "justify-self-end bg-accent-500 text-white ml-6"
-                      : "justify-self-start mr-6"
+                      : "justify-self-start bg-white mr-6"
                   }`}
                 >
                   {content.text}
@@ -74,13 +93,24 @@ export const ChatView = () => {
               ))}
             </div>
           </div>
-          <Textarea
-            backgroundColor="white"
-            resize="none"
-            placeholder="Mensaje"
-            onChange={onChangeMessage}
-            onKeyDown={onSendMessage}
-          />
+          <div className="grid gap-2 bg-white p-3 rounded-md">
+            <Textarea
+              backgroundColor="white"
+              resize="none"
+              placeholder="Mensaje"
+              value={message}
+              onChange={onChangeMessage}
+            />
+            <Button
+              onClick={onSendMessage}
+              className="justify-self-end"
+              leftIcon={<i className="fa-regular fa-paper-plane"></i>}
+              variant="message"
+              isLoading={isSendingMessage}
+            >
+              Enviar
+            </Button>
+          </div>
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
