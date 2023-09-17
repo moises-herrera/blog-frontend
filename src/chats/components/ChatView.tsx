@@ -1,16 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HeaderChat } from ".";
 import not_chat from "src/assets/images/not-chat.svg";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { getMessages } from "src/store/chats";
+import { getMessages, sendMessage } from "src/store/chats";
+import { Textarea } from "@chakra-ui/react";
+import "./ChatView.css";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
   const { chatSelected, messages } = useTypedSelector(({ chats }) => chats);
   const participant = chatSelected?.participants[0];
+  const [message, setMessage] = useState<string>("");
+
+  const onChangeMessage = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(value);
+  };
+
+  const onSendMessage = ({ key }: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (key !== "Enter" || !chatSelected?._id || !message.trim()) return;
+
+    dispatch(
+      sendMessage({
+        id: chatSelected._id,
+        message: {
+          content: {
+            text: message,
+          },
+        },
+      })
+    );
+  };
 
   useEffect(() => {
     if (chatSelected?._id) {
@@ -34,20 +58,29 @@ export const ChatView = () => {
             avatar={participant.avatar}
             fullName={participant.fullName}
           />
-          <div className="grid gap-3 pt-5">
-            {messages.map(({ _id, content, sender }) => (
-              <p
-                key={_id}
-                className={`bg-white rounded-md py-2 px-4 ${
-                  sender === user?._id
-                    ? "justify-self-end bg-accent-500 text-white"
-                    : "justify-self-start"
-                }`}
-              >
-                {content.text}
-              </p>
-            ))}
+          <div className="messages-container">
+            <div className="grid gap-3 pt-5">
+              {messages.map(({ _id, content, sender }) => (
+                <p
+                  key={_id}
+                  className={`bg-white rounded-md py-2 px-4 ${
+                    sender === user?._id
+                      ? "justify-self-end bg-accent-500 text-white ml-6"
+                      : "justify-self-start mr-6"
+                  }`}
+                >
+                  {content.text}
+                </p>
+              ))}
+            </div>
           </div>
+          <Textarea
+            backgroundColor="white"
+            resize="none"
+            placeholder="Mensaje"
+            onChange={onChangeMessage}
+            onKeyDown={onSendMessage}
+          />
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
