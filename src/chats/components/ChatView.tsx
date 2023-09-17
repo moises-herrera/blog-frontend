@@ -9,6 +9,7 @@ import { Button, Textarea } from "@chakra-ui/react";
 import "./ChatView.css";
 import { Message, SendMessage } from "src/interfaces";
 import { socket } from "src/socket";
+import { getTimeFormatted } from "src/helpers";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -78,18 +79,29 @@ export const ChatView = () => {
             fullName={participant.fullName}
           />
           <div className="messages-container">
-            <div className="grid gap-3 pt-5">
-              {messages.map(({ _id, content, sender }) => (
-                <p
+            <div className="flex flex-col gap-3 pt-5">
+              {messages.map(({ _id, content, sender, createdAt }) => (
+                <div
                   key={_id}
-                  className={`rounded-md py-2 px-4 ${
-                    sender === user?._id
-                      ? "justify-self-end bg-accent-500 text-white ml-6"
-                      : "justify-self-start bg-white mr-6"
+                  className={`flex ${
+                    sender === user?._id ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {content.text}
-                </p>
+                  <div
+                    className={`flex rounded-md p-2 ${
+                      sender === user?._id
+                        ? "bg-accent-500 text-white "
+                        : "bg-white"
+                    }`}
+                  >
+                    <span>{content.text}</span>
+                    <div className="flex items-end pl-2">
+                      <span className="text-xs">
+                        {getTimeFormatted(createdAt)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
