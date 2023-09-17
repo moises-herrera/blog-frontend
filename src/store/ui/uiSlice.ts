@@ -5,7 +5,7 @@ const initialState: UiState = {
   isLeftSidebarOpen: false,
   isFollowersModalOpen: false,
   isFollowingModalOpen: false,
-  isRigthSidebarOpen: true,
+  isRightSidebarOpen: true,
   isLikeModalOpen: false,
 };
 
@@ -14,7 +14,7 @@ export const uiSlice = createSlice({
   initialState,
   reducers: {
     toggleRightSidebar: (state) => {
-      state.isRigthSidebarOpen = !state.isRigthSidebarOpen;
+      state.isRightSidebarOpen = !state.isRightSidebarOpen;
     },
     toggleLeftSidebar: (state) => {
       state.isLeftSidebarOpen = !state.isLeftSidebarOpen;

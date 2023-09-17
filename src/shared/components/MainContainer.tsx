@@ -9,7 +9,7 @@ interface MainContainerProps {
 }
 
 export const MainContainer = ({ children }: MainContainerProps) => {
-  const { isRigthSidebarOpen } = useTypedSelector(({ ui }) => ui);
+  const { isRightSidebarOpen } = useTypedSelector(({ ui }) => ui);
   const { isLeftSidebarOpen } = useTypedSelector(({ ui }) => ui);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const MainContainer = ({ children }: MainContainerProps) => {
   return (
     <div
       className={
-        isRigthSidebarOpen
+        isRightSidebarOpen
           ? `main-container`
           : `h-full w-full min-w-min lg:pl-[350px]`
       }

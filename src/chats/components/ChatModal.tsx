@@ -1,35 +1,32 @@
 import { Modal, ModalContent, ModalBody } from "@chakra-ui/react";
 import { useTypedSelector } from "src/store";
-import { HeaderChat } from "./HeaderChat";
+import { ModalData } from "src/interfaces";
+import { HeaderChat } from ".";
 
-interface ControlModal {
-  onClose: () => void;
-  isOpen: boolean;
-}
-
-export const ChatModal = ({ onClose, isOpen }: ControlModal) => {
+export const ChatModal = ({ onClose, isOpen }: ModalData) => {
   const { chatSelected } = useTypedSelector(({ chats }) => chats);
-  const width = window.screen.width;
+  const isMobile = window.screen.width <= 767;
+  const participant = chatSelected?.participants[0];
+
   return (
     <>
-      {width <= 767 ? (
+      {isMobile && participant && (
         <Modal onClose={onClose} isOpen={isOpen} size={"full"}>
           <ModalContent>
-            <ModalBody background={"#D3D3D3"}>
+            <ModalBody background="secondary.100">
               <button onClick={onClose}>
                 <i className="text-xl fa-solid fa-arrow-left"></i>
               </button>
               <div>
                 <HeaderChat
-                  avatar={chatSelected?.avatar}
-                  fullname={chatSelected?.fullname}
-                  id={chatSelected?.id}
+                  avatar={participant?.avatar}
+                  fullName={participant?.fullName}
                 />
               </div>
             </ModalBody>
           </ModalContent>
         </Modal>
-      ) : null}
+      )}
     </>
   );
 };

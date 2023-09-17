@@ -11,8 +11,9 @@ export interface UiState {
   /** Whether the following modal is open. */
   isFollowingModalOpen: boolean;
 
-  /**Wheter the right sidebar is open  */
-  isRigthSidebarOpen: boolean;
+  /** Whether the right sidebar is open  */
+  isRightSidebarOpen: boolean;
+
   /** Whether the post form modal is open. */
   isLikeModalOpen: boolean;
 }
