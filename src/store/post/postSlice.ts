@@ -13,12 +13,16 @@ import {
 const initialState: PostState = {
   postFollowingList: [],
   isLoadingFollowing: false,
+  postsFollowingTotal: 0,
   postSuggestedList: [],
   isLoadingSuggested: false,
+  postsSuggestedTotal: 0,
   userPosts: [],
   isLoadingUserPosts: false,
+  userPostsTotal: 0,
   searchResults: [],
   isLoadingSearch: false,
+  totalResults: 0,
   isLoadingPostForm: false,
   isNewPostFormVisible: false,
   successMessage: null,
@@ -319,10 +323,15 @@ export const postSlice = createSlice({
     builder.addCase(getPostsFollowing.pending, (state) => {
       state.isLoadingFollowing = true;
     });
-    builder.addCase(getPostsFollowing.fulfilled, (state, { payload }) => {
-      state.postFollowingList = payload;
-      state.isLoadingFollowing = false;
-    });
+    builder.addCase(
+      getPostsFollowing.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.postFollowingList =
+          page > 1 ? [...state.postFollowingList, ...data] : data;
+        state.postsFollowingTotal = resultsCount;
+        state.isLoadingFollowing = false;
+      }
+    );
     builder.addCase(getPostsFollowing.rejected, (state, { payload }) => {
       state.isLoadingFollowing = false;
       state.errorMessage = payload?.message;
@@ -331,10 +340,15 @@ export const postSlice = createSlice({
     builder.addCase(getPostsSuggested.pending, (state) => {
       state.isLoadingSuggested = true;
     });
-    builder.addCase(getPostsSuggested.fulfilled, (state, { payload }) => {
-      state.postSuggestedList = payload;
-      state.isLoadingSuggested = false;
-    });
+    builder.addCase(
+      getPostsSuggested.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.postSuggestedList =
+          page > 1 ? [...state.postSuggestedList, ...data] : data;
+        state.postsSuggestedTotal = resultsCount;
+        state.isLoadingSuggested = false;
+      }
+    );
     builder.addCase(getPostsSuggested.rejected, (state, { payload }) => {
       state.isLoadingSuggested = false;
       state.errorMessage = payload?.message;
@@ -343,10 +357,14 @@ export const postSlice = createSlice({
     builder.addCase(getUserPosts.pending, (state) => {
       state.isLoadingUserPosts = true;
     });
-    builder.addCase(getUserPosts.fulfilled, (state, { payload }) => {
-      state.userPosts = payload;
-      state.isLoadingUserPosts = false;
-    });
+    builder.addCase(
+      getUserPosts.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.userPosts = page > 1 ? [...state.userPosts, ...data] : data;
+        state.userPostsTotal = resultsCount;
+        state.isLoadingUserPosts = false;
+      }
+    );
     builder.addCase(getUserPosts.rejected, (state, { payload }) => {
       state.isLoadingUserPosts = false;
       state.errorMessage = payload?.message;
@@ -355,10 +373,15 @@ export const postSlice = createSlice({
     builder.addCase(searchPosts.pending, (state) => {
       state.isLoadingSearch = true;
     });
-    builder.addCase(searchPosts.fulfilled, (state, { payload }) => {
-      state.searchResults = payload;
-      state.isLoadingSearch = false;
-    });
+    builder.addCase(
+      searchPosts.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.searchResults =
+          page > 1 ? [...state.searchResults, ...data] : data;
+        state.totalResults = resultsCount;
+        state.isLoadingSearch = false;
+      }
+    );
     builder.addCase(searchPosts.rejected, (state, { payload }) => {
       state.isLoadingSearch = false;
       state.errorMessage = payload?.message;

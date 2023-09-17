@@ -10,6 +10,12 @@ export interface UsersState {
   /** Loading state. */
   isLoading: boolean;
 
+  /** Total users. */
+  totalUsers: number;
+
+  /** Results count. */
+  resultsCount: number;
+
   /** Error message. */
   error?: string | null;
 
@@ -19,11 +25,20 @@ export interface UsersState {
   /** Whether the followers are loading. */
   followersLoading: boolean;
 
+  /** Total followers filtered. */
+  followersResultsCount: number;
+
   /** Following list. */
   following: User[];
 
   /** Whether the following are loading. */
   followingLoading: boolean;
+
+  /** Total following users. */
+  totalFollowing: number;
+
+  /** Total following filtered. */
+  followingResultsCount: number;
 
   /** User profile. */
   userProfile: User | null;

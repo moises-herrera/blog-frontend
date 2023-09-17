@@ -1,29 +1,42 @@
-import { GetFollowers, User } from "src/interfaces";
-import { FollowButton, Loading, SearchInput, UserCard } from ".";
+import { User } from "src/interfaces";
+import { FollowButton, SearchInput, UserCard } from ".";
 import { useTypedSelector } from "src/store";
-import { useSearch } from "src/hooks";
+import { useScrollPagination, useSearch } from "src/hooks";
 import { getFollowers } from "src/store/users";
-import { useCallback, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
 
 export const FollowersList = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
-  const { followers, followersLoading } = useTypedSelector(
-    ({ users }) => users
-  );
+  const { followers, followersLoading, followersResultsCount } =
+    useTypedSelector(({ users }) => users);
   const currentUserId = useMemo(() => currentUser?._id, [currentUser?._id]);
-  const searchResults = useCallback(
-    (filter: string) =>
+  const { debouncedSearchTerm, onSearch } = useSearch({
+    value: "",
+  });
+  const scrollableDiv = useRef<HTMLDivElement>(null);
+
+  const { page } = useScrollPagination({
+    isLoading: followersLoading,
+    currentRecords: followers.length,
+    total: followersResultsCount,
+    elementRef: scrollableDiv,
+  });
+
+  useEffect(() => {
+    dispatch(
       getFollowers({
         id: currentUserId as string,
-        username: filter,
-      }),
-    [currentUserId]
-  );
-
-  const { onSearch } = useSearch<User, GetFollowers>({
-    value: "",
-    action: searchResults,
-  });
+        queryParams: {
+          username: debouncedSearchTerm || "",
+          limit: 10,
+          page,
+        },
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, currentUserId, page]);
 
   return (
     <>
@@ -32,16 +45,15 @@ export const FollowersList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      <div className="users-list h-[310px] overflow-auto scrollable-div">
-        {!followersLoading ? (
-          followers.map((user) => (
-            <UserCard key={user.username} user={user}>
-              <FollowButton user={user} currentUser={currentUser as User} />
-            </UserCard>
-          ))
-        ) : (
-          <Loading />
-        )}
+      <div
+        className="users-list h-[310px] overflow-auto scrollable-div"
+        ref={scrollableDiv}
+      >
+        {followers.map((user) => (
+          <UserCard key={user.username} user={user}>
+            <FollowButton user={user} currentUser={currentUser as User} />
+          </UserCard>
+        ))}
       </div>
     </>
   );
