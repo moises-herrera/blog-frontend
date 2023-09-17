@@ -10,4 +10,7 @@ export interface UiState {
 
   /** Whether the following modal is open. */
   isFollowingModalOpen: boolean;
+
+  /**Wheter the right sidebar is open  */
+  isRigthSidebarOpen: boolean;
 }
