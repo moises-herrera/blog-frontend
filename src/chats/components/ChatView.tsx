@@ -1,15 +1,17 @@
-import { HeaderChat } from "./HeaderChat";
+import { HeaderChat } from ".";
 import not_chat from "src/assets/images/not-chat.svg";
 import { useTypedSelector } from "src/store";
+
 export const ChatView = () => {
   const { chatSelected } = useTypedSelector(({ chats }) => chats);
+  const participant = chatSelected?.participants[0];
+
   return (
-    <div className="hidden h-screen bg-[#D3D3D3] md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l-[1px] border-[#B3B3B3] pl-7 pt-3 pr-7">
-      {chatSelected ? (
+    <div className="hidden h-screen bg-secondary-200 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l-[1px] border-[#B3B3B3] pl-7 pt-3 pr-7">
+      {participant ? (
         <HeaderChat
-          avatar={chatSelected.avatar}
-          fullname={chatSelected.fullname}
-          id={chatSelected.id}
+          avatar={participant.avatar}
+          fullName={`${participant.firstName} ${participant.lastName}`}
         />
       ) : (
         <div className="flex items-center justify-center h-full">
