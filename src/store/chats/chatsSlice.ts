@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ChatState } from "src/interfaces";
-import { getChatsList } from ".";
+import { getChatsList, getMessages } from ".";
 
 const initialState: ChatState = {
   list: [],
@@ -36,6 +36,21 @@ export const chatSlice = createSlice({
     );
     builder.addCase(getChatsList.rejected, (state) => {
       state.isLoadingList = false;
+    });
+
+    builder.addCase(getMessages.pending, (state) => {
+      state.isLoadingMessages = true;
+    });
+    builder.addCase(
+      getMessages.fulfilled,
+      (state, { payload: { data, page, resultsCount } }) => {
+        state.isLoadingMessages = false;
+        state.messages = page > 1 ? [...state.messages, ...data] : data;
+        state.totalChats = resultsCount;
+      }
+    );
+    builder.addCase(getMessages.rejected, (state) => {
+      state.isLoadingMessages = false;
     });
   },
 });
