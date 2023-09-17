@@ -5,6 +5,8 @@ import {
   PaginatedResponse,
   QueryParams,
   RequestData,
+  SendMessage,
+  StandardResponse,
 } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 import { AxiosError } from "axios";
@@ -57,6 +59,36 @@ export const getMessages = createAsyncThunk<
     const queryString = getQueryStringFromObject(queryParams);
     const { data } = await peopleApi.get<PaginatedResponse<Message>>(
       `/conversation/${id}/messages?${queryString}`
+    );
+
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
+ * Send message.
+ *
+ * @param id Chat id.
+ * @param message Message data.
+ */
+export const sendMessage = createAsyncThunk<
+  StandardResponse<Message>,
+  SendMessage,
+  AsyncThunkConfig
+>("sendMessage", async ({ id, message }, { rejectWithValue }) => {
+  try {
+    const { data } = await peopleApi.post<StandardResponse<Message>>(
+      `/conversation/${id}/messages`,
+      message
     );
 
     return data;
