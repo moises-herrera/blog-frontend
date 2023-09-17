@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { HeaderChat } from ".";
-import not_chat from "src/assets/images/not-chat.svg";
+import { HeaderChat, MessageContent } from ".";
+import defaultChat from "src/assets/images/default-chat.svg";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { addNewMessage, getMessages, sendMessage } from "src/store/chats";
 import { Button, Textarea } from "@chakra-ui/react";
-import "./ChatView.css";
 import { Message, SendMessage } from "src/interfaces";
 import { socket } from "src/socket";
-import { getTimeFormatted } from "src/helpers";
+import "./ChatView.css";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -79,33 +78,16 @@ export const ChatView = () => {
             fullName={participant.fullName}
           />
           <div className="messages-container">
-            <div className="flex flex-col gap-3 pt-5">
-              {messages.map(({ _id, content, sender, createdAt }) => (
-                <div
-                  key={_id}
-                  className={`flex ${
-                    sender === user?._id ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`flex rounded-md p-2 ${
-                      sender === user?._id
-                        ? "bg-accent-500 text-white "
-                        : "bg-white"
-                    }`}
-                  >
-                    <span>{content.text}</span>
-                    <div className="flex items-end pl-2">
-                      <span className="text-xs">
-                        {getTimeFormatted(createdAt)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {messages.map(({ _id, content, sender, createdAt }) => (
+              <MessageContent
+                key={_id}
+                content={content}
+                createdAt={createdAt}
+                isFromCurrentUser={sender === user?._id}
+              />
+            ))}
           </div>
-          <div className="grid gap-2 bg-white p-3 rounded-md">
+          <div className="flex flex-col gap-2 bg-white p-3 rounded-md">
             <Textarea
               backgroundColor="white"
               resize="none"
@@ -113,20 +95,23 @@ export const ChatView = () => {
               value={message}
               onChange={onChangeMessage}
             />
-            <Button
-              onClick={onSendMessage}
-              className="justify-self-end"
-              leftIcon={<i className="fa-regular fa-paper-plane"></i>}
-              variant="message"
-              isLoading={isSendingMessage}
-            >
-              Enviar
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                onClick={onSendMessage}
+                leftIcon={<i className="fa-regular fa-paper-plane"></i>}
+                variant="message"
+                isLoading={isSendingMessage}
+              >
+                Enviar
+              </Button>
+            </div>
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center h-full">
-          <img className="w-72 h-72" src={not_chat} />
+        <div className="flex items-center justify-center h-full w-full">
+          <div className="max-w-[500px]">
+            <img className="w-full" src={defaultChat} />
+          </div>
         </div>
       )}
     </div>
