@@ -1,5 +1,5 @@
 .messages-container {
   height: calc(100% - 230px);
 
-  @apply flex flex-col gap-3 pt-5;
+  @apply flex flex-col gap-3 py-4 overflow-auto;
 }

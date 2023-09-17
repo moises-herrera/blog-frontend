@@ -19,7 +19,7 @@ export const MessageContent = ({
     >
       <div
         className={`flex rounded-md p-2 ${
-          isFromCurrentUser ? "bg-accent-500 text-white" : "bg-white"
+          isFromCurrentUser ? "bg-accent-500 text-white ml-6" : "bg-white mr-6"
         }`}
       >
         <span>{content.text}</span>

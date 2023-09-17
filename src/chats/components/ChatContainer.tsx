@@ -33,7 +33,7 @@ export const ChatContainer = () => {
   }, [dispatch, debouncedSearchTerm, page]);
 
   return (
-    <div className="w-full h-screen bg-secondary-200 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
+    <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
       <div className="flex w-full px-3 pt-16 pb-5 md:pt-3">
         <form className="w-full ">
           <InputGroup>

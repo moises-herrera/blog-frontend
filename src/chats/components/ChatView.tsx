@@ -70,14 +70,14 @@ export const ChatView = () => {
   }, []);
 
   return (
-    <div className="hidden h-screen bg-secondary-200 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l-[1px] border-[#B3B3B3] pl-7 pt-3 pr-7">
+    <div className="hidden h-screen bg-secondary-100 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l border-[#B3B3B3] pt-3 px-4">
       {participant ? (
         <>
           <HeaderChat
             avatar={participant.avatar}
             fullName={participant.fullName}
           />
-          <div className="messages-container">
+          <div className="messages-container scrollable-chat">
             {messages.map(({ _id, content, sender, createdAt }) => (
               <MessageContent
                 key={_id}
