@@ -60,8 +60,17 @@ export const chatSlice = createSlice({
     builder.addCase(sendMessage.pending, (state) => {
       state.isSendingMessage = true;
     });
-    builder.addCase(sendMessage.fulfilled, (state) => {
+    builder.addCase(sendMessage.fulfilled, (state, { payload: { data } }) => {
       state.isSendingMessage = false;
+      if (data) {
+        state.list = state.list.map((chat) => {
+          if (chat._id === data.conversation) {
+            chat.lastMessage = data;
+          }
+
+          return chat;
+        });
+      }
     });
     builder.addCase(sendMessage.rejected, (state) => {
       state.isSendingMessage = false;
