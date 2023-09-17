@@ -21,4 +21,7 @@ export interface ChatState {
 
   /** If messages are loading. */
   isLoadingMessages: boolean;
+
+  /** If is sending message. */
+  isSendingMessage: boolean;
 }

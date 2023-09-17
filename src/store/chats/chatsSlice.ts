@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ChatState } from "src/interfaces";
-import { getChatsList, getMessages } from ".";
+import { getChatsList, getMessages, sendMessage } from ".";
 
 const initialState: ChatState = {
   list: [],
@@ -9,6 +9,7 @@ const initialState: ChatState = {
   chatSelected: null,
   messages: [],
   isLoadingMessages: false,
+  isSendingMessage: false,
 };
 
 export const chatSlice = createSlice({
@@ -51,6 +52,20 @@ export const chatSlice = createSlice({
     );
     builder.addCase(getMessages.rejected, (state) => {
       state.isLoadingMessages = false;
+    });
+
+    builder.addCase(sendMessage.pending, (state) => {
+      state.isSendingMessage = true;
+    });
+    builder.addCase(sendMessage.fulfilled, (state, { payload: { data } }) => {
+      state.isSendingMessage = false;
+      if (data) {
+        state.messages =
+          state.messages.length > 1 ? [...state.messages, data] : [data];
+      }
+    });
+    builder.addCase(sendMessage.rejected, (state) => {
+      state.isSendingMessage = false;
     });
   },
 });

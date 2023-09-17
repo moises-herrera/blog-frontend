@@ -35,3 +35,4 @@ export * from "./get-likes.interface";
 export * from "./user-chat.interface";
 export * from "./chat-state";
 export * from "./request-data.interface";
+export * from "./send-message.interface";
