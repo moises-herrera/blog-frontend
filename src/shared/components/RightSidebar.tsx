@@ -3,10 +3,10 @@ import "./RightSidebar.css";
 import { useTypedSelector } from "src/store";
 
 export const RightSidebar = () => {
-  const { isRigthSidebarOpen } = useTypedSelector(({ ui }) => ui);
+  const { isRightSidebarOpen } = useTypedSelector(({ ui }) => ui);
   return (
     <>
-      {isRigthSidebarOpen && (
+      {isRightSidebarOpen && (
         <Sidebar
           align="right"
           cssClass="hidden lg:block lg:border-l lg:border-gray-500 pt-10 pb-3"

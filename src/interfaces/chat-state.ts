@@ -1,9 +1,27 @@
-import { ChatItem, Message } from ".";
+import { ChatData, Message } from ".";
 
+/**
+ * Chat state in the store.
+ */
 export interface ChatState {
-  list: ChatItem[];
+  /** Chats list. */
+  list: ChatData[];
+
+  /** If chats list is loading. */
   isLoadingList: boolean;
-  chatSelected: ChatItem | null;
+
+  /** Total chats. */
+  totalChats: number;
+
+  /** Chat selected. */
+  chatSelected: ChatData | null;
+
+  /** Messages of the chat selected. */
   messages: Message[];
+
+  /** If messages are loading. */
   isLoadingMessages: boolean;
+
+  /** If is sending message. */
+  isSendingMessage: boolean;
 }

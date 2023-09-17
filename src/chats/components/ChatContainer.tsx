@@ -1,52 +1,66 @@
-import { useState, ChangeEvent } from "react";
-import { Input, InputGroup, InputLeftElement, Button } from "@chakra-ui/react";
-import { ChatItems } from "./ChatItem";
-import { datachats } from "src/mocks/users";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { ChatItem } from ".";
+import { useTypedSelector } from "src/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/types";
+import { useEffect, useRef } from "react";
+import { getChatsList } from "src/store/chats";
+import { useScrollPagination, useSearch } from "src/hooks";
 
 export const ChatContainer = () => {
-  const [search, setSearch] = useState<string>("");
-  const onSearchUser = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const { list, isLoadingList, totalChats } = useTypedSelector(
+    ({ chats }) => chats
+  );
+  const { debouncedSearchTerm, onSearch } = useSearch({ value: "" });
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const { page } = useScrollPagination({
+    isLoading: isLoadingList,
+    currentRecords: list.length,
+    total: totalChats,
+    elementRef: listRef,
+  });
+
+  useEffect(() => {
+    dispatch(
+      getChatsList({
+        search: debouncedSearchTerm || "",
+        limit: 10,
+        page,
+      })
+    );
+  }, [dispatch, debouncedSearchTerm, page]);
+
   return (
-    <div className="w-full h-screen bg-[#D3D3D3] md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
-      <div className="flex w-full px-3 pt-16 pb-5 md:pt-3">
+    <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
+      <div className="flex w-full items-center gap-2 px-3 pt-16 pb-5 md:pt-3">
         <form className="w-full ">
           <InputGroup>
             <InputLeftElement>
-              <Button
-                type="submit"
-                backgroundColor={"#ffffff"}
-                marginLeft={"10px"}
-              >
+              <button type="button">
                 <i className="fa-solid fa-magnifying-glass"></i>
-              </Button>
+              </button>
             </InputLeftElement>
             <Input
-              onChange={onSearchUser}
+              onChange={onSearch}
               type="text"
               placeholder="Buscar..."
-              marginLeft={"5px"}
               background={"ffffff"}
             />
           </InputGroup>
         </form>
-        <i className="pl-2 pt-2 text-2xl fa-solid fa-pencil text-[##e9ecf1]"></i>
+        <button>
+          <i className="text-2xl text-accent-500 fa-solid fa-circle-plus"></i>
+        </button>
       </div>
-      <div className="w-full px-3 overflow-auto chat-list scrollable-chat">
-        {datachats
-          .filter((user) =>
-            user.firstName.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((item) => (
-            <div key={item._id}>
-              <ChatItems
-                id={item._id}
-                fullname={`${item.firstName} ${item.lastName}`}
-                avatar={item.avatar}
-              />
-            </div>
-          ))}
+      <div
+        ref={listRef}
+        className="w-full px-3 overflow-auto chat-list scrollable-chat"
+      >
+        {list.map((chat) => (
+          <ChatItem key={chat._id} {...chat} />
+        ))}
       </div>
     </div>
   );

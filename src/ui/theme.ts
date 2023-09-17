@@ -42,6 +42,17 @@ export const appTheme = extendTheme({
           width: "100%",
           maxWidth: "200px",
         },
+        message: {
+          bg: "accent.500",
+          textColor: "white",
+          fontWeight: "500",
+          rounded: "6px",
+          size: "md",
+          paddingY: "5px",
+          minWidth: "fit-content",
+          width: "100%",
+          maxWidth: "90px",
+        },
       },
     },
     Input: {
