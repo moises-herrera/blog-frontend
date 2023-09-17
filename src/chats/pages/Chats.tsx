@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-
 import { toggleRightSidebar } from "src/store/ui";
 import { useDispatch } from "react-redux";
-import { ChatContainer } from "../components/ChatContainer";
-import { ChatView } from "../components/ChatView";
+import { ChatContainer, ChatView } from "src/chats/components";
 
 export const Chats = () => {
   const dispatch = useDispatch();
