@@ -22,6 +22,9 @@ export const chatSlice = createSlice({
     clearChatSelected: (state) => {
       state.chatSelected = null;
     },
+    addNewMessage: (state, { payload }) => {
+      state.messages = [...state.messages, payload];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getChatsList.pending, (state) => {
@@ -57,12 +60,8 @@ export const chatSlice = createSlice({
     builder.addCase(sendMessage.pending, (state) => {
       state.isSendingMessage = true;
     });
-    builder.addCase(sendMessage.fulfilled, (state, { payload: { data } }) => {
+    builder.addCase(sendMessage.fulfilled, (state) => {
       state.isSendingMessage = false;
-      if (data) {
-        state.messages =
-          state.messages.length > 1 ? [...state.messages, data] : [data];
-      }
     });
     builder.addCase(sendMessage.rejected, (state) => {
       state.isSendingMessage = false;
@@ -70,4 +69,5 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setChatSelected, clearChatSelected } = chatSlice.actions;
+export const { setChatSelected, clearChatSelected, addNewMessage } =
+  chatSlice.actions;
