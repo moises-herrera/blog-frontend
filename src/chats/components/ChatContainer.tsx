@@ -53,39 +53,39 @@ export const ChatContainer = () => {
   }, [dispatch, debouncedSearchTerm, page]);
 
   return (
-    <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
-      <div className="flex items-center w-full gap-2 px-3 pt-16 pb-5 md:pt-3">
-        <SearchUsers isOpen={isOpen} onClose={onClose} />
-        <form className="w-full ">
-          <InputGroup>
-            <InputLeftElement>
-              <button type="button">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </InputLeftElement>
-            <Input
-              onChange={onSearch}
-              type="text"
-              placeholder="Buscar..."
-              background={"ffffff"}
-            />
-          </InputGroup>
-        </form>
-        <button onClick={onOpen}>
-          <i className="text-2xl text-accent-500 fa-solid fa-circle-plus"></i>
-        </button>
+      <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
+        <div className="flex items-center w-full gap-2 px-3 pt-16 pb-5 md:pt-3">
+          <SearchUsers isOpen={isOpen} onClose={onClose} />
+          <form className="w-full">
+            <InputGroup>
+              <InputLeftElement>
+                <button type="button">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </InputLeftElement>
+              <Input
+                onChange={onSearch}
+                type="text"
+                placeholder="Buscar..."
+                background={"ffffff"}
+              />
+            </InputGroup>
+          </form>
+          <button onClick={onOpen}>
+            <i className="text-2xl text-accent-500 fa-solid fa-circle-plus"></i>
+          </button>
+        </div>
+        <div
+          ref={listRef}
+          className="w-full px-3 overflow-y-auto chat-list scrollable-chat"
+        >
+          {list.map((chat) => (
+            <ChatItem key={chat._id} {...chat} />
+          ))}
+          {isChatModalOpen && (
+            <ChatModal onClose={onCloseModal} isOpen={isChatModalOpen} />
+          )}
+        </div>
       </div>
-      <div
-        ref={listRef}
-        className="w-full px-3 overflow-auto chat-list scrollable-chat"
-      >
-        {list.map((chat) => (
-          <ChatItem key={chat._id} {...chat} />
-        ))}
-        {isChatModalOpen && (
-          <ChatModal onClose={onCloseModal} isOpen={isChatModalOpen} />
-        )}
-      </div>
-    </div>
   );
 };
