@@ -57,5 +57,6 @@ export const useScrollPagination = ({
 
   return {
     page,
+    setPage,
   };
 };

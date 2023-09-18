@@ -31,7 +31,7 @@ export const ChatMessages = () => {
   const [message, setMessage] = useState<string>("");
   const messagesListRef = useRef<HTMLDivElement>(null);
 
-  const { page } = useScrollPagination({
+  const { page, setPage } = useScrollPagination({
     isLoading: isLoadingMessages,
     currentRecords: messages.length,
     total: totalMessages,
@@ -78,6 +78,7 @@ export const ChatMessages = () => {
 
   useEffect(() => {
     if (chatSelected?._id) {
+      setPage(1);
       dispatch(
         getMessages({
           id: chatSelected._id,
@@ -90,7 +91,7 @@ export const ChatMessages = () => {
     } else {
       dispatch(clearMessages());
     }
-  }, [dispatch, chatSelected?._id, page]);
+  }, [dispatch, chatSelected?._id, setPage, page]);
 
   useEffect(() => {
     if (messagesListRef.current) {
