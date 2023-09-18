@@ -11,6 +11,7 @@ const initialState: ChatState = {
   isLoadingMessages: false,
   isSendingMessage: false,
   isCreatingChat: false,
+  isChatModalOpen: false,
 };
 
 export const chatSlice = createSlice({
@@ -28,6 +29,12 @@ export const chatSlice = createSlice({
     },
     clearMessages: (state) => {
       state.messages = [];
+    },
+    openChatModal: (state) => {
+      state.isChatModalOpen = true;
+    },
+    closeChatModal: (state) => {
+      state.isChatModalOpen = false;
     },
   },
   extraReducers: (builder) => {
@@ -100,4 +107,6 @@ export const {
   clearChatSelected,
   addNewMessage,
   clearMessages,
+  openChatModal,
+  closeChatModal,
 } = chatSlice.actions;

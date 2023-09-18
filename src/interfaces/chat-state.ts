@@ -27,4 +27,7 @@ export interface ChatState {
 
   /** If is sending message. */
   isSendingMessage: boolean;
+
+  /** If is chat modal open. */
+  isChatModalOpen: boolean;
 }

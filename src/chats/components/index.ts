@@ -6,3 +6,4 @@ export * from "./HeaderChat";
 export * from "./MessageContent";
 export * from "./SearchUsers";
 export * from "./UserItem";
+export * from "./ChatMessages";

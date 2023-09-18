@@ -1,7 +1,7 @@
 import { ChatData } from "src/interfaces";
 import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
-import { setChatSelected } from "src/store/chats";
+import { openChatModal, setChatSelected } from "src/store/chats";
 import { Avatar } from "@chakra-ui/react";
 interface NewChat {
   onClose: () => void;
@@ -23,6 +23,12 @@ export const UserItem = ({ _id, fullName, avatar, onClose }: NewChat) => {
       ],
     } as ChatData;
     dispatch(setChatSelected(newChat));
+
+    const isMobile = window.screen.width <= 767;
+
+    if (isMobile) {
+      dispatch(openChatModal());
+    }
     onClose();
   };
   return (

@@ -1,21 +1,33 @@
 import { Avatar } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { ChatData } from "src/interfaces";
-import { setChatSelected } from "src/store/chats";
+import {
+  closeChatModal,
+  openChatModal,
+  setChatSelected,
+} from "src/store/chats";
 import { AppDispatch } from "src/store/types";
 import { ChatModal } from ".";
-import { useDisclosure } from "@chakra-ui/react";
 import { getTimeFormatted } from "src/helpers";
+import { useTypedSelector } from "src/store";
 
 export const ChatItem = (data: ChatData) => {
   const { participants, lastMessage } = data;
   const dispatch = useDispatch<AppDispatch>();
   const { fullName, avatar } = participants[0];
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isChatModalOpen } = useTypedSelector(({ chats }) => chats);
 
   const onSelectChat = () => {
     dispatch(setChatSelected(data));
-    onOpen();
+    const isMobile = window.screen.width <= 767;
+
+    if (isMobile) {
+      dispatch(openChatModal());
+    }
+  };
+
+  const onCloseModal = () => {
+    dispatch(closeChatModal());
   };
 
   return (
@@ -37,7 +49,7 @@ export const ChatItem = (data: ChatData) => {
           <p>{getTimeFormatted(lastMessage?.createdAt || "")}</p>
         </div>
       </div>
-      <ChatModal onClose={onClose} isOpen={isOpen} />
+      <ChatModal onClose={onCloseModal} isOpen={isChatModalOpen} />
     </div>
   );
 };
