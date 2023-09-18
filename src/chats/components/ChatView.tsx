@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { HeaderChat, MessageContent } from ".";
 import defaultChat from "src/assets/images/default-chat.svg";
 import { useTypedSelector } from "src/store";
@@ -14,15 +14,29 @@ import { Button, Textarea } from "@chakra-ui/react";
 import { Message, SendMessage } from "src/interfaces";
 import { socket } from "src/socket";
 import "./ChatView.css";
+import { getDateFormattedFromString, isSameDate } from "src/helpers";
+import { useScrollPagination } from "src/hooks";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
-  const { chatSelected, messages, isSendingMessage } = useTypedSelector(
-    ({ chats }) => chats
-  );
+  const {
+    chatSelected,
+    messages,
+    isSendingMessage,
+    isLoadingMessages,
+    totalMessages,
+  } = useTypedSelector(({ chats }) => chats);
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
+  const messagesListRef = useRef<HTMLDivElement>(null);
+  const { page } = useScrollPagination({
+    isLoading: isLoadingMessages,
+    currentRecords: messages.length,
+    total: totalMessages,
+    elementRef: messagesListRef,
+    isReverse: true,
+  });
 
   const onChangeMessage = ({
     target: { value },
@@ -52,13 +66,13 @@ export const ChatView = () => {
         getMessages({
           id: chatSelected._id,
           queryParams: {
-            limit: 10,
-            page: 1,
+            limit: 15,
+            page,
           },
         })
       );
     }
-  }, [dispatch, chatSelected?._id]);
+  }, [dispatch, chatSelected?._id, page]);
 
   useEffect(() => {
     const onNewMessage = (message: Message) => {
@@ -81,14 +95,26 @@ export const ChatView = () => {
             avatar={participant.avatar}
             fullName={participant.fullName}
           />
-          <div className="messages-container scrollable-chat">
-            {messages.map(({ _id, content, sender, createdAt }) => (
-              <MessageContent
-                key={_id}
-                content={content}
-                createdAt={createdAt}
-                isFromCurrentUser={sender === user?._id}
-              />
+          <div
+            className="messages-container scrollable-chat"
+            ref={messagesListRef}
+          >
+            {messages.map(({ _id, content, sender, createdAt }, index) => (
+              <Fragment key={_id}>
+                <>
+                  {index !== 0 &&
+                    !isSameDate(createdAt, messages[index - 1].createdAt) && (
+                      <span className="w-full text-center text-secondary-300 font-semibold">
+                        {getDateFormattedFromString(createdAt)}
+                      </span>
+                    )}
+                </>
+                <MessageContent
+                  content={content}
+                  createdAt={createdAt}
+                  isFromCurrentUser={sender === user?._id}
+                />
+              </Fragment>
             ))}
           </div>
           <div className="flex flex-col gap-2 bg-white p-3 rounded-md">
