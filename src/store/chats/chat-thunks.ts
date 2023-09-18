@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   ChatData,
+  CreateChat,
   Message,
   PaginatedResponse,
   QueryParams,
@@ -28,6 +29,36 @@ export const getChatsList = createAsyncThunk<
     const queryString = getQueryStringFromObject(queryParams);
     const { data } = await peopleApi.get<PaginatedResponse<ChatData>>(
       `/conversation?${queryString}`
+    );
+
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : "Ha ocurrido un error.";
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
+ * Create chat.
+ *
+ * @param chatData Chat data.
+ * @returns Chat data.
+ */
+export const createChat = createAsyncThunk<
+  StandardResponse<ChatData>,
+  CreateChat,
+  AsyncThunkConfig
+>("createChat", async (chatData, { rejectWithValue }) => {
+  try {
+    const { data } = await peopleApi.post<StandardResponse<ChatData>>(
+      "/conversation",
+      chatData
     );
 
     return data;

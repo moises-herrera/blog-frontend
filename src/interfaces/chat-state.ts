@@ -16,6 +16,9 @@ export interface ChatState {
   /** Chat selected. */
   chatSelected: ChatData | null;
 
+  /** If is creating chat. */
+  isCreatingChat: boolean;
+
   /** Messages of the chat selected. */
   messages: Message[];
 
@@ -24,4 +27,7 @@ export interface ChatState {
 
   /** If is sending message. */
   isSendingMessage: boolean;
+
+  /** If is chat modal open. */
+  isChatModalOpen: boolean;
 }

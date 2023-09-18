@@ -1,4 +1,9 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ChatItem } from ".";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
@@ -6,8 +11,10 @@ import { AppDispatch } from "src/store/types";
 import { useEffect, useRef } from "react";
 import { getChatsList } from "src/store/chats";
 import { useScrollPagination, useSearch } from "src/hooks";
+import { SearchUsers } from ".";
 
 export const ChatContainer = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch<AppDispatch>();
   const { list, isLoadingList, totalChats } = useTypedSelector(
     ({ chats }) => chats
@@ -34,7 +41,8 @@ export const ChatContainer = () => {
 
   return (
     <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
-      <div className="flex w-full items-center gap-2 px-3 pt-16 pb-5 md:pt-3">
+      <div className="flex items-center w-full gap-2 px-3 pt-16 pb-5 md:pt-3">
+        <SearchUsers isOpen={isOpen} onClose={onClose} />
         <form className="w-full ">
           <InputGroup>
             <InputLeftElement>
@@ -50,7 +58,7 @@ export const ChatContainer = () => {
             />
           </InputGroup>
         </form>
-        <button>
+        <button onClick={onOpen}>
           <i className="text-2xl text-accent-500 fa-solid fa-circle-plus"></i>
         </button>
       </div>

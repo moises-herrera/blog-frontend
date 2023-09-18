@@ -1,5 +1,11 @@
 .messages-container {
-  height: calc(100% - 230px);
+  height: calc(100vh - 280px);
 
   @apply flex flex-col gap-3 py-4 overflow-auto;
+}
+
+@media (min-width: 768px) {
+  .messages-container {
+    height: calc(100vh - 240px);
+  }
 }
