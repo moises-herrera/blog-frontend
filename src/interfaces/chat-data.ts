@@ -11,5 +11,5 @@ export interface ChatData {
   participants: UserChat[];
 
   /** Last message of the conversation. */
-  lastMessage: Message;
+  lastMessage?: Message;
 }
