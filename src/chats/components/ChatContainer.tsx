@@ -4,12 +4,12 @@ import {
   InputLeftElement,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ChatItem } from ".";
+import { ChatItem, ChatModal } from ".";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { useEffect, useRef } from "react";
-import { getChatsList } from "src/store/chats";
+import { closeChatModal, getChatsList } from "src/store/chats";
 import { useScrollPagination, useSearch } from "src/hooks";
 import { socket } from "src/socket";
 import { SearchUsers } from ".";
@@ -22,6 +22,11 @@ export const ChatContainer = () => {
   );
   const { debouncedSearchTerm, onSearch } = useSearch({ value: "" });
   const listRef = useRef<HTMLDivElement>(null);
+  const { isChatModalOpen } = useTypedSelector(({ chats }) => chats);
+
+  const onCloseModal = () => {
+    dispatch(closeChatModal());
+  };
 
   const { page } = useScrollPagination({
     isLoading: isLoadingList,
@@ -77,6 +82,9 @@ export const ChatContainer = () => {
         {list.map((chat) => (
           <ChatItem key={chat._id} {...chat} />
         ))}
+        {isChatModalOpen && (
+          <ChatModal onClose={onCloseModal} isOpen={isChatModalOpen} />
+        )}
       </div>
     </div>
   );

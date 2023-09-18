@@ -2,7 +2,7 @@ import { Textarea, Button } from "@chakra-ui/react";
 import { HeaderChat, MessageContent } from ".";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 import { SendMessage, CreateChat } from "src/interfaces";
 import { useTypedSelector } from "src/store";
 import {
@@ -16,7 +16,7 @@ import "./ChatView.css";
 import { useScrollPagination } from "src/hooks";
 import { isSameDate, getDateFormattedFromString } from "src/helpers";
 
-export const ChatMessages = () => {
+export const ChatMessages = memo(() => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
   const {
@@ -30,6 +30,7 @@ export const ChatMessages = () => {
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
   const messagesListRef = useRef<HTMLDivElement>(null);
+  const chatId = useMemo(() => chatSelected?._id, [chatSelected?._id]);
 
   const { page, setPage } = useScrollPagination({
     isLoading: isLoadingMessages,
@@ -77,11 +78,11 @@ export const ChatMessages = () => {
   };
 
   useEffect(() => {
-    if (chatSelected?._id) {
+    if (chatId) {
       setPage(1);
       dispatch(
         getMessages({
-          id: chatSelected._id,
+          id: chatId,
           queryParams: {
             limit: 15,
             page,
@@ -91,7 +92,7 @@ export const ChatMessages = () => {
     } else {
       dispatch(clearMessages());
     }
-  }, [dispatch, chatSelected?._id, setPage, page]);
+  }, [dispatch, chatId, setPage, page]);
 
   useEffect(() => {
     if (messagesListRef.current) {
@@ -166,4 +167,4 @@ export const ChatMessages = () => {
       )}
     </>
   );
-};
+});

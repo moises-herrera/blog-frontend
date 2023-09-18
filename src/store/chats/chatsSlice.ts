@@ -21,6 +21,9 @@ export const chatSlice = createSlice({
   reducers: {
     setChatSelected: (state, { payload }) => {
       state.chatSelected = payload;
+      if (window.screen.width <= 767) {
+        state.isChatModalOpen = true;
+      }
     },
     clearChatSelected: (state) => {
       state.chatSelected = null;
