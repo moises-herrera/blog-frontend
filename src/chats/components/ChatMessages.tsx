@@ -2,20 +2,41 @@ import { Textarea, Button } from "@chakra-ui/react";
 import { HeaderChat, MessageContent } from ".";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SendMessage, CreateChat } from "src/interfaces";
 import { useTypedSelector } from "src/store";
-import { sendMessage, createChat } from "src/store/chats";
+import {
+  sendMessage,
+  createChat,
+  clearMessages,
+  getMessages,
+} from "src/store/chats";
 import defaultChat from "src/assets/images/default-chat.svg";
 import "./ChatView.css";
+import { useScrollPagination } from "src/hooks";
 
 export const ChatMessages = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
-  const { chatSelected, messages, isSendingMessage, isCreatingChat } =
-    useTypedSelector(({ chats }) => chats);
+  const {
+    chatSelected,
+    messages,
+    isSendingMessage,
+    isCreatingChat,
+    isLoadingMessages,
+    totalMessages,
+  } = useTypedSelector(({ chats }) => chats);
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
+  const messagesListRef = useRef<HTMLDivElement>(null);
+
+  const { page } = useScrollPagination({
+    isLoading: isLoadingMessages,
+    currentRecords: messages.length,
+    total: totalMessages,
+    elementRef: messagesListRef,
+    isReverse: true,
+  });
 
   const onChangeMessage = ({
     target: { value },
@@ -53,6 +74,34 @@ export const ChatMessages = () => {
       dispatch(createChat(chatData));
     }
   };
+
+  useEffect(() => {
+    if (chatSelected?._id) {
+      dispatch(
+        getMessages({
+          id: chatSelected._id,
+          queryParams: {
+            limit: 15,
+            page,
+          },
+        })
+      );
+    } else {
+      dispatch(clearMessages());
+    }
+  }, [dispatch, chatSelected?._id, page]);
+
+  useEffect(() => {
+    if (messagesListRef.current) {
+      const scrollTop = Number(localStorage.getItem("scrollTop"));
+      if (scrollTop) {
+        messagesListRef.current.scrollTop = scrollTop;
+      } else {
+        messagesListRef.current.scrollTop =
+          messagesListRef.current.scrollHeight;
+      }
+    }
+  }, [messages]);
 
   return (
     <>

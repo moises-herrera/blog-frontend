@@ -3,6 +3,8 @@ import { AppDispatch } from "src/store/types";
 import { useDispatch } from "react-redux";
 import { openChatModal, setChatSelected } from "src/store/chats";
 import { Avatar } from "@chakra-ui/react";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
+
 interface NewChat {
   onClose: () => void;
   _id: string;
@@ -38,7 +40,7 @@ export const UserItem = ({ _id, fullName, avatar, onClose }: NewChat) => {
     >
       <div className="flex justify-between max-w-full py-2 pl-3">
         <div className="flex max-w-full">
-          <Avatar name={fullName} src={avatar} />
+          <Avatar name={fullName} src={avatar || avatarPlaceholder} />
           <div className="flex items-center pl-3">
             <p className="font-bold">{fullName}</p>
           </div>
