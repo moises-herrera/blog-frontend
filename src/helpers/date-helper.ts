@@ -36,3 +36,20 @@ export const getTimeFormatted = (date: Date | string): string => {
 
   return getDateFormattedFromString(date);
 };
+
+/**
+ * Whether the date are the same.
+ *
+ * @param dateInput1 The first date.
+ * @param dateInput2 The second date.
+ * @returns
+ */
+export const isSameDate = (
+  dateInput1: Date | string,
+  dateInput2: Date | string
+): boolean => {
+  const date1 = new Date(dateInput1);
+  const date2 = new Date(dateInput2);
+
+  return date1.toLocaleDateString() === date2.toLocaleDateString();
+};
