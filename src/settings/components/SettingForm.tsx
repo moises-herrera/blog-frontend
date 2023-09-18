@@ -182,7 +182,7 @@ export const SettingForm = () => {
                 {...register("password")}
               />
               <InputRightElement>
-                <button onClick={onChangeVisible}>
+                <button onClick={onChangeVisible} type="button">
                   {!isVisible ? (
                     <i className="fa-solid fa-eye-slash"></i>
                   ) : (
