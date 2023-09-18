@@ -23,16 +23,20 @@ export const ChatItem = (data: ChatData) => {
       className="w-full mb-3 bg-white rounded-lg cursor-pointer"
       onClick={onSelectChat}
     >
-      <div className="flex max-w-full justify-between py-2 pl-3">
+      <div className="flex justify-between max-w-full py-2 pl-3">
         <div className="flex max-w-full">
           <Avatar name={fullName} src={avatar} />
           <div className="pl-3">
             <p className="font-bold">{fullName}</p>
-            <p className="text-sm truncate">{lastMessage.content.text}</p>
+            <p className="text-sm truncate">{lastMessage?.content.text}</p>
           </div>
         </div>
         <div className="pr-3 text-sm">
-          <p>{getTimeFormatted(lastMessage.createdAt)}</p>
+          <p>
+            {getTimeFormatted(
+              lastMessage?.createdAt ? lastMessage?.createdAt : ""
+            )}
+          </p>
         </div>
       </div>
       <ChatModal onClose={onClose} isOpen={isOpen} />
