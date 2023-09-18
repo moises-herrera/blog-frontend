@@ -52,6 +52,16 @@ export const chatSlice = createSlice({
 
           return chat;
         });
+
+        state.list.sort((a, b) => {
+          if (!a.lastMessage) return -1;
+          if (!b.lastMessage) return 1;
+
+          return (
+            new Date(b.lastMessage.createdAt).getTime() -
+            new Date(a.lastMessage.createdAt).getTime()
+          );
+        });
       }
     },
     clearMessages: (state) => {
