@@ -16,4 +16,7 @@ export interface UiState {
 
   /** Whether the post form modal is open. */
   isLikeModalOpen: boolean;
+
+  /** Whether the search users modal is open. */
+  isSearchUsersModalOpen: boolean;
 }
