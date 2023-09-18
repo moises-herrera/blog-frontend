@@ -6,6 +6,7 @@ import { AppDispatch } from "src/store/types";
 import { ChatModal } from ".";
 import { useDisclosure } from "@chakra-ui/react";
 import { getTimeFormatted } from "src/helpers";
+import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 
 export const ChatItem = (data: ChatData) => {
   const { participants, lastMessage } = data;
@@ -25,7 +26,7 @@ export const ChatItem = (data: ChatData) => {
     >
       <div className="flex max-w-full justify-between py-2 pl-3">
         <div className="flex max-w-full">
-          <Avatar name={fullName} src={avatar} />
+          <Avatar name={fullName} src={avatar || avatarPlaceholder} />
           <div className="pl-3">
             <p className="font-bold">{fullName}</p>
             <p className="text-sm truncate">{lastMessage.content.text}</p>

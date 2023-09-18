@@ -80,6 +80,6 @@ body {
 
 .scrollable-chat::-webkit-scrollbar-thumb {
   background-color: #d3d3d3;
-  outline: 1px solid slategrey;
+  outline: 1px solid #b4b2b2;
   border-radius: 4px;
 }
