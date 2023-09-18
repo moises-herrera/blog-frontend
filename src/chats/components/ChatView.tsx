@@ -88,7 +88,7 @@ export const ChatView = () => {
   }, []);
 
   return (
-    <div className="hidden h-screen bg-secondary-100 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l border-[#B3B3B3] pt-3 px-4">
+    <div className="chat-selected-container">
       {participant ? (
         <>
           <HeaderChat
@@ -104,9 +104,11 @@ export const ChatView = () => {
                 <>
                   {index !== 0 &&
                     !isSameDate(createdAt, messages[index - 1].createdAt) && (
-                      <span className="w-full text-center text-secondary-300 font-semibold">
-                        {getDateFormattedFromString(createdAt)}
-                      </span>
+                      <div className="w-full flex justify-center">
+                        <span className="date-label">
+                          {getDateFormattedFromString(createdAt)}
+                        </span>
+                      </div>
                     )}
                 </>
                 <MessageContent
