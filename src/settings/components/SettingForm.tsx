@@ -1,4 +1,11 @@
-import { Box, Image, Input, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Input,
+  Button,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useTypedSelector } from "src/store";
 import { SettingSchema, SettingSchemaType } from "src/settings/validations";
@@ -20,6 +27,10 @@ export const SettingForm = () => {
   const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
     ({ auth }) => auth
   );
+  const [isVisible, setIsVisible] = useState(false);
+  const onChangeVisible = () => {
+    setIsVisible(!isVisible);
+  };
 
   const { displaySuccessMessage, displayError } = useMessageToast();
 
@@ -103,7 +114,7 @@ export const SettingForm = () => {
   }, []);
 
   return (
-    <section className="w-full min-h-screen bg-secondary-200 text-primary-500 py-5 flex flex-col justify-center">
+    <section className="flex flex-col justify-center w-full min-h-screen py-5 bg-secondary-200 text-primary-500">
       <Box className="flex justify-center mb-5">
         <Image
           content="center"
@@ -124,7 +135,7 @@ export const SettingForm = () => {
         />
       </Box>
 
-      <div className="w-full flex justify-center">
+      <div className="flex justify-center w-full">
         <form
           onSubmit={handleSubmit(onSubmitForm)}
           className="flex flex-col w-full gap-10 px-5 md:px-12 lg:w-1/2 lg:px-0"
@@ -162,12 +173,24 @@ export const SettingForm = () => {
             />
           </FormControlContainer>
           <FormControlContainer fieldError={errors.password}>
-            <Input
-              type="password"
-              placeholder="Contraseña"
-              variant="settings"
-              {...register("password")}
-            />
+            <InputGroup>
+              <Input
+                autoComplete="off"
+                type={isVisible ? "text" : "password"}
+                placeholder="Contraseña"
+                variant="settings"
+                {...register("password")}
+              />
+              <InputRightElement>
+                <button onClick={onChangeVisible}>
+                  {!isVisible ? (
+                    <i className="fa-solid fa-eye-slash"></i>
+                  ) : (
+                    <i className="fa-solid fa-eye"></i>
+                  )}
+                </button>
+              </InputRightElement>
+            </InputGroup>
           </FormControlContainer>
 
           <div className="flex justify-center space-x-2 md:space-x-8">
