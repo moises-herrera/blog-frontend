@@ -30,6 +30,7 @@ export const ChatView = () => {
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
   const messagesListRef = useRef<HTMLDivElement>(null);
+
   const { page } = useScrollPagination({
     isLoading: isLoadingMessages,
     currentRecords: messages.length,
@@ -73,6 +74,18 @@ export const ChatView = () => {
       );
     }
   }, [dispatch, chatSelected?._id, page]);
+
+  useEffect(() => {
+    if (messagesListRef.current) {
+      const scrollTop = Number(localStorage.getItem("scrollTop"));
+      if (scrollTop) {
+        messagesListRef.current.scrollTop = scrollTop;
+      } else {
+        messagesListRef.current.scrollTop =
+          messagesListRef.current.scrollHeight;
+      }
+    }
+  }, [messages]);
 
   useEffect(() => {
     const onNewMessage = (message: Message) => {
