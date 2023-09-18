@@ -1,4 +1,4 @@
-import { Post, PostInfo } from ".";
+import { Post, PostInfo, User } from ".";
 
 /**
  * Represents the state of the post in the store.
@@ -10,11 +10,17 @@ export interface PostState {
   /** Loading state. */
   isLoadingFollowing: boolean;
 
+  /** Total posts following. */
+  postsFollowingTotal: number;
+
   /** Posts suggested list. */
   postSuggestedList: PostInfo[];
 
   /** Loading state. */
   isLoadingSuggested: boolean;
+
+  /** Total posts suggested. */
+  postsSuggestedTotal: number;
 
   /** User's posts. */
   userPosts: PostInfo[];
@@ -22,11 +28,17 @@ export interface PostState {
   /** Loading state. */
   isLoadingUserPosts: boolean;
 
+  /** Total user's posts. */
+  userPostsTotal: number;
+
   /** Search posts. */
   searchResults: PostInfo[];
 
   /** Loading state. */
   isLoadingSearch: boolean;
+
+  /** Total search results. */
+  totalResults: number;
 
   /** Whether the new post form is visible. */
   isNewPostFormVisible: boolean;
@@ -60,4 +72,13 @@ export interface PostState {
 
   /** Post info active. */
   postInfoActive?: PostInfo | null;
+
+  /** Users that liked the active post. */
+  postUserLikes: User[];
+
+  /** Loading state. */
+  isLoadingPostLikes: boolean;
+
+  /** Total post likes. */
+  totalPostLikes: number;
 }

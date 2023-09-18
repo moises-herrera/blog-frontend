@@ -1,33 +1,44 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetFollowers, User } from "src/interfaces";
+import {
+  GetFollowers,
+  PaginatedResponse,
+  QueryParams,
+  User,
+} from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 import { AxiosError } from "axios";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
+import { getQueryStringFromObject } from "src/helpers";
 
 /**
  * Get users.
  *
- * @param username The username.
+ * @param queryParams The query params.
  * @returns A promise of users.
  */
-const getUsers = async (username?: string) => {
-  const { data } = await blogApi.get<User[]>(`/user?username=${username}`);
+const getUsers = async (
+  queryParams?: QueryParams
+): Promise<PaginatedResponse<User>> => {
+  const queryString = getQueryStringFromObject(queryParams || {});
+  const { data } = await peopleApi.get<PaginatedResponse<User>>(
+    `/user?${queryString}`
+  );
   return data;
 };
 
 /**
  * Get all users.
  *
- * @param username The username to search.
+ * @param queryParams The query params.
  * @returns A thunk that dispatches an action.
  */
 export const getAllUsers = createAsyncThunk<
-  User[],
-  string | undefined,
+  PaginatedResponse<User>,
+  QueryParams | undefined,
   AsyncThunkConfig
->("getUsers", async (username = "", { rejectWithValue }) => {
+>("getUsers", async (queryParams, { rejectWithValue }) => {
   try {
-    const data = await getUsers(username);
+    const data = await getUsers(queryParams);
 
     return data;
   } catch (error) {
@@ -52,7 +63,7 @@ export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
   "getUser",
   async (username, { rejectWithValue }) => {
     try {
-      const { data } = await blogApi.get<User>(`/user/${username}`);
+      const { data } = await peopleApi.get<User>(`/user/${username}`);
       return data;
     } catch (error) {
       const message =
@@ -74,13 +85,14 @@ export const getUser = createAsyncThunk<User, string, AsyncThunkConfig>(
  * @returns A thunk that dispatches an action.
  */
 export const getFollowers = createAsyncThunk<
-  User[],
+  PaginatedResponse<User>,
   GetFollowers,
   AsyncThunkConfig
->("getFollowers", async ({ id, username }, { rejectWithValue }) => {
+>("getFollowers", async ({ id, queryParams }, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.get<User[]>(
-      `/user/${id}/followers?username=${username}`
+    const queryString = getQueryStringFromObject(queryParams || {});
+    const { data } = await peopleApi.get<PaginatedResponse<User>>(
+      `/user/${id}/followers?${queryString}`
     );
 
     return data;
@@ -103,13 +115,14 @@ export const getFollowers = createAsyncThunk<
  * @returns A thunk that dispatches an action.
  */
 export const getFollowing = createAsyncThunk<
-  User[],
+  PaginatedResponse<User>,
   GetFollowers,
   AsyncThunkConfig
->("getFollowing", async ({ id, username }, { rejectWithValue }) => {
+>("getFollowing", async ({ id, queryParams }, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.get<User[]>(
-      `/user/${id}/following?username=${username}`
+    const queryString = getQueryStringFromObject(queryParams || {});
+    const { data } = await peopleApi.get<PaginatedResponse<User>>(
+      `/user/${id}/following?${queryString}`
     );
 
     return data;

@@ -1,1 +1,1 @@
-export { default as blogApi } from './blogApi';
+export { default as peopleApi } from './peopleApi';

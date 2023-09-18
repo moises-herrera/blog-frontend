@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { addLike, removeLike } from "src/store/post";
 import { AppDispatch } from "src/store/types";
 
@@ -26,7 +26,7 @@ export const LikeButton = ({
   const onClickLike = async () => {
     setIsLoading(true);
 
-    await blogApi.post(requestPath);
+    await peopleApi.post(requestPath);
 
     setIsLoading(false);
 

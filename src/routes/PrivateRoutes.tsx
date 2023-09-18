@@ -7,7 +7,11 @@ import {
   FollowersModal,
   FollowingModal,
 } from "src/shared/components";
-import { PostFormModal, CommentsModalContainer } from "src/post/components";
+import {
+  PostFormModal,
+  CommentsModalContainer,
+  LikesModal,
+} from "src/post/components";
 
 export const PrivateRoutes = () => {
   return (
@@ -28,6 +32,7 @@ export const PrivateRoutes = () => {
       <CommentsModalContainer />
       <FollowersModal />
       <FollowingModal />
+      <LikesModal />
     </main>
   );
 };

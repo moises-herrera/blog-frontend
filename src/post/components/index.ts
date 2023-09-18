@@ -8,3 +8,5 @@ export * from "./CommentsModal";
 export * from "./DeleteCommentModal";
 export * from "./LikeButton";
 export * from "./CommentsModalContainer";
+export * from "./LikesList";
+export * from "./LikesModal";

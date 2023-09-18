@@ -5,12 +5,17 @@ const initialState: UiState = {
   isLeftSidebarOpen: false,
   isFollowersModalOpen: false,
   isFollowingModalOpen: false,
+  isRightSidebarOpen: true,
+  isLikeModalOpen: false,
 };
 
 export const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
+    toggleRightSidebar: (state) => {
+      state.isRightSidebarOpen = !state.isRightSidebarOpen;
+    },
     toggleLeftSidebar: (state) => {
       state.isLeftSidebarOpen = !state.isLeftSidebarOpen;
     },
@@ -29,14 +34,23 @@ export const uiSlice = createSlice({
     closeFollowingModal: (state) => {
       state.isFollowingModalOpen = false;
     },
+    openLikesModal: (state) => {
+      state.isLikeModalOpen = true;
+    },
+    closeLikesModal: (state) => {
+      state.isLikeModalOpen = false;
+    },
   },
 });
 
 export const {
+  toggleRightSidebar,
   toggleLeftSidebar,
   closeLeftSidebar,
   openFollowersModal,
   closeFollowersModal,
   openFollowingModal,
   closeFollowingModal,
+  openLikesModal,
+  closeLikesModal,
 } = uiSlice.actions;

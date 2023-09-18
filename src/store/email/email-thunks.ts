@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { SendEmail, StandardResponse } from "src/interfaces";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "src/store/types";
@@ -16,7 +16,7 @@ export const sendConfirmEmail = createAsyncThunk<
   AsyncThunkConfig
 >("sendConfirmEmail", async (emailData, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.post<StandardResponse>(
+    const { data } = await peopleApi.post<StandardResponse>(
       "/email/confirm-email",
       emailData
     );
@@ -46,7 +46,7 @@ export const sendForgotPasswordEmail = createAsyncThunk<
   AsyncThunkConfig
 >("sendForgotPasswordEmail", async (emailData, { rejectWithValue }) => {
   try {
-    const { data } = await blogApi.post<StandardResponse>(
+    const { data } = await peopleApi.post<StandardResponse>(
       "/email/forgot-password",
       emailData
     );

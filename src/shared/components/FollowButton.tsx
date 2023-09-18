@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { blogApi } from "src/api";
+import { peopleApi } from "src/api";
 import { hasFollower } from "src/helpers";
 import { StandardResponse, User } from "src/interfaces";
 import { useTypedSelector } from "src/store";
@@ -32,7 +32,7 @@ export const FollowButton = ({ user, currentUser }: Props) => {
   const onClickButton = async () => {
     setIsLoading(true);
 
-    await blogApi.post<StandardResponse>(requestPath);
+    await peopleApi.post<StandardResponse>(requestPath);
 
     setIsLoading(false);
     setHasFollowerState(!hasFollowerState);
