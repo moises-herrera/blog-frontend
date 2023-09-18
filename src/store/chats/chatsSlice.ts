@@ -20,7 +20,17 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     setChatSelected: (state, { payload }) => {
-      state.chatSelected = payload;
+      const existingChat = state.list.find(
+        ({ participants }) =>
+          participants[0]._id === payload?.participants[0]._id
+      );
+
+      if (existingChat) {
+        state.chatSelected = existingChat;
+      } else {
+        state.chatSelected = payload;
+      }
+
       if (window.screen.width <= 767) {
         state.isChatModalOpen = true;
       }
