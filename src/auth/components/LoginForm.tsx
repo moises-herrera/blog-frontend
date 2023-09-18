@@ -18,9 +18,9 @@ import { clearErrorMessage, loginUser } from "src/store/auth";
 export const LoginForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
   const { errorMessage } = useTypedSelector(({ auth }) => auth);
-  const [isvisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const onChangeVisible = () => {
-    setIsVisible(!isvisible);
+    setIsVisible(!isVisible);
   };
   const { displayError } = useMessageToast();
   const {
@@ -59,13 +59,14 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
         <FormControlContainer fieldError={errors.password}>
           <InputGroup>
             <Input
+              autoComplete="off"
               placeholder="Contraseña"
-              type={isvisible ? "text" : "password"}
+              type={isVisible ? "text" : "password"}
               {...register("password")}
             />
             <InputRightElement>
               <button onClick={onChangeVisible} type="button">
-                {!isvisible ? (
+                {!isVisible ? (
                   <i className="fa-solid fa-eye-slash"></i>
                 ) : (
                   <i className="fa-solid fa-eye"></i>

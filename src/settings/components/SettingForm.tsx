@@ -27,9 +27,9 @@ export const SettingForm = () => {
   const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
     ({ auth }) => auth
   );
-  const [isvisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const onChangeVisible = () => {
-    setIsVisible(!isvisible);
+    setIsVisible(!isVisible);
   };
 
   const { displaySuccessMessage, displayError } = useMessageToast();
@@ -175,14 +175,15 @@ export const SettingForm = () => {
           <FormControlContainer fieldError={errors.password}>
             <InputGroup>
               <Input
-                type={isvisible ? "text" : "password"}
+                autoComplete="off"
+                type={isVisible ? "text" : "password"}
                 placeholder="Contraseña"
                 variant="settings"
                 {...register("password")}
               />
               <InputRightElement>
                 <button onClick={onChangeVisible}>
-                  {!isvisible ? (
+                  {!isVisible ? (
                     <i className="fa-solid fa-eye-slash"></i>
                   ) : (
                     <i className="fa-solid fa-eye"></i>
