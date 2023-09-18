@@ -5,6 +5,7 @@ interface UsePaginationProps {
   currentRecords: number;
   total: number;
   elementRef?: React.RefObject<HTMLDivElement>;
+  isReverse?: boolean;
 }
 
 export const useScrollPagination = ({
@@ -12,6 +13,7 @@ export const useScrollPagination = ({
   currentRecords,
   total,
   elementRef,
+  isReverse,
 }: UsePaginationProps) => {
   const element = elementRef ? elementRef.current : window;
   const [page, setPage] = useState<number>(1);
@@ -27,15 +29,23 @@ export const useScrollPagination = ({
       element.innerHeight + document.documentElement.scrollTop !==
         document.documentElement.offsetHeight;
     const canScrollDiv =
-      element instanceof HTMLDivElement &&
-      element.offsetHeight + element.scrollTop !== element.scrollHeight;
+      element instanceof HTMLDivElement
+        ? !isReverse
+          ? element.offsetHeight + element.scrollTop !== element.scrollHeight
+          : element.scrollTop !== 0
+        : false;
 
     if (canScrollWindow || canScrollDiv || isLoading || isLastPage) {
       return;
     }
 
+    if (element instanceof HTMLDivElement) {
+      const lastScrollTop = element.scrollTop + element.scrollHeight / 2;
+      localStorage.setItem("scrollTop", lastScrollTop.toString());
+    }
+
     setPage((prevPage) => prevPage + 1);
-  }, [isLoading, isLastPage, element]);
+  }, [isLoading, isLastPage, element, isReverse]);
 
   useEffect(() => {
     if (element) {
@@ -47,5 +57,6 @@ export const useScrollPagination = ({
 
   return {
     page,
+    setPage,
   };
 };

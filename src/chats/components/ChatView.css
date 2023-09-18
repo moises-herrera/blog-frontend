@@ -1,3 +1,7 @@
+.chat-selected-container {
+  @apply hidden h-screen bg-secondary-100 md:w-1/2 lg:w-2/3 xl:w-2/3 md:block border-l border-[#B3B3B3] pt-3 px-4;
+}
+
 .messages-container {
   height: calc(100vh - 280px);
 
@@ -8,4 +12,8 @@
   .messages-container {
     height: calc(100vh - 240px);
   }
+}
+
+.date-label {
+  @apply bg-secondary-200 px-2 py-1 rounded-md text-center text-secondary-300 font-semibold text-sm;
 }

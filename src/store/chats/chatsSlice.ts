@@ -9,6 +9,7 @@ const initialState: ChatState = {
   chatSelected: null,
   messages: [],
   isLoadingMessages: false,
+  totalMessages: 0,
   isSendingMessage: false,
   isCreatingChat: false,
   isChatModalOpen: false,
@@ -20,12 +21,28 @@ export const chatSlice = createSlice({
   reducers: {
     setChatSelected: (state, { payload }) => {
       state.chatSelected = payload;
+      if (window.screen.width <= 767) {
+        state.isChatModalOpen = true;
+      }
     },
     clearChatSelected: (state) => {
       state.chatSelected = null;
     },
     addNewMessage: (state, { payload }) => {
-      state.messages = [...state.messages, payload];
+      if (state.chatSelected?._id === payload.conversation) {
+        state.messages = [...state.messages, payload];
+      }
+    },
+    updateLastMessage: (state, { payload }) => {
+      if (payload) {
+        state.list = state.list.map((chat) => {
+          if (chat._id === payload.conversation) {
+            chat.lastMessage = payload;
+          }
+
+          return chat;
+        });
+      }
     },
     clearMessages: (state) => {
       state.messages = [];
@@ -60,8 +77,8 @@ export const chatSlice = createSlice({
       getMessages.fulfilled,
       (state, { payload: { data, page, resultsCount } }) => {
         state.isLoadingMessages = false;
-        state.messages = page > 1 ? [...state.messages, ...data] : data;
-        state.totalChats = resultsCount;
+        state.messages = page > 1 ? [...data, ...state.messages] : data;
+        state.totalMessages = resultsCount;
       }
     );
     builder.addCase(getMessages.rejected, (state) => {
@@ -106,6 +123,7 @@ export const {
   setChatSelected,
   clearChatSelected,
   addNewMessage,
+  updateLastMessage,
   clearMessages,
   openChatModal,
   closeChatModal,

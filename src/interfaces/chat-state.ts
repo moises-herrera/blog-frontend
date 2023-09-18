@@ -28,6 +28,9 @@ export interface ChatState {
   /** If is sending message. */
   isSendingMessage: boolean;
 
+  /** Total messages of the chat selected. */
+  totalMessages: number;
+
   /** If is chat modal open. */
   isChatModalOpen: boolean;
 }
