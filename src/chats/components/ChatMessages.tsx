@@ -80,6 +80,12 @@ export const ChatMessages = memo(() => {
   useEffect(() => {
     if (chatId) {
       setPage(1);
+      localStorage.removeItem("scrollHeight");
+    }
+  }, [chatId, setPage]);
+
+  useEffect(() => {
+    if (chatId) {
       dispatch(
         getMessages({
           id: chatId,
@@ -92,13 +98,14 @@ export const ChatMessages = memo(() => {
     } else {
       dispatch(clearMessages());
     }
-  }, [dispatch, chatId, setPage, page]);
+  }, [dispatch, chatId, page]);
 
   useEffect(() => {
     if (messagesListRef.current) {
-      const scrollTop = Number(localStorage.getItem("scrollTop"));
-      if (scrollTop) {
-        messagesListRef.current.scrollTop = scrollTop;
+      const scrollHeight = Number(localStorage.getItem("scrollHeight"));
+      if (scrollHeight) {
+        const currentScrollHeight = messagesListRef.current.scrollHeight;
+        messagesListRef.current.scrollTop = currentScrollHeight - scrollHeight;
       } else {
         messagesListRef.current.scrollTop =
           messagesListRef.current.scrollHeight;
