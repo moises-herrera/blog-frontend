@@ -4,7 +4,12 @@ import defaultChat from "src/assets/images/default-chat.svg";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { addNewMessage, getMessages, sendMessage } from "src/store/chats";
+import {
+  addNewMessage,
+  getMessages,
+  sendMessage,
+  updateLastMessage,
+} from "src/store/chats";
 import { Button, Textarea } from "@chakra-ui/react";
 import { Message, SendMessage } from "src/interfaces";
 import { socket } from "src/socket";
@@ -43,8 +48,6 @@ export const ChatView = () => {
 
   useEffect(() => {
     if (chatSelected?._id) {
-      socket.emit("join", chatSelected._id);
-
       dispatch(
         getMessages({
           id: chatSelected._id,
@@ -60,6 +63,7 @@ export const ChatView = () => {
   useEffect(() => {
     const onNewMessage = (message: Message) => {
       dispatch(addNewMessage(message));
+      dispatch(updateLastMessage(message));
     };
 
     socket.on("message", onNewMessage);

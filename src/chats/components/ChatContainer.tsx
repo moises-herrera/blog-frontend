@@ -6,6 +6,7 @@ import { AppDispatch } from "src/store/types";
 import { useEffect, useRef } from "react";
 import { getChatsList } from "src/store/chats";
 import { useScrollPagination, useSearch } from "src/hooks";
+import { socket } from "src/socket";
 
 export const ChatContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +22,13 @@ export const ChatContainer = () => {
     total: totalChats,
     elementRef: listRef,
   });
+
+  useEffect(() => {
+    if (list.length) {
+      const chatIds = list.map(({ _id }) => _id);
+      socket.emit("join", chatIds);
+    }
+  }, [list]);
 
   useEffect(() => {
     dispatch(

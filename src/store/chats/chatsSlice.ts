@@ -23,7 +23,20 @@ export const chatSlice = createSlice({
       state.chatSelected = null;
     },
     addNewMessage: (state, { payload }) => {
-      state.messages = [...state.messages, payload];
+      if (state.chatSelected?._id === payload.conversation) {
+        state.messages = [...state.messages, payload];
+      }
+    },
+    updateLastMessage: (state, { payload }) => {
+      if (payload) {
+        state.list = state.list.map((chat) => {
+          if (chat._id === payload.conversation) {
+            chat.lastMessage = payload;
+          }
+
+          return chat;
+        });
+      }
     },
   },
   extraReducers: (builder) => {
@@ -78,5 +91,9 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setChatSelected, clearChatSelected, addNewMessage } =
-  chatSlice.actions;
+export const {
+  setChatSelected,
+  clearChatSelected,
+  addNewMessage,
+  updateLastMessage,
+} = chatSlice.actions;
