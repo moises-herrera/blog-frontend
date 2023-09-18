@@ -40,8 +40,8 @@ export const useScrollPagination = ({
     }
 
     if (element instanceof HTMLDivElement) {
-      const lastScrollTop = element.scrollTop + element.scrollHeight / 2;
-      localStorage.setItem("scrollTop", lastScrollTop.toString());
+      const lastScrollHeight = element.scrollHeight;
+      localStorage.setItem("scrollHeight", lastScrollHeight.toString());
     }
 
     setPage((prevPage) => prevPage + 1);

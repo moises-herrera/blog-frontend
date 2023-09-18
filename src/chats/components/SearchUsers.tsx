@@ -15,7 +15,7 @@ import { ModalData } from "src/interfaces";
 import { UserItem } from ".";
 
 export const SearchUsers = ({ isOpen, onClose }: ModalData) => {
-  const isModal = () => {
+  const onCloseModal = () => {
     onClose();
   };
   const dispatch = useDispatch<AppDispatch>();
@@ -60,7 +60,7 @@ export const SearchUsers = ({ isOpen, onClose }: ModalData) => {
               _id={user._id}
               fullName={`${user.firstName} ${user.lastName}`}
               avatar={user?.avatar || ""}
-              onClose={isModal}
+              onClose={onCloseModal}
             />
           ))}
         </div>
