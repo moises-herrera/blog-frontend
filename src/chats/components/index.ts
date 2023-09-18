@@ -4,6 +4,7 @@ export * from "./ChatItem";
 export * from "./ChatModal";
 export * from "./HeaderChat";
 export * from "./MessageContent";
-export * from "./SearchUsers";
+export * from "./SearchUsersModal";
 export * from "./UserItem";
 export * from "./ChatMessages";
+export * from "./SearchUsersList";
