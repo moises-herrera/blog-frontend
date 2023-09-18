@@ -2,7 +2,7 @@ import { Textarea, Button } from "@chakra-ui/react";
 import { HeaderChat, MessageContent } from ".";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { SendMessage, CreateChat } from "src/interfaces";
 import { useTypedSelector } from "src/store";
 import {
@@ -14,6 +14,7 @@ import {
 import defaultChat from "src/assets/images/default-chat.svg";
 import "./ChatView.css";
 import { useScrollPagination } from "src/hooks";
+import { isSameDate, getDateFormattedFromString } from "src/helpers";
 
 export const ChatMessages = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -111,14 +112,28 @@ export const ChatMessages = () => {
             avatar={participant.avatar}
             fullName={participant.fullName}
           />
-          <div className="messages-container scrollable-chat">
-            {messages.map(({ _id, content, sender, createdAt }) => (
-              <MessageContent
-                key={_id}
-                content={content}
-                createdAt={createdAt}
-                isFromCurrentUser={sender === user?._id}
-              />
+          <div
+            className="messages-container scrollable-chat"
+            ref={messagesListRef}
+          >
+            {messages.map(({ _id, content, sender, createdAt }, index) => (
+              <Fragment key={_id}>
+                <>
+                  {index !== 0 &&
+                    !isSameDate(createdAt, messages[index - 1].createdAt) && (
+                      <div className="w-full flex justify-center">
+                        <span className="date-label">
+                          {getDateFormattedFromString(createdAt)}
+                        </span>
+                      </div>
+                    )}
+                </>
+                <MessageContent
+                  content={content}
+                  createdAt={createdAt}
+                  isFromCurrentUser={sender === user?._id}
+                />
+              </Fragment>
             ))}
           </div>
           <div className="flex flex-col gap-2 bg-white p-3 rounded-md">
