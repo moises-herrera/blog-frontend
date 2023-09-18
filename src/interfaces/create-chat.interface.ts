@@ -7,6 +7,6 @@ export interface CreateChat {
   /** Participants of the conversation. */
   participants: string[];
 
-  /** Last message of the conversation. */
-  lastMessage?: Message;
+  /** Message of the conversation. */
+  message?: Partial<Message>;
 }

@@ -16,6 +16,9 @@ export interface ChatState {
   /** Chat selected. */
   chatSelected: ChatData | null;
 
+  /** If is creating chat. */
+  isCreatingChat: boolean;
+
   /** Messages of the chat selected. */
   messages: Message[];
 

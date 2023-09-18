@@ -28,15 +28,13 @@ export const ChatItem = (data: ChatData) => {
           <Avatar name={fullName} src={avatar} />
           <div className="pl-3">
             <p className="font-bold">{fullName}</p>
-            <p className="text-sm truncate">{lastMessage?.content.text}</p>
+            <p className="text-sm truncate">
+              {lastMessage?.content.text || ""}
+            </p>
           </div>
         </div>
         <div className="pr-3 text-sm">
-          <p>
-            {getTimeFormatted(
-              lastMessage?.createdAt ? lastMessage?.createdAt : ""
-            )}
-          </p>
+          <p>{getTimeFormatted(lastMessage?.createdAt || "")}</p>
         </div>
       </div>
       <ChatModal onClose={onClose} isOpen={isOpen} />

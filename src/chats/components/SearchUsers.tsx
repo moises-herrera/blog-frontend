@@ -34,7 +34,7 @@ export const SearchUsers = ({ isOpen, onClose }: ModalData) => {
   useEffect(() => {
     dispatch(
       getAllUsers({
-        username: debouncedSearchTerm || "",
+        name: debouncedSearchTerm || "",
         excludeCurrentUser: true,
         limit: 10,
         page,
@@ -59,7 +59,7 @@ export const SearchUsers = ({ isOpen, onClose }: ModalData) => {
               key={user.username}
               _id={user._id}
               fullName={`${user.firstName} ${user.lastName}`}
-              avatar={user?.avatar ? user?.avatar : ""}
+              avatar={user?.avatar || ""}
               onClose={isModal}
             />
           ))}

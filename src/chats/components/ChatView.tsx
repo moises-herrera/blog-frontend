@@ -4,18 +4,23 @@ import defaultChat from "src/assets/images/default-chat.svg";
 import { useTypedSelector } from "src/store";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { addNewMessage, getMessages, sendMessage } from "src/store/chats";
+import {
+  addNewMessage,
+  clearMessages,
+  createChat,
+  getMessages,
+  sendMessage,
+} from "src/store/chats";
 import { Button, Textarea } from "@chakra-ui/react";
-import { Message, SendMessage } from "src/interfaces";
+import { CreateChat, Message, SendMessage } from "src/interfaces";
 import { socket } from "src/socket";
 import "./ChatView.css";
 
 export const ChatView = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
-  const { chatSelected, messages, isSendingMessage } = useTypedSelector(
-    ({ chats }) => chats
-  );
+  const { chatSelected, messages, isSendingMessage, isCreatingChat } =
+    useTypedSelector(({ chats }) => chats);
   const participant = chatSelected?.participants[0];
   const [message, setMessage] = useState<string>("");
 
@@ -26,19 +31,34 @@ export const ChatView = () => {
   };
 
   const onSendMessage = () => {
-    if (!chatSelected?._id || !message.trim()) return;
-
-    const data: SendMessage = {
-      id: chatSelected._id,
-      message: {
-        content: {
-          text: message,
-        },
-      },
-    };
+    if (!message.trim()) return;
 
     setMessage("");
-    dispatch(sendMessage(data));
+
+    if (chatSelected?._id) {
+      const data: SendMessage = {
+        id: chatSelected._id,
+        message: {
+          content: {
+            text: message,
+          },
+        },
+      };
+
+      dispatch(sendMessage(data));
+    } else {
+      const chatData: CreateChat = {
+        participants: [user?._id as string, participant?._id as string],
+        message: {
+          content: {
+            text: message,
+          },
+          sender: user?._id as string,
+        },
+      };
+
+      dispatch(createChat(chatData));
+    }
   };
 
   useEffect(() => {
@@ -54,6 +74,8 @@ export const ChatView = () => {
           },
         })
       );
+    } else {
+      dispatch(clearMessages());
     }
   }, [dispatch, chatSelected?._id]);
 
@@ -100,7 +122,7 @@ export const ChatView = () => {
                 onClick={onSendMessage}
                 leftIcon={<i className="fa-regular fa-paper-plane"></i>}
                 variant="message"
-                isLoading={isSendingMessage}
+                isLoading={isSendingMessage || isCreatingChat}
               >
                 Enviar
               </Button>

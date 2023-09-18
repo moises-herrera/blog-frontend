@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ChatState } from "src/interfaces";
-import { getChatsList, getMessages, sendMessage } from ".";
+import { ChatData, ChatState } from "src/interfaces";
+import { createChat, getChatsList, getMessages, sendMessage } from ".";
 
 const initialState: ChatState = {
   list: [],
@@ -10,6 +10,7 @@ const initialState: ChatState = {
   messages: [],
   isLoadingMessages: false,
   isSendingMessage: false,
+  isCreatingChat: false,
 };
 
 export const chatSlice = createSlice({
@@ -24,6 +25,9 @@ export const chatSlice = createSlice({
     },
     addNewMessage: (state, { payload }) => {
       state.messages = [...state.messages, payload];
+    },
+    clearMessages: (state) => {
+      state.messages = [];
     },
   },
   extraReducers: (builder) => {
@@ -75,8 +79,25 @@ export const chatSlice = createSlice({
     builder.addCase(sendMessage.rejected, (state) => {
       state.isSendingMessage = false;
     });
+
+    builder.addCase(createChat.pending, (state) => {
+      state.isCreatingChat = true;
+    });
+    builder.addCase(createChat.fulfilled, (state, { payload }) => {
+      state.isCreatingChat = false;
+      const chat = payload.data as ChatData;
+      state.chatSelected = chat;
+      state.list = state.list.length > 1 ? [chat, ...state.list] : [chat];
+    });
+    builder.addCase(createChat.rejected, (state) => {
+      state.isCreatingChat = false;
+    });
   },
 });
 
-export const { setChatSelected, clearChatSelected, addNewMessage } =
-  chatSlice.actions;
+export const {
+  setChatSelected,
+  clearChatSelected,
+  addNewMessage,
+  clearMessages,
+} = chatSlice.actions;
