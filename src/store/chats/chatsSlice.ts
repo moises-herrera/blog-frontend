@@ -9,6 +9,7 @@ const initialState: ChatState = {
   chatSelected: null,
   messages: [],
   isLoadingMessages: false,
+  totalMessages: 0,
   isSendingMessage: false,
 };
 
@@ -62,8 +63,8 @@ export const chatSlice = createSlice({
       getMessages.fulfilled,
       (state, { payload: { data, page, resultsCount } }) => {
         state.isLoadingMessages = false;
-        state.messages = page > 1 ? [...state.messages, ...data] : data;
-        state.totalChats = resultsCount;
+        state.messages = page > 1 ? [...data, ...state.messages] : data;
+        state.totalMessages = resultsCount;
       }
     );
     builder.addCase(getMessages.rejected, (state) => {
