@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Loading } from "src/shared/components";
+import { ListContainer, Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { FeedContent } from ".";
@@ -29,12 +29,14 @@ export const SuggestedTab = () => {
 
   return (
     <>
-      {!isLoadingSuggested ? (
-        <FeedContent posts={postSuggestedList} />
-      ) : (
+      {!postSuggestedList.length && isLoadingSuggested ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
+      ) : (
+        <ListContainer isLoading={isLoadingSuggested}>
+          <FeedContent posts={postSuggestedList} />
+        </ListContainer>
       )}
     </>
   );

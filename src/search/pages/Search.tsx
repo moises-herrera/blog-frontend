@@ -1,5 +1,5 @@
 import { FeedContent } from "src/feed/components";
-import { Loading, SearchInput } from "src/shared/components";
+import { ListContainer, Loading, SearchInput } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { searchPosts } from "src/store/post";
 import { useScrollPagination, useSearch } from "src/hooks";
@@ -51,13 +51,15 @@ export const Search = () => {
         />
       </div>
 
-      {isLoadingSearch ? (
+      {!searchResults.length && isLoadingSearch ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
       ) : (
         <div className="mt-8">
-          <FeedContent posts={searchResults} />
+          <ListContainer isLoading={isLoadingSearch}>
+            <FeedContent posts={searchResults} />
+          </ListContainer>
         </div>
       )}
     </div>

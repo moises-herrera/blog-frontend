@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Loading } from "src/shared/components";
+import { ListContainer, Loading } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 import { FeedContent } from ".";
@@ -30,12 +30,14 @@ export const FollowingTab = () => {
 
   return (
     <>
-      {!isLoadingFollowing ? (
-        <FeedContent posts={postFollowingList} />
-      ) : (
+      {!postFollowingList.length && isLoadingFollowing ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
+      ) : (
+        <ListContainer isLoading={isLoadingFollowing}>
+          <FeedContent posts={postFollowingList} />
+        </ListContainer>
       )}
     </>
   );
