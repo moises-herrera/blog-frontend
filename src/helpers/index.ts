@@ -6,3 +6,4 @@ export * from "./form-data-helper";
 export * from "./convert-image";
 export * from "./query-params-helper";
 export * from "./post-helper";
+export * from "./device-helper";
