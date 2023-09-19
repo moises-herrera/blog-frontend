@@ -88,11 +88,11 @@ export const getPostsSuggested = createAsyncThunk<
  */
 export const getUserPosts = createAsyncThunk<
   PaginatedResponse<PostInfo>,
-  string,
+  QueryParams,
   AsyncThunkConfig
->("getUserPosts", async (userId, { rejectWithValue }) => {
+>("getUserPosts", async (queryParams, { rejectWithValue }) => {
   try {
-    const posts = await getPosts({ userId });
+    const posts = await getPosts(queryParams);
     return posts;
   } catch (error) {
     const message =

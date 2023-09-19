@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Loading, SearchInput } from "src/shared/components";
+import { Loading, SearchInput, ListContainer } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { UsersList } from "src/users/components";
 import "./Users.css";
@@ -57,12 +57,14 @@ export const Users = () => {
         iconClassName="text-gray-400"
       />
 
-      {isLoading ? (
+      {!list.length && isLoading ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
       ) : (
-        <UsersList users={list} />
+        <ListContainer isLoading={isLoading}>
+          <UsersList users={list} />
+        </ListContainer>
       )}
     </section>
   );
