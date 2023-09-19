@@ -64,9 +64,9 @@ export const useScrollPagination = ({
 
     return () => {
       if (!isMobile()) {
-        element?.addEventListener("scroll", handleScroll);
+        element?.removeEventListener("scroll", handleScroll);
       } else {
-        element?.addEventListener("touchmove", handleScroll);
+        element?.removeEventListener("touchmove", handleScroll);
       }
     };
   }, [isLoading, handleScroll, element]);
