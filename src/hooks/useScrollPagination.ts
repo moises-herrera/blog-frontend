@@ -16,7 +16,7 @@ export const useScrollPagination = ({
   elementRef,
   isReverse,
 }: UsePaginationProps) => {
-  const element = elementRef ? elementRef.current : window;
+  const element = elementRef ? elementRef.current : document.documentElement;
   const [page, setPage] = useState<number>(1);
   const isLastPage = useMemo(
     () => currentRecords === total,
@@ -24,19 +24,13 @@ export const useScrollPagination = ({
   );
 
   const handleScroll = useCallback(() => {
-    const canScrollWindow =
-      element &&
-      element instanceof Window &&
-      element.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight;
-    const canScrollDiv =
-      element instanceof HTMLDivElement
-        ? !isReverse
-          ? element.offsetHeight + element.scrollTop !== element.scrollHeight
-          : element.scrollTop !== 0
-        : false;
+    const canScrollElement = element
+      ? !isReverse
+        ? element.offsetHeight + element.scrollTop !== element.scrollHeight
+        : element.scrollTop !== 0
+      : false;
 
-    if (canScrollWindow || canScrollDiv || isLoading || isLastPage) {
+    if (canScrollElement || isLoading || isLastPage) {
       return;
     }
 
