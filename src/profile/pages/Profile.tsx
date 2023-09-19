@@ -51,10 +51,13 @@ export const Profile = () => {
   }, [dispatch, userProfile, page]);
 
   useEffect(() => {
+    setPage(1);
+  }, [userProfile?._id]);
+
+  useEffect(() => {
     if (username) {
       dispatch(getUser(username));
       dispatch(setUserPosts([]));
-      setPage(1);
 
       if (isFollowersModalOpen) dispatch(closeFollowersModal());
       if (isFollowingModalOpen) dispatch(closeFollowingModal());
@@ -67,6 +70,10 @@ export const Profile = () => {
     if (userProfile) {
       document.title = `${getFullName(userProfile)} (@${userProfile.username})`;
     }
+
+    return () => {
+      document.documentElement.scrollTop = 0;
+    };
   }, [userProfile]);
 
   return (

@@ -6,6 +6,10 @@ import { FollowingTab, SuggestedTab } from "src/feed/components";
 export const Feed = () => {
   useEffect(() => {
     document.title = `${APP_NAME}`;
+
+    return () => {
+      document.documentElement.scrollTop = 0;
+    };
   }, []);
 
   return (
