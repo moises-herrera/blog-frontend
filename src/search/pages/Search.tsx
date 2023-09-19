@@ -35,6 +35,10 @@ export const Search = () => {
 
   useEffect(() => {
     document.title = "Buscar publicaciones";
+
+    return () => {
+      document.documentElement.scrollTop = 0;
+    };
   }, []);
 
   return (

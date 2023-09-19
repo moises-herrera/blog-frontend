@@ -37,6 +37,10 @@ export const Users = () => {
 
   useEffect(() => {
     document.title = "Usuarios";
+
+    return () => {
+      document.documentElement.scrollTop = 0;
+    };
   }, []);
 
   return (
