@@ -20,9 +20,8 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     setChatSelected: (state, { payload }) => {
-      const existingChat = state.list.find(
-        ({ participants }) =>
-          participants[0]._id === payload?.participants[0]._id
+      const existingChat = state.list.find(({ participants }) =>
+        participants.some(({ _id }) => _id === payload._id)
       );
 
       if (existingChat) {
@@ -42,6 +41,9 @@ export const chatSlice = createSlice({
       if (state.chatSelected?._id === payload.conversation) {
         state.messages = [...state.messages, payload];
       }
+    },
+    addChatToList: (state, { payload }) => {
+      state.list = state.list.length > 1 ? [payload, ...state.list] : [payload];
     },
     updateLastMessage: (state, { payload }) => {
       if (payload) {
@@ -147,4 +149,5 @@ export const {
   clearMessages,
   openChatModal,
   closeChatModal,
+  addChatToList,
 } = chatSlice.actions;

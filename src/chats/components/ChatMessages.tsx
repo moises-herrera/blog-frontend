@@ -27,7 +27,9 @@ export const ChatMessages = memo(() => {
     isLoadingMessages,
     totalMessages,
   } = useTypedSelector(({ chats }) => chats);
-  const participant = chatSelected?.participants[0];
+  const participant = chatSelected?.participants.find(
+    ({ _id }) => _id !== user?._id
+  );
   const [message, setMessage] = useState<string>("");
   const messagesListRef = useRef<HTMLDivElement>(null);
   const chatId = useMemo(() => chatSelected?._id, [chatSelected?._id]);

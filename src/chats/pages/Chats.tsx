@@ -2,14 +2,19 @@ import { useEffect } from "react";
 import { toggleRightSidebar } from "src/store/ui";
 import { useDispatch } from "react-redux";
 import { ChatContainer, ChatView } from "src/chats/components";
-import { addNewMessage, updateLastMessage } from "src/store/chats";
-import { Message } from "src/interfaces";
+import {
+  addChatToList,
+  addNewMessage,
+  updateLastMessage,
+} from "src/store/chats";
+import { ChatData, Message } from "src/interfaces";
 import { AppDispatch } from "src/store/types";
 import { socket } from "src/socket";
 import { useTypedSelector } from "src/store";
 
 export const Chats = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { user } = useTypedSelector(({ auth }) => auth);
   const { isChatModalOpen } = useTypedSelector(({ chats }) => chats);
 
   useEffect(() => {
@@ -25,10 +30,19 @@ export const Chats = () => {
       dispatch(updateLastMessage(message));
     };
 
+    const onNewChat = (chat: ChatData) => {
+      dispatch(addChatToList(chat));
+    };
+
+    socket.emit("join", user?._id);
+
     socket.on("message", onNewMessage);
+
+    socket.on("new-chat", onNewChat);
 
     return () => {
       socket.off("message", onNewMessage);
+      socket.off("new-chat", onNewChat);
     };
   }, []);
 

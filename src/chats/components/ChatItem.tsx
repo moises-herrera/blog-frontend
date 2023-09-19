@@ -6,11 +6,14 @@ import { AppDispatch } from "src/store/types";
 import { getTimeFormatted } from "src/helpers";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
 import { useCallback } from "react";
+import { useTypedSelector } from "src/store";
 
 export const ChatItem = (data: ChatData) => {
-  const { participants, lastMessage } = data;
   const dispatch = useDispatch<AppDispatch>();
-  const { fullName, avatar } = participants[0];
+  const { user } = useTypedSelector(({ auth }) => auth);
+  const { participants, lastMessage } = data;
+  const { fullName, avatar } =
+    participants.find(({ _id }) => _id !== user?._id) || {};
 
   const onSelectChat = useCallback(() => {
     dispatch(setChatSelected(data));
