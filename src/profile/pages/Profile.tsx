@@ -51,10 +51,13 @@ export const Profile = () => {
   }, [dispatch, userProfile, page]);
 
   useEffect(() => {
+    setPage(1);
+  }, [userProfile?._id]);
+
+  useEffect(() => {
     if (username) {
       dispatch(getUser(username));
       dispatch(setUserPosts([]));
-      setPage(1);
 
       if (isFollowersModalOpen) dispatch(closeFollowersModal());
       if (isFollowingModalOpen) dispatch(closeFollowingModal());
