@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
+import { isMobile } from "src/helpers";
 
 interface UsePaginationProps {
   isLoading: boolean;
@@ -49,10 +50,20 @@ export const useScrollPagination = ({
 
   useEffect(() => {
     if (element) {
-      element.addEventListener("scroll", handleScroll);
+      if (!isMobile()) {
+        element.addEventListener("scroll", handleScroll);
+      } else {
+        element.addEventListener("touchmove", handleScroll);
+      }
     }
 
-    return () => element?.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (!isMobile()) {
+        element?.addEventListener("scroll", handleScroll);
+      } else {
+        element?.addEventListener("touchmove", handleScroll);
+      }
+    };
   }, [isLoading, handleScroll, element]);
 
   return {
