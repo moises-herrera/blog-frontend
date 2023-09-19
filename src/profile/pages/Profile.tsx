@@ -67,6 +67,10 @@ export const Profile = () => {
     if (userProfile) {
       document.title = `${getFullName(userProfile)} (@${userProfile.username})`;
     }
+
+    return () => {
+      document.documentElement.scrollTop = 0;
+    };
   }, [userProfile]);
 
   return (
