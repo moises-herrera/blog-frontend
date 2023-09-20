@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { APP_NAME } from "src/constants";
 import { FollowingTab, SuggestedTab } from "src/feed/components";
 
-export const Feed = () => {
+export default function Feed() {
   useEffect(() => {
     document.title = `${APP_NAME}`;
 
@@ -37,4 +37,4 @@ export const Feed = () => {
       </Tabs>
     </section>
   );
-};
+}

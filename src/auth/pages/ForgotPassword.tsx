@@ -1,5 +1,5 @@
 import { RecoveryPassword } from "src/auth/components";
 
-export const ForgotPassword = () => {
+export default function ForgotPassword() {
   return <RecoveryPassword isOpen={true} onClose={() => {}} />;
-};
+}

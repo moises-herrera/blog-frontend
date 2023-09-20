@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { AuthRoutes, PrivateRoutes } from ".";
+import { LazyLoadRoute } from ".";
 import { useTypedSelector } from "src/store";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -20,9 +20,12 @@ export const AppRouter = () => {
   return (
     <Routes>
       {status === "authenticated" ? (
-        <Route path="/*" element={<PrivateRoutes />} />
+        <Route
+          path="/*"
+          element={LazyLoadRoute("../routes/PrivateRoutes.tsx")}
+        />
       ) : (
-        <Route path="/auth/*" element={<AuthRoutes />} />
+        <Route path="/auth/*" element={LazyLoadRoute("../routes/AuthRoutes.tsx")} />
       )}
 
       <Route path="*" element={<Navigate to="/auth/login" />} />

@@ -17,7 +17,7 @@ import {
 } from "src/store/ui";
 import { getUser } from "src/store/users";
 
-export const Profile = () => {
+export default function Profile() {
   const { username } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { userPosts, isLoadingUserPosts, userPostsTotal } = useTypedSelector(
@@ -101,4 +101,4 @@ export const Profile = () => {
       )}
     </section>
   );
-};
+}

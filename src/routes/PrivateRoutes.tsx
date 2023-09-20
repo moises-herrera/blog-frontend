@@ -13,7 +13,7 @@ import {
   LikesModal,
 } from "src/post/components";
 
-export const PrivateRoutes = () => {
+export default function PrivateRoutes() {
   return (
     <main className="flex w-full h-full">
       <LeftSidebar />
@@ -35,4 +35,4 @@ export const PrivateRoutes = () => {
       <LikesModal />
     </main>
   );
-};
+}
