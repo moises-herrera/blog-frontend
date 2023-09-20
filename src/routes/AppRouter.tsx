@@ -22,10 +22,13 @@ export const AppRouter = () => {
       {status === "authenticated" ? (
         <Route
           path="/*"
-          element={LazyLoadRoute("../routes/PrivateRoutes.tsx")}
+          element={LazyLoadRoute(() => import("../routes/PrivateRoutes.tsx"))}
         />
       ) : (
-        <Route path="/auth/*" element={LazyLoadRoute("../routes/AuthRoutes.tsx")} />
+        <Route
+          path="/auth/*"
+          element={LazyLoadRoute(() => import("../routes/AuthRoutes.tsx"))}
+        />
       )}
 
       <Route path="*" element={<Navigate to="/auth/login" />} />
