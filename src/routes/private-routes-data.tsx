@@ -7,26 +7,28 @@ import { LazyLoadRoute } from ".";
 export const privateRoutesData: RouteData[] = [
   {
     path: "/",
-    element: LazyLoadRoute("../feed/pages/Feed.tsx"),
+    element: LazyLoadRoute(() => import("../feed/pages/Feed.tsx")),
   },
   {
     path: "/search",
-    element: LazyLoadRoute("../search/pages/Search.tsx"),
+    element: LazyLoadRoute(() => import("../search/pages/Search.tsx")),
   },
   {
     path: "/profile/:username",
-    element: LazyLoadRoute("../profile/pages/Profile.tsx"),
+    element: LazyLoadRoute(() => import("../profile/pages/Profile.tsx")),
   },
   {
     path: "/users",
-    element: LazyLoadRoute("../users/pages/Users.tsx"),
+    element: LazyLoadRoute(() => import("../users/pages/Users.tsx")),
   },
   {
     path: "/chats",
-    element: LazyLoadRoute("../chats/pages/Chats.tsx"),
+    element: LazyLoadRoute(() => import("../chats/pages/Chats.tsx")),
   },
   {
     path: "/settings",
-    element: LazyLoadRoute("../settings/components/SettingForm.tsx"),
+    element: LazyLoadRoute(
+      () => import("../settings/components/SettingForm.tsx")
+    ),
   },
 ];
