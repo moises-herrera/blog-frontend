@@ -14,7 +14,7 @@ import {
 } from "src/store/auth";
 import mailBox from "src/assets/images/mailbox.svg";
 
-export const ConfirmEmail = () => {
+export default function ConfirmEmail() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const { userId, token } = getQueryParams(search);
@@ -74,4 +74,4 @@ export const ConfirmEmail = () => {
       </div>
     </section>
   );
-};
+}

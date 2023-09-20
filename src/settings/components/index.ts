@@ -1,2 +1,2 @@
 export * from "./InputSetting";
-export * from "./SettingForm";
+export { default as SettingForm } from "./SettingForm";

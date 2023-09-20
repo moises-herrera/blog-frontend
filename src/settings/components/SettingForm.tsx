@@ -23,7 +23,7 @@ import { AppDispatch } from "src/store/types";
 import { getFormDataFromObject, convertImageToBase64 } from "src/helpers";
 import { useMessageToast } from "src/hooks";
 
-export const SettingForm = () => {
+export default function SettingForm() {
   const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
     ({ auth }) => auth
   );
@@ -206,4 +206,4 @@ export const SettingForm = () => {
       </div>
     </section>
   );
-};
+}

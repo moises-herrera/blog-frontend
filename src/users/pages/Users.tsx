@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { Loading, SearchInput, ListContainer } from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { UsersList } from "src/users/components";
-import "./Users.css";
 import { useScrollPagination, useSearch } from "src/hooks";
 import { getAllUsers } from "src/store/users";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 
-export const Users = () => {
+export default function Users() {
   const dispatch = useDispatch<AppDispatch>();
   const { list, isLoading, totalUsers, resultsCount } = useTypedSelector(
     ({ users }) => users
@@ -72,4 +71,4 @@ export const Users = () => {
       )}
     </section>
   );
-};
+}

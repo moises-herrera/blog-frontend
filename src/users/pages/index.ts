@@ -1,1 +1,1 @@
-export * from "./Users";
+export { default as Users } from "./Users";

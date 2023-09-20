@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { authRoutesData } from ".";
 
-export const AuthRoutes = () => {
+export default function AuthRoutes() {
   return (
     <Routes>
       {authRoutesData.map(({ path, element }) => (
@@ -11,4 +11,4 @@ export const AuthRoutes = () => {
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   );
-};
+}

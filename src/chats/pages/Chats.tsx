@@ -12,7 +12,7 @@ import { AppDispatch } from "src/store/types";
 import { socket } from "src/socket";
 import { useTypedSelector } from "src/store";
 
-export const Chats = () => {
+export default function Chats() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useTypedSelector(({ auth }) => auth);
   const { isChatModalOpen } = useTypedSelector(({ chats }) => chats);
@@ -52,4 +52,4 @@ export const Chats = () => {
       {!isChatModalOpen && <ChatView />}
     </div>
   );
-};
+}

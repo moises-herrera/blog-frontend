@@ -19,7 +19,7 @@ import { useTypedSelector } from "src/store";
 import { useCallback, useEffect } from "react";
 import { useMessageToast } from "src/hooks";
 
-export const ResetPassword = () => {
+export default function ResetPassword() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const { userId, token } = getQueryParams(search);
@@ -97,4 +97,4 @@ export const ResetPassword = () => {
       </form>
     </ModalContainForm>
   );
-};
+}

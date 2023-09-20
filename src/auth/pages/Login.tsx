@@ -1,5 +1,5 @@
 import { LoginForm } from "src/auth/components";
 
-export const Login = () => {
+export default function Login() {
   return <LoginForm isOpen={true} onClose={() => {}} />;
-};
+}
