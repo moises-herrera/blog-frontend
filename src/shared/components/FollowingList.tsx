@@ -1,5 +1,5 @@
 import { User } from "src/interfaces";
-import { FollowButton, SearchInput, UserCard } from ".";
+import { FollowButton, ListContainer, Loading, SearchInput, UserCard } from ".";
 import { useTypedSelector } from "src/store";
 import { useScrollPagination, useSearch } from "src/hooks";
 import { getFollowing } from "src/store/users";
@@ -45,16 +45,24 @@ export const FollowingList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      <div
-        className="users-list h-[310px] overflow-auto scrollable-div"
-        ref={scrollableDiv}
-      >
-        {following.map((user) => (
-          <UserCard key={user.username} user={user}>
-            <FollowButton user={user} currentUser={currentUser as User} />
-          </UserCard>
-        ))}
-      </div>
+      {!following.length && followingLoading ? (
+        <div className="h-[310px]">
+          <Loading />
+        </div>
+      ) : (
+        <ListContainer isLoading={followingLoading} loadingHeight="50px">
+          <div
+            className="users-list h-[310px] overflow-auto scrollable-div"
+            ref={scrollableDiv}
+          >
+            {following.map((user) => (
+              <UserCard key={user.username} user={user}>
+                <FollowButton user={user} currentUser={currentUser as User} />
+              </UserCard>
+            ))}
+          </div>
+        </ListContainer>
+      )}
     </>
   );
 };
