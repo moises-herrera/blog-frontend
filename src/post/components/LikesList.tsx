@@ -2,7 +2,13 @@ import { useRef, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useSearch, useScrollPagination } from "src/hooks";
 import { User } from "src/interfaces";
-import { SearchInput, UserCard, FollowButton } from "src/shared/components";
+import {
+  SearchInput,
+  UserCard,
+  FollowButton,
+  Loading,
+  ListContainer,
+} from "src/shared/components";
 import { useTypedSelector } from "src/store";
 import { getPostLikes } from "src/store/post";
 import { AppDispatch } from "src/store/types";
@@ -48,16 +54,24 @@ export const LikesList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      <div
-        className="users-list h-[310px] overflow-auto scrollable-div"
-        ref={scrollableDiv}
-      >
-        {postUserLikes.map((user) => (
-          <UserCard key={user.username} user={user}>
-            <FollowButton user={user} currentUser={currentUser as User} />
-          </UserCard>
-        ))}
-      </div>
+      {!postUserLikes.length && isLoadingPostLikes ? (
+        <div className="h-[310px]">
+          <Loading />
+        </div>
+      ) : (
+        <ListContainer isLoading={isLoadingPostLikes} loadingHeight="50px">
+          <div
+            className="users-list h-[310px] overflow-auto scrollable-div"
+            ref={scrollableDiv}
+          >
+            {postUserLikes.map((user) => (
+              <UserCard key={user.username} user={user}>
+                <FollowButton user={user} currentUser={currentUser as User} />
+              </UserCard>
+            ))}
+          </div>
+        </ListContainer>
+      )}
     </>
   );
 };

@@ -1,11 +1,5 @@
-import {
-  Login,
-  Register,
-  ForgotPassword,
-  ResetPassword,
-  ConfirmEmail,
-} from "src/auth/pages";
 import { RouteData } from "src/interfaces";
+import { LazyLoadRoute } from ".";
 
 /**
  * Public routes data.
@@ -13,22 +7,22 @@ import { RouteData } from "src/interfaces";
 export const authRoutesData: RouteData[] = [
   {
     path: "/login",
-    element: <Login />,
+    element: LazyLoadRoute("../auth/pages/Login.tsx"),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: LazyLoadRoute("../auth/pages/Register.tsx"),
   },
   {
     path: "/forgot-password",
-    element: <ForgotPassword />,
+    element: LazyLoadRoute("../auth/pages/ForgotPassword.tsx"),
   },
   {
     path: "/reset-password",
-    element: <ResetPassword />,
+    element: LazyLoadRoute("../auth/pages/ResetPassword.tsx"),
   },
   {
     path: "/confirm-email",
-    element: <ConfirmEmail />,
+    element: LazyLoadRoute("../auth/pages/ConfirmEmail.tsx"),
   },
 ];

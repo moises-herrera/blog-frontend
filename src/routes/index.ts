@@ -1,3 +1,4 @@
+export * from "./LazyLoadRoute";
 export * from "./private-routes-data";
 export * from "./auth-routes-data";
 export * from "./AppRouter";

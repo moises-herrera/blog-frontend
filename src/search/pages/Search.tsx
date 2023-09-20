@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 
-export const Search = () => {
+export default function Search() {
   const dispatch = useDispatch<AppDispatch>();
   const { searchResults, isLoadingSearch, totalResults } = useTypedSelector(
     ({ post }) => post
@@ -68,4 +68,4 @@ export const Search = () => {
       )}
     </div>
   );
-};
+}

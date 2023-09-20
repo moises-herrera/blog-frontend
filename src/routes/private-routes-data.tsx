@@ -1,10 +1,5 @@
-import { Feed } from "src/feed/pages";
 import { RouteData } from "src/interfaces";
-import { Profile } from "src/profile/pages";
-import { Search } from "src/search/pages";
-import { SettingForm } from "src/settings/components";
-import { Users } from "src/users/pages";
-import { Chats } from "src/chats/pages";
+import { LazyLoadRoute } from ".";
 
 /**
  * Private routes data.
@@ -12,26 +7,26 @@ import { Chats } from "src/chats/pages";
 export const privateRoutesData: RouteData[] = [
   {
     path: "/",
-    element: <Feed />,
+    element: LazyLoadRoute("../feed/pages/Feed.tsx"),
   },
   {
     path: "/search",
-    element: <Search />,
+    element: LazyLoadRoute("../search/pages/Search.tsx"),
   },
   {
     path: "/profile/:username",
-    element: <Profile />,
+    element: LazyLoadRoute("../profile/pages/Profile.tsx"),
   },
   {
     path: "/users",
-    element: <Users />,
+    element: LazyLoadRoute("../users/pages/Users.tsx"),
   },
   {
     path: "/chats",
-    element: <Chats />,
+    element: LazyLoadRoute("../chats/pages/Chats.tsx"),
   },
   {
     path: "/settings",
-    element: <SettingForm />,
+    element: LazyLoadRoute("../settings/components/SettingForm.tsx"),
   },
 ];

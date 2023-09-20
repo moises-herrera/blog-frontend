@@ -1,4 +1,4 @@
-import { SearchInput } from "src/shared/components";
+import { ListContainer, Loading, SearchInput } from "src/shared/components";
 import { UserItem } from ".";
 import { useDispatch } from "react-redux";
 import { useRef, useEffect } from "react";
@@ -45,20 +45,28 @@ export const SearchUsersList = () => {
         <p className="users-list-title">Usuarios</p>
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      <div
-        className="users-list h-[310px] overflow-auto scrollable-div"
-        ref={usersListRef}
-      >
-        {list.map((user) => (
-          <UserItem
-            key={user.username}
-            _id={user._id}
-            fullName={`${user.firstName} ${user.lastName}`}
-            avatar={user?.avatar || ""}
-            onClose={onCloseModal}
-          />
-        ))}
-      </div>
+      {!list.length && isLoading ? (
+        <div className="h-[310px]">
+          <Loading />
+        </div>
+      ) : (
+        <div
+          className="users-list h-[310px] overflow-auto scrollable-div"
+          ref={usersListRef}
+        >
+          <ListContainer isLoading={isLoading} loadingHeight="50px">
+            {list.map((user) => (
+              <UserItem
+                key={user.username}
+                _id={user._id}
+                fullName={`${user.firstName} ${user.lastName}`}
+                avatar={user?.avatar || ""}
+                onClose={onCloseModal}
+              />
+            ))}
+          </ListContainer>
+        </div>
+      )}
     </>
   );
 };

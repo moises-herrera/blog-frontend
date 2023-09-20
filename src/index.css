@@ -83,3 +83,9 @@ body {
   outline: 1px solid #b4b2b2;
   border-radius: 4px;
 }
+
+.loading-container {
+  @apply flex flex-col justify-center items-center;
+
+  height: calc(100vh - 150px);
+}
