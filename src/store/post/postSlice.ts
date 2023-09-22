@@ -88,6 +88,9 @@ export const postSlice = createSlice({
     clearPostInfoActive: (state) => {
       state.postInfoActive = null;
     },
+    clearLikes: (state) => {
+      state.postUserLikes = [];
+    },
     addLike: (state, { payload: { postId, userId } }) => {
       if (state.searchResults.some((post) => post._id === postId)) {
         state.searchResults = state.searchResults.map((post) => {
@@ -477,4 +480,5 @@ export const {
   removeComment,
   setPostInfoActive,
   clearPostInfoActive,
+  clearLikes,
 } = postSlice.actions;

@@ -147,7 +147,7 @@ export const PostCard = (data: PostInfo) => {
               userId={currentUser?._id as string}
               userLiked={postHasLike(likes, currentUser?._id as string)}
             />
-            <button onClick={onOpenLikesModal}>
+            <button onClick={onOpenLikesModal} disabled={likes.length === 0}>
               <span>{likes.length}</span>
             </button>
           </div>
