@@ -17,7 +17,7 @@ export const CommentsModalContainer = () => {
 
   return (
     <>
-      {postInfoActive && (
+      {isCommentsModalVisible && postInfoActive && (
         <>
           <CommentsModal
             isOpen={isCommentsModalVisible}
