@@ -67,7 +67,7 @@ export const CommentsModal = ({
   };
 
   useEffect(() => {
-    dispatch(getComments(_id));
+    if (isOpen) dispatch(getComments(_id));
   }, []);
 
   return (
