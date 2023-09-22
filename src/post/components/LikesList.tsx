@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo, Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { useSearch, useScrollPagination } from "src/hooks";
 import { User } from "src/interfaces";
@@ -10,7 +10,7 @@ import {
   ListContainer,
 } from "src/shared/components";
 import { useTypedSelector } from "src/store";
-import { getPostLikes } from "src/store/post";
+import { clearLikes, getPostLikes } from "src/store/post";
 import { AppDispatch } from "src/store/types";
 
 export const LikesList = () => {
@@ -21,13 +21,10 @@ export const LikesList = () => {
   const { debouncedSearchTerm, onSearch } = useSearch({
     value: "",
   });
-  const currentUserId = useMemo(
-    () => postInfoActive?._id,
-    [postInfoActive?._id]
-  );
+  const postId = useMemo(() => postInfoActive?._id, [postInfoActive?._id]);
   const scrollableDiv = useRef<HTMLDivElement>(null);
 
-  const { page } = useScrollPagination({
+  const { page, setPage } = useScrollPagination({
     isLoading: isLoadingPostLikes,
     currentRecords: postInfoActive?.likes.length || 0,
     total: totalPostLikes,
@@ -35,17 +32,24 @@ export const LikesList = () => {
   });
 
   useEffect(() => {
-    dispatch(
-      getPostLikes({
-        id: currentUserId as string,
-        queryParams: {
-          username: debouncedSearchTerm || "",
-          limit: 10,
-          page,
-        },
-      })
-    );
-  }, [dispatch, debouncedSearchTerm, currentUserId, page]);
+    if (postId) {
+      dispatch(
+        getPostLikes({
+          id: postId as string,
+          queryParams: {
+            username: debouncedSearchTerm || "",
+            limit: 10,
+            page,
+          },
+        })
+      );
+    }
+  }, [dispatch, debouncedSearchTerm, postId, page]);
+
+  useEffect(() => {
+    dispatch(clearLikes());
+    setPage(1);
+  }, [postId]);
 
   return (
     <>
@@ -66,7 +70,14 @@ export const LikesList = () => {
           >
             {postUserLikes.map((user) => (
               <UserCard key={user.username} user={user}>
-                <FollowButton user={user} currentUser={currentUser as User} />
+                <Fragment>
+                  {user._id !== currentUser?._id && (
+                    <FollowButton
+                      user={user}
+                      currentUser={currentUser as User}
+                    />
+                  )}
+                </Fragment>
               </UserCard>
             ))}
           </div>
