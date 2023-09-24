@@ -7,3 +7,4 @@ export * from "./convert-image";
 export * from "./query-params-helper";
 export * from "./post-helper";
 export * from "./device-helper";
+export * from "./get-environments";
