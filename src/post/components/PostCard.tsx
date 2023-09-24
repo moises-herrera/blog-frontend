@@ -75,7 +75,7 @@ export const PostCard = (data: PostInfo) => {
   };
 
   const onClickDelete = () => {
-    dispatch(openDeleteModal(_id));
+    dispatch(openDeleteModal(data));
   };
 
   return (

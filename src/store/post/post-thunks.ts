@@ -236,11 +236,17 @@ export const updatePost = createAsyncThunk<
  */
 export const deletePost = createAsyncThunk<
   StandardResponse,
-  string,
+  PostInfo,
   AsyncThunkConfig
->("deletePost", async (id, { rejectWithValue }) => {
+>("deletePost", async ({ _id, files }, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.delete<StandardResponse>(`/post/${id}`);
+    if (files) {
+      const fileToDelete = files.length ? files[0].url : null;
+
+      if (fileToDelete) await deleteFile(fileToDelete);
+    }
+
+    const { data } = await peopleApi.delete<StandardResponse>(`/post/${_id}`);
 
     return data;
   } catch (error) {
