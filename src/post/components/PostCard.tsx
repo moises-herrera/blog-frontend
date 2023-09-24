@@ -113,9 +113,14 @@ export const PostCard = (data: PostInfo) => {
         {files?.length && (
           <Box className="flex justify-center mb-5">
             {files[0].type.includes("image") ? (
-              <Image src={files[0].url} alt={title} borderRadius={20} />
+              <Image
+                src={files[0].url}
+                alt={title}
+                borderRadius={20}
+                boxSize="450px"
+              />
             ) : (
-              <video src={files[0].url} controls />
+              <video src={files[0].url} controls className="w-[400px]" />
             )}
           </Box>
         )}

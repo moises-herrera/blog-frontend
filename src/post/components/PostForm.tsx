@@ -124,6 +124,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
               src={uploadImage}
               className="cursor-pointer"
               alt="Post image"
+              boxSize="450px"
             />
           )}
           {files.map((file, index) => (
