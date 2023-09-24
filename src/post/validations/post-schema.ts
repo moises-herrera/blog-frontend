@@ -6,6 +6,7 @@ import { z } from "zod";
 export const PostSchema = z.object({
   title: z.string().nonempty("El titulo es requerido"),
   image: z.any(),
+  files: z.array(z.any()),
   topic: z.string().nonempty("El tema es requerido"),
   description: z
     .string()

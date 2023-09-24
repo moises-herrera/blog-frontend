@@ -4,6 +4,7 @@ import { peopleApi } from "src/api";
 import { getQueryStringFromObject } from "src/helpers";
 import {
   CreatePost,
+  FileStored,
   GetLikes,
   PaginatedResponse,
   Post,
@@ -13,7 +14,7 @@ import {
   UpdatePost,
   User,
 } from "src/interfaces";
-import { updateFile, uploadFile } from "src/shared/services";
+import { deleteFile, updateFile, uploadFile } from "src/shared/services";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -147,15 +148,20 @@ export const createPost = createAsyncThunk<
 >("createPost", async (postData, { rejectWithValue }) => {
   try {
     const postFile = postData.fileUploaded;
-    let fileUrl = "";
+    const files: FileStored[] = [];
 
     if (postFile) {
-      fileUrl = await uploadFile("posts", postFile);
+      const fileUrl = await uploadFile("posts", postFile);
+
+      files.push({
+        url: fileUrl,
+        type: postFile?.type,
+      } as FileStored);
     }
 
     const { data } = await peopleApi.post<StandardResponse<Post>>("/post", {
       ...postData,
-      image: fileUrl,
+      files,
     });
 
     return data;
@@ -184,19 +190,28 @@ export const updatePost = createAsyncThunk<
 >("updatePost", async ({ id, postData }, { rejectWithValue }) => {
   try {
     const postFile = postData.fileUploaded;
-    let fileUrl = postData.image;
+    const files: FileStored[] = postData.files || [];
 
     if (postFile) {
-      fileUrl = !postData.image
+      const fileUrl = !files.length
         ? await uploadFile("posts", postFile)
-        : await updateFile("posts", postFile, postData.image);
+        : await updateFile("posts", postFile, files[0].url);
+
+      files.push({
+        url: fileUrl,
+        type: postFile?.type,
+      } as FileStored);
+    } else {
+      const fileToDelete = files ? files[0].url : null;
+
+      if (fileToDelete) await deleteFile(fileToDelete);
     }
 
     const { data } = await peopleApi.put<StandardResponse<Post>>(
       `/post/${id}`,
       {
         ...postData,
-        image: fileUrl,
+        files,
       }
     );
 
