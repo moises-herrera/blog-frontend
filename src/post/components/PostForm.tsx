@@ -18,6 +18,7 @@ import { useMessageToast } from "src/hooks";
 import { CreatePost, FileStored, Post } from "src/interfaces";
 import { useDropzone } from "react-dropzone";
 import uploadImage from "src/assets/images/upload-image.png";
+import { PostFileItem } from ".";
 
 interface PostFormProps {
   defaultValues?: Post;
@@ -125,31 +126,14 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
               alt="Post image"
             />
           )}
-          {files.map((file, index) =>
-            file.type.includes("image") ? (
-              <>
-                <Image key={index} src={file.url} alt="Post image" />
-                <button
-                  onClick={(event) => onRemoveFile(event, index)}
-                  type="button"
-                  className="absolute top-5 right-5 z-20"
-                >
-                  <i className="text-2xl fa-regular fa-circle-xmark"></i>
-                </button>
-              </>
-            ) : (
-              <>
-                <video key={index} src={file.url} controls />
-                <button
-                  onClick={(event) => onRemoveFile(event, index)}
-                  type="button"
-                  className="absolute top-5 right-5 z-20"
-                >
-                  <i className="text-2xl fa-regular fa-circle-xmark"></i>
-                </button>
-              </>
-            )
-          )}
+          {files.map((file, index) => (
+            <PostFileItem
+              key={index}
+              file={file}
+              index={index}
+              onRemoveFile={onRemoveFile}
+            />
+          ))}
         </div>
       </div>
 

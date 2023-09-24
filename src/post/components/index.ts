@@ -10,3 +10,4 @@ export * from "./LikeButton";
 export * from "./CommentsModalContainer";
 export * from "./LikesList";
 export * from "./LikesModal";
+export * from "./PostFileItem";
