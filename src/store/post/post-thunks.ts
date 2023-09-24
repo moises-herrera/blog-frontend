@@ -13,7 +13,7 @@ import {
   UpdatePost,
   User,
 } from "src/interfaces";
-import { uploadFile } from "src/shared/services";
+import { updateFile, uploadFile } from "src/shared/services";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -150,7 +150,7 @@ export const createPost = createAsyncThunk<
     let fileUrl = "";
 
     if (postFile) {
-      fileUrl = await uploadFile(postFile, "posts");
+      fileUrl = await uploadFile("posts", postFile);
     }
 
     const { data } = await peopleApi.post<StandardResponse<Post>>("/post", {
@@ -183,9 +183,21 @@ export const updatePost = createAsyncThunk<
   AsyncThunkConfig
 >("updatePost", async ({ id, postData }, { rejectWithValue }) => {
   try {
+    const postFile = postData.fileUploaded;
+    let fileUrl = postData.image;
+
+    if (postFile) {
+      fileUrl = !postData.image
+        ? await uploadFile("posts", postFile)
+        : await updateFile("posts", postFile, postData.image);
+    }
+
     const { data } = await peopleApi.put<StandardResponse<Post>>(
       `/post/${id}`,
-      postData
+      {
+        ...postData,
+        image: fileUrl,
+      }
     );
 
     return data;
