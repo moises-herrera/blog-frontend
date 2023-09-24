@@ -37,3 +37,4 @@ export * from "./chat-state";
 export * from "./request-data.interface";
 export * from "./send-message.interface";
 export * from "./create-chat.interface";
+export * from "./create-post.interface";
