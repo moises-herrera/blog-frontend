@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import { peopleApi } from "src/api";
 import { getQueryStringFromObject } from "src/helpers";
 import {
+  CreatePost,
   GetLikes,
   PaginatedResponse,
   Post,
@@ -12,6 +13,7 @@ import {
   UpdatePost,
   User,
 } from "src/interfaces";
+import { uploadFile } from "src/shared/services";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -140,14 +142,21 @@ export const searchPosts = createAsyncThunk<
  */
 export const createPost = createAsyncThunk<
   StandardResponse<Post>,
-  FormData,
+  CreatePost,
   AsyncThunkConfig
 >("createPost", async (postData, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.post<StandardResponse<Post>>(
-      "/post",
-      postData
-    );
+    const postFile = postData.fileUploaded;
+    let fileUrl = "";
+
+    if (postFile) {
+      fileUrl = await uploadFile(postFile, "posts");
+    }
+
+    const { data } = await peopleApi.post<StandardResponse<Post>>("/post", {
+      ...postData,
+      image: fileUrl,
+    });
 
     return data;
   } catch (error) {
