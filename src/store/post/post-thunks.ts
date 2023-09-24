@@ -190,17 +190,19 @@ export const updatePost = createAsyncThunk<
 >("updatePost", async ({ id, postData }, { rejectWithValue }) => {
   try {
     const postFile = postData.fileUploaded;
-    const files: FileStored[] = postData.files || [];
+    let files: FileStored[] = postData.files || [];
 
     if (postFile) {
       const fileUrl = !files.length
         ? await uploadFile("posts", postFile)
         : await updateFile("posts", postFile, files[0].url);
 
-      files.push({
-        url: fileUrl,
-        type: postFile?.type,
-      } as FileStored);
+      files = [
+        {
+          url: fileUrl,
+          type: postFile?.type,
+        } as FileStored,
+      ];
     } else {
       const fileToDelete = files ? files[0].url : null;
 
