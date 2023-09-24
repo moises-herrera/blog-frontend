@@ -1,4 +1,9 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { firebaseStorage } from "src/firebase";
 import { v4 as uuidv4 } from "uuid";
 
@@ -9,13 +14,49 @@ import { v4 as uuidv4 } from "uuid";
  * @returns The file url.
  */
 export const uploadFile = async (
-  file: File,
-  folder: string
+  folder: string,
+  file: File
 ): Promise<string> => {
-  const fileId = uuidv4();
-  const storageRef = ref(firebaseStorage, `${folder}/${fileId}`);
-  const result = await uploadBytes(storageRef, file);
-  const fileUrl = getDownloadURL(result.ref);
+  try {
+    const fileId = uuidv4();
+    const storageRef = ref(firebaseStorage, `${folder}/${fileId}`);
+    const result = await uploadBytes(storageRef, file);
+    const fileUrl = getDownloadURL(result.ref);
 
-  return fileUrl;
+    return fileUrl;
+  } catch (error) {
+    throw new Error("Ha ocurrido un error al cargar el archivo.");
+  }
+};
+
+/**
+ * Update file from firebase storage.
+ *
+ * @param folder The folder name.
+ * @param newFile The new file.
+ * @param oldFileUrl The old file url.
+ * @returns
+ */
+export const updateFile = async (
+  folder: string,
+  newFile: File,
+  oldFileUrl: string
+): Promise<string> => {
+  await deleteFile(oldFileUrl);
+  return uploadFile(folder, newFile);
+};
+
+/**
+ * Delete file from firebase storage.
+ *
+ * @param fileUrl The file url.
+ */
+export const deleteFile = async (fileUrl: string): Promise<void> => {
+  try {
+    const fileRef = ref(firebaseStorage, fileUrl);
+
+    await deleteObject(fileRef);
+  } catch (error) {
+    throw new Error("Ha ocurrido un error.");
+  }
 };
