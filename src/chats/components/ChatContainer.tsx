@@ -76,7 +76,7 @@ export const ChatContainer = () => {
       </div>
       <div
         ref={listRef}
-        className="w-full px-3 overflow-y-auto chat-list scrollable-chat"
+        className="w-full px-3 overflow-y-auto chat-list scrollbar-gray"
       >
         {list.map((chat) => (
           <ChatItem key={chat._id} {...chat} />
