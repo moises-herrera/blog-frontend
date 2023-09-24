@@ -1,3 +1,10 @@
+import { User } from ".";
+
+export interface UserWithAvatarFile extends Partial<User> {
+  /** Avatar file. */
+  avatarFile: File | null;
+}
+
 /**
  * Update user data.
  */
@@ -6,5 +13,5 @@ export interface UpdateUser {
   id: string;
 
   /** User data. */
-  userData: FormData;
+  userData: UserWithAvatarFile;
 }

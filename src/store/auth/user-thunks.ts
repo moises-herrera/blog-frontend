@@ -8,6 +8,7 @@ import {
   UpdateUser,
   User,
 } from "src/interfaces";
+import { uploadFile, updateFile } from "src/shared/services";
 import { AsyncThunkConfig } from "src/store/types";
 
 const { VITE_API_URL } = import.meta.env;
@@ -22,7 +23,21 @@ export const updateUser = createAsyncThunk<User, UpdateUser, AsyncThunkConfig>(
   "updateUser",
   async ({ id, userData }, { rejectWithValue }) => {
     try {
-      const { data } = await peopleApi.put<User>(`/user/${id}`, userData);
+      const avatarFile = userData.avatarFile;
+      let avatarUrl = userData.avatar;
+
+      if (avatarFile) {
+        const fileUrl = !userData.avatar
+          ? await uploadFile("users", avatarFile)
+          : await updateFile("users", avatarFile, userData.avatar);
+
+        avatarUrl = fileUrl;
+      }
+
+      const { data } = await peopleApi.put<User>(`/user/${id}`, {
+        ...userData,
+        avatar: avatarUrl,
+      });
 
       return data;
     } catch (error) {
