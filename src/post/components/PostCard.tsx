@@ -46,6 +46,7 @@ export const PostCard = (data: PostInfo) => {
     comments,
     likes,
     createdAt,
+    files,
   } = data;
 
   const onClickUpdate = () => {
@@ -57,6 +58,7 @@ export const PostCard = (data: PostInfo) => {
         image,
         description,
         user: user._id,
+        files,
       })
     );
     dispatch(openNewPostForm());
