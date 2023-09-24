@@ -56,6 +56,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
       "video/mp4": [".mp4", ".webm", ".ogg"],
     },
     maxFiles: 1,
+    maxSize: 60 * 1024 * 1024,
   });
 
   const clearSuccess = useCallback(() => {
