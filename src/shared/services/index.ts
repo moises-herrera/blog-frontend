@@ -1,1 +1,2 @@
-export * from './sidebar.service';
+export * from "./sidebar.service";
+export * from "./file.service";

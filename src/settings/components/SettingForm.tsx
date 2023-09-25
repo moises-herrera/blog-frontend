@@ -20,8 +20,8 @@ import {
 } from "src/store/auth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { getFormDataFromObject, convertImageToBase64 } from "src/helpers";
 import { useMessageToast } from "src/hooks";
+import { FileStored, UserWithAvatarFile } from "src/interfaces";
 
 export default function SettingForm() {
   const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
@@ -33,10 +33,13 @@ export default function SettingForm() {
   };
 
   const { displaySuccessMessage, displayError } = useMessageToast();
-
-  const [userAvatar, setUserAvatar] = useState<string | ArrayBuffer | null>(
-    (user?.avatar as string) || null
-  );
+  const avatar = user?.avatar
+    ? ({
+        url: user.avatar,
+        type: "image/jpeg",
+      } as FileStored)
+    : null;
+  const [userAvatar, setUserAvatar] = useState<FileStored | null>(avatar);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -52,20 +55,24 @@ export default function SettingForm() {
   };
   const onCancelChanges = () => {
     reset(formDefaultValues);
-    setUserAvatar(user?.avatar || null);
+    setUserAvatar({
+      url: user?.avatar || null,
+      type: "image/jpeg",
+    } as FileStored);
   };
 
   const onUploadAvatar = (files: FileList | null) => {
     const avatarFile = files?.[0];
-    setValue("avatar", avatarFile);
+
     if (avatarFile) {
-      convertImageToBase64(avatarFile, setUserAvatar);
+      setUserAvatar(
+        Object.assign(avatarFile, { url: URL.createObjectURL(avatarFile) })
+      );
     }
   };
 
   const {
     reset,
-    setValue,
     handleSubmit,
     register,
     formState: { errors },
@@ -75,7 +82,10 @@ export default function SettingForm() {
   });
 
   const onSubmitForm: SubmitHandler<SettingSchemaType> = (data) => {
-    const userData = getFormDataFromObject(data);
+    const userData: UserWithAvatarFile = {
+      ...data,
+      avatarFile: userAvatar,
+    };
     dispatch(
       updateUser({
         id: user?._id as string,
@@ -124,7 +134,7 @@ export default function SettingForm() {
           cursor="pointer"
           onClick={onUploadImage}
           boxSize="200px"
-          src={(userAvatar as string) || avatarPlaceholder}
+          src={userAvatar?.url || avatarPlaceholder}
         />
         <Input
           onChange={({ target: { files } }) => onUploadAvatar(files)}

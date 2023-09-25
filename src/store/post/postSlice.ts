@@ -30,7 +30,7 @@ const initialState: PostState = {
   errorMessage: null,
   editPost: null,
   isDeleteModalVisible: false,
-  deletePostId: null,
+  deletePostInfo: null,
   isLoadingDeletePost: false,
   postInfoActive: null,
   postUserLikes: [],
@@ -70,11 +70,11 @@ export const postSlice = createSlice({
     },
     openDeleteModal: (state, { payload }) => {
       state.isDeleteModalVisible = true;
-      state.deletePostId = payload;
+      state.deletePostInfo = payload;
     },
     closeDeleteModal: (state) => {
       state.isDeleteModalVisible = false;
-      state.deletePostId = null;
+      state.deletePostInfo = null;
     },
     clearDeleteResponse: (state) => {
       state.deleteMessage = null;
@@ -435,16 +435,16 @@ export const postSlice = createSlice({
       state.isLoadingDeletePost = false;
       state.deleteMessage = payload.message;
       state.userPosts = state.userPosts.filter(
-        (post) => post._id !== state.deletePostId
+        (post) => post._id !== state.deletePostInfo?._id
       );
       state.isDeleteModalVisible = false;
-      state.deletePostId = null;
+      state.deletePostInfo = null;
     });
     builder.addCase(deletePost.rejected, (state, { payload }) => {
       state.isLoadingDeletePost = false;
       state.deleteError = payload?.message;
       state.isDeleteModalVisible = false;
-      state.deletePostId = null;
+      state.deletePostInfo = null;
     });
 
     builder.addCase(getPostLikes.pending, (state) => {

@@ -46,6 +46,7 @@ export const PostCard = (data: PostInfo) => {
     comments,
     likes,
     createdAt,
+    files,
   } = data;
 
   const onClickUpdate = () => {
@@ -57,6 +58,7 @@ export const PostCard = (data: PostInfo) => {
         image,
         description,
         user: user._id,
+        files,
       })
     );
     dispatch(openNewPostForm());
@@ -73,7 +75,7 @@ export const PostCard = (data: PostInfo) => {
   };
 
   const onClickDelete = () => {
-    dispatch(openDeleteModal(_id));
+    dispatch(openDeleteModal(data));
   };
 
   return (
@@ -108,9 +110,13 @@ export const PostCard = (data: PostInfo) => {
       </CardHeader>
 
       <CardBody>
-        {image && (
+        {files?.length && (
           <Box className="flex justify-center mb-5">
-            <Image src={image} alt={title} borderRadius={20} />
+            {files[0].type.includes("image") ? (
+              <Image src={files[0].url} alt={title} borderRadius={20} />
+            ) : (
+              <video src={files[0].url} controls className="w-[400px]" />
+            )}
           </Box>
         )}
 

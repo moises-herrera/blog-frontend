@@ -41,7 +41,7 @@ type CommentForm = {
 export const CommentsModal = ({
   isOpen,
   onClose,
-  infoPost: { _id, title, topic, image, description, user, createdAt, likes },
+  infoPost: { _id, title, topic, files, description, user, createdAt, likes },
 }: CommentsModalProps) => {
   const { user: currentUser } = useTypedSelector(({ auth }) => auth);
   const { comments, isLoadingComments } = useTypedSelector(
@@ -84,15 +84,18 @@ export const CommentsModal = ({
           <div className="flex flex-col w-full h-full sm:flex-row">
             <div className="hidden w-full bg-white rounded-l-[20px] lg:w-1/2 lg:block">
               <CloseButton onClick={onClose} className="ml-1" />
-              {image && (
-                <div className="flex justify-center">
-                  <Image
-                    rounded={"20px"}
-                    boxSize="450px"
-                    objectFit="cover"
-                    src={image}
-                    alt={title}
-                  />
+              {files?.length && (
+                <div className="flex justify-center m-auto">
+                  {files[0].type.includes("image") ? (
+                    <Image
+                      src={files[0].url}
+                      alt={title}
+                      rounded="20px"
+                      boxSize="450px"
+                    />
+                  ) : (
+                    <video src={files[0].url} controls className="w-[350px]" />
+                  )}
                 </div>
               )}
               <div className="mt-3 flex justify-evenly text-secondary-300">
@@ -102,9 +105,15 @@ export const CommentsModal = ({
               <div className="flex justify-center text-primary-500 text-[22px] pt-2 pb-3 font-semibold">
                 <h2>{title}</h2>
               </div>
-              <p className="text-[16px] text-primary-500 px-5 pb-3 text-justify">
-                {description}
-              </p>
+              <article
+                className={`post-description ${
+                  files?.length ? "max-h-[120px]" : "max-h-[80%]"
+                }`}
+              >
+                <p className="text-[16px] text-primary-500 px-5 pb-3 text-justify">
+                  {description}
+                </p>
+              </article>
             </div>
             <div className="w-full bg-primary-500 rounded-r-[20px] lg:w-1/2 h-full">
               <div className="block lg:hidden">
@@ -140,7 +149,7 @@ export const CommentsModal = ({
                   Comentarios
                 </div>
 
-                <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[550px]">
+                <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[650px]">
                   {!isLoadingComments ? (
                     <>
                       {comments.map(
