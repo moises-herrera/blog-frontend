@@ -15,7 +15,7 @@ export const DeletePostModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     isDeleteModalVisible,
-    deletePostId,
+    deletePostInfo,
     isLoadingDeletePost,
     deleteMessage,
     deleteError,
@@ -23,7 +23,7 @@ export const DeletePostModal = () => {
   const { displaySuccessMessage, displayError } = useMessageToast();
 
   const onDelete = () => {
-    dispatch(deletePost(deletePostId as string));
+    if (deletePostInfo) dispatch(deletePost(deletePostInfo));
   };
 
   const onClose = () => {

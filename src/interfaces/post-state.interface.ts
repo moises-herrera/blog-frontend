@@ -64,8 +64,8 @@ export interface PostState {
   /** Delete post error message. */
   deleteError?: string | null;
 
-  /** Delete post id. */
-  deletePostId?: string | null;
+  /** Delete post. */
+  deletePostInfo?: PostInfo | null;
 
   /** Loading state. */
   isLoadingDeletePost: boolean;

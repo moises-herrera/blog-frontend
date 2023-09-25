@@ -1,3 +1,5 @@
+import { CreatePost } from ".";
+
 /**
  * Update post data.
  */
@@ -6,5 +8,5 @@ export interface UpdatePost {
   id: string;
 
   /** Post data. */
-  postData: FormData;
+  postData: CreatePost;
 }

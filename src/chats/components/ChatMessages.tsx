@@ -124,7 +124,7 @@ export const ChatMessages = memo(() => {
             fullName={participant.fullName}
           />
           <div
-            className="messages-container scrollable-chat"
+            className="messages-container scrollbar-gray"
             ref={messagesListRef}
           >
             {messages.map(({ _id, content, sender, createdAt }, index) => (

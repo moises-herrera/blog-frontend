@@ -3,6 +3,8 @@ import { AxiosError } from "axios";
 import { peopleApi } from "src/api";
 import { getQueryStringFromObject } from "src/helpers";
 import {
+  CreatePost,
+  FileStored,
   GetLikes,
   PaginatedResponse,
   Post,
@@ -12,6 +14,7 @@ import {
   UpdatePost,
   User,
 } from "src/interfaces";
+import { deleteFile, updateFile, uploadFile } from "src/shared/services";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -140,14 +143,26 @@ export const searchPosts = createAsyncThunk<
  */
 export const createPost = createAsyncThunk<
   StandardResponse<Post>,
-  FormData,
+  CreatePost,
   AsyncThunkConfig
 >("createPost", async (postData, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.post<StandardResponse<Post>>(
-      "/post",
-      postData
-    );
+    const postFile = postData.fileUploaded;
+    const files: FileStored[] = [];
+
+    if (postFile) {
+      const fileUrl = await uploadFile("posts", postFile);
+
+      files.push({
+        url: fileUrl,
+        type: postFile?.type,
+      } as FileStored);
+    }
+
+    const { data } = await peopleApi.post<StandardResponse<Post>>("/post", {
+      ...postData,
+      files,
+    });
 
     return data;
   } catch (error) {
@@ -174,9 +189,32 @@ export const updatePost = createAsyncThunk<
   AsyncThunkConfig
 >("updatePost", async ({ id, postData }, { rejectWithValue }) => {
   try {
+    const postFile = postData.fileUploaded;
+    let files: FileStored[] = postData.files || [];
+
+    if (postFile) {
+      const fileUrl = !files.length
+        ? await uploadFile("posts", postFile)
+        : await updateFile("posts", postFile, files[0].url);
+
+      files = [
+        {
+          url: fileUrl,
+          type: postFile?.type,
+        } as FileStored,
+      ];
+    } else {
+      const fileToDelete = files ? files[0].url : null;
+
+      if (fileToDelete) await deleteFile(fileToDelete);
+    }
+
     const { data } = await peopleApi.put<StandardResponse<Post>>(
       `/post/${id}`,
-      postData
+      {
+        ...postData,
+        files,
+      }
     );
 
     return data;
@@ -200,11 +238,17 @@ export const updatePost = createAsyncThunk<
  */
 export const deletePost = createAsyncThunk<
   StandardResponse,
-  string,
+  PostInfo,
   AsyncThunkConfig
->("deletePost", async (id, { rejectWithValue }) => {
+>("deletePost", async ({ _id, files }, { rejectWithValue }) => {
   try {
-    const { data } = await peopleApi.delete<StandardResponse>(`/post/${id}`);
+    if (files) {
+      const fileToDelete = files.length ? files[0].url : null;
+
+      if (fileToDelete) await deleteFile(fileToDelete);
+    }
+
+    const { data } = await peopleApi.delete<StandardResponse>(`/post/${_id}`);
 
     return data;
   } catch (error) {

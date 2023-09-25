@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  FormLabel,
-  Image,
-  Input,
-  Textarea,
-} from "@chakra-ui/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Button, FormLabel, Image, Input, Textarea } from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
 import "./PostForm.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PostSchema, PostSchemaType } from "../validations";
@@ -22,9 +15,10 @@ import {
   updatePost,
 } from "src/store/post";
 import { useMessageToast } from "src/hooks";
-import { convertImageToBase64, getFormDataFromObject } from "src/helpers";
-import postImagePlaceholder from "src/assets/images/upload-image.png";
-import { Post } from "src/interfaces";
+import { CreatePost, FileStored, Post } from "src/interfaces";
+import { useDropzone } from "react-dropzone";
+import uploadImage from "src/assets/images/upload-image.png";
+import { PostFileItem } from ".";
 
 interface PostFormProps {
   defaultValues?: Post;
@@ -39,16 +33,31 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
     defaultValues,
   });
   const { displaySuccessMessage, displayError } = useMessageToast();
-  const [imageFile, setImageFile] = useState<ArrayBuffer | string | null>(
-    defaultValues?.image || null
-  );
-  const profileImageInputRef = useRef<HTMLInputElement | null>(null);
+  const [files, setFiles] = useState<FileStored[]>(defaultValues?.files || []);
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(
+      acceptedFiles.map((file) =>
+        Object.assign(file, {
+          url: URL.createObjectURL(file),
+        })
+      )
+    );
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "image/png": [".jpg", ".jpeg", ".png"],
+      "video/mp4": [".mp4", ".webm", ".ogg"],
+    },
+    maxFiles: 1,
+    maxSize: 60 * 1024 * 1024,
+  });
 
   const clearSuccess = useCallback(() => {
     dispatch(clearSuccessMessage());
@@ -75,54 +84,60 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     clearError,
   ]);
 
-  const onClickImage = (): void => {
-    profileImageInputRef.current?.click();
-  };
-
-  const onUploadPostImage = ({
-    target: { files },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    const imageFile = files?.[0];
-    setValue("image", imageFile);
-    if (imageFile) {
-      convertImageToBase64(imageFile, setImageFile);
-    }
-  };
-
-  const onSubmitForm: SubmitHandler<PostSchemaType> = (data) => {
-    const formData = getFormDataFromObject(data);
+  const onSubmitForm: SubmitHandler<PostSchemaType> = async (data) => {
+    const postData: CreatePost = {
+      ...data,
+      fileUploaded: files.length > 0 ? files[0] : null,
+    };
 
     if (!defaultValues?._id) {
-      dispatch(createPost(formData));
+      dispatch(createPost(postData));
     } else {
       dispatch(
         updatePost({
           id: defaultValues._id,
-          postData: formData,
+          postData: postData,
         })
       );
     }
   };
 
+  const onRemoveFile = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    index: number
+  ) => {
+    event.stopPropagation();
+
+    setFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
+
   return (
     <div className="post-form-container">
-      <Box className="flex justify-center mb-5">
-        <Image
-          src={(imageFile as string) || postImagePlaceholder}
-          alt="Post image"
-          borderRadius={20}
-          onClick={onClickImage}
-          cursor="pointer"
-          className="w-[400px]"
-        />
-        <Input
-          className="hidden"
-          type="file"
-          accept="image/png,image/jpg,image/jpeg"
-          ref={profileImageInputRef}
-          onChange={onUploadPostImage}
-        />
-      </Box>
+      <div className="relative flex justify-center mb-5">
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          {files.length === 0 && (
+            <Image
+              src={uploadImage}
+              className="cursor-pointer"
+              alt="Post image"
+              boxSize="450px"
+            />
+          )}
+          {files.map((file, index) => (
+            <PostFileItem
+              key={index}
+              file={file}
+              index={index}
+              onRemoveFile={onRemoveFile}
+            />
+          ))}
+        </div>
+      </div>
 
       <form
         onSubmit={handleSubmit(onSubmitForm)}
@@ -158,7 +173,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
           variant="form"
           isLoading={isLoadingPostForm}
         >
-          Publicar
+          {defaultValues?._id ? "Guardar" : "Publicar"}
         </Button>
       </form>
     </div>
