@@ -30,6 +30,7 @@ export const posts: PostInfo[] = [
       isFounder: false,
       followers: [],
     },
+    files: [],
     createdAt: new Date(),
   },
 ];
