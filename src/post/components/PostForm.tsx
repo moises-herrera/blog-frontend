@@ -52,8 +52,8 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/png": [".jpg", ".jpeg", ".png"],
-      "video/mp4": [".mp4", ".webm", ".ogg"],
+      "image/png": [".jpg", ".jpeg", ".png", ".gif"],
+      "video/*": [".mp4", ".webm", ".ogg"],
     },
     maxFiles: 1,
     maxSize: 60 * 1024 * 1024,
