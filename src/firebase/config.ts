@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
-import { getEnvironments } from "src/helpers";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,7 +11,7 @@ const {
   VITE_FIREBASE_STORAGE_BUCKET,
   VITE_FIREBASE_MESSAGING_SENDER_ID,
   VITE_FIREBASE_APP_ID,
-} = getEnvironments();
+} = import.meta.env;
 
 // Web app's Firebase configuration
 const firebaseConfig = {
