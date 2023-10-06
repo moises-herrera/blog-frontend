@@ -87,12 +87,7 @@ export const CommentsModal = ({
               {files?.length && (
                 <div className="flex justify-center m-auto">
                   {files[0].type.includes("image") ? (
-                    <Image
-                      src={files[0].url}
-                      alt={title}
-                      rounded="20px"
-                      boxSize="450px"
-                    />
+                    <Image src={files[0].url} alt={title} rounded="20px" className="w-[450px]" />
                   ) : (
                     <video src={files[0].url} controls className="w-[350px]" />
                   )}

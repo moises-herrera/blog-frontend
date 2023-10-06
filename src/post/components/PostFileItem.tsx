@@ -18,7 +18,7 @@ export const PostFileItem = ({
   return (
     <>
       {file.type.includes("image") ? (
-        <Image key={index} src={file.url} alt="Post image" boxSize="450px" />
+        <Image key={index} src={file.url} alt="Post image" className="w-[450px]" />
       ) : (
         <video key={index} src={file.url} controls />
       )}
