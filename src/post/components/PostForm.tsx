@@ -1,4 +1,11 @@
-import { Button, FormLabel, Image, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormLabel,
+  Image,
+  Input,
+  Switch,
+  Textarea,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import "./PostForm.css";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -155,6 +162,13 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
         <FormControlContainer fieldError={errors.title}>
           <FormLabel textColor="secondary.300">Título</FormLabel>
           <Input backgroundColor="white" {...register("title")} />
+        </FormControlContainer>
+
+        <FormControlContainer fieldError={errors.isAnonymous}>
+          <FormLabel htmlFor="isAnonymous" textColor="secondary.300">
+            Anónimo
+          </FormLabel>
+          <Switch id="isAnonymous" {...register("isAnonymous")} />
         </FormControlContainer>
 
         <FormControlContainer fieldError={errors.description}>
