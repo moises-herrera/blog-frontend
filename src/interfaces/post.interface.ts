@@ -33,4 +33,7 @@ export interface Post {
 
   /** Date of creation. */
   createdAt: Date;
+
+  /** Whether the post is anonymous. */
+  isAnonymous: boolean;
 }
