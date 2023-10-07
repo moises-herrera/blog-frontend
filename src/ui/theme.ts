@@ -96,5 +96,15 @@ export const appTheme = extendTheme({
         },
       },
     },
+    Switch: {
+      baseStyle: {
+        track: {
+          bg: "secondary.100",
+          _checked: {
+            bg: "accent.500",
+          },
+        },
+      },
+    },
   },
 });

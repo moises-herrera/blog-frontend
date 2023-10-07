@@ -204,7 +204,7 @@ export const updatePost = createAsyncThunk<
         } as FileStored,
       ];
     } else {
-      const fileToDelete = files ? files[0].url : null;
+      const fileToDelete = files.length > 0 ? files[0].url : null;
 
       if (fileToDelete) await deleteFile(fileToDelete);
     }
