@@ -10,9 +10,6 @@ export interface Post {
   /** Post title. */
   title: string;
 
-  /** Image url. */
-  image?: string;
-
   /** Post files. */
   files: FileStored[];
 
