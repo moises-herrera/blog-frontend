@@ -58,6 +58,7 @@ export const CommentsModal = ({
     reset,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CommentForm>();
   const dispatch = useDispatch<AppDispatch>();
@@ -76,6 +77,15 @@ export const CommentsModal = ({
   useEffect(() => {
     dispatch(getComments(_id));
   }, []);
+
+  const onCommentKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") {
+      const textValue = `${event.currentTarget.value}\n`;
+      setValue("comment", textValue);
+    }
+  };
 
   return (
     <Modal
@@ -218,6 +228,7 @@ export const CommentsModal = ({
                         {...register("comment", {
                           required: "El comentario es requerido",
                         })}
+                        onKeyDown={onCommentKeyDown}
                       />
                     </FormControlContainer>
 
