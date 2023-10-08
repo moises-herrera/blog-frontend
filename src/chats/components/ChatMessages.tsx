@@ -115,6 +115,13 @@ export const ChatMessages = memo(() => {
     }
   }, [messages]);
 
+  const onMessageKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      const textValue = `${e.currentTarget.value}\n`;
+      setMessage(textValue);
+    }
+  };
+
   return (
     <>
       {participant ? (
@@ -154,6 +161,7 @@ export const ChatMessages = memo(() => {
               placeholder="Mensaje"
               value={message}
               onChange={onChangeMessage}
+              onKeyDown={onMessageKeyDown}
             />
             <div className="flex justify-end">
               <Button

@@ -22,7 +22,7 @@ export const MessageContent = ({
           isFromCurrentUser ? "bg-accent-500 text-white ml-6" : "bg-white mr-6"
         }`}
       >
-        <span>{content.text}</span>
+        <span className="whitespace-pre">{content.text}</span>
         <div className="flex items-end pl-2">
           <span className="text-xs">{getTimeString(createdAt)}</span>
         </div>
