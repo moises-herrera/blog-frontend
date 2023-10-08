@@ -117,7 +117,7 @@ export const ChatMessages = memo(() => {
 
   const onMessageKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
-      const textValue = `${e.currentTarget.value}\n`;
+      const textValue = e.currentTarget.value;
       setMessage(textValue);
     }
   };

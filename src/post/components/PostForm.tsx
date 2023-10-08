@@ -127,7 +127,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (event.key === "Enter") {
-      const textValue = `${event.currentTarget.value}\n`;
+      const textValue = event.currentTarget.value;
       setValue("description", textValue);
     }
   };

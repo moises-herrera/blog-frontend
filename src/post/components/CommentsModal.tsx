@@ -82,7 +82,7 @@ export const CommentsModal = ({
     event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (event.key === "Enter") {
-      const textValue = `${event.currentTarget.value}\n`;
+      const textValue = event.currentTarget.value;
       setValue("comment", textValue);
     }
   };
