@@ -88,7 +88,7 @@ export const CommentCard = ({
         </div>
         <p
           className={`mr-9 text-[14px] text-justify ${
-            content.includes("\n") ? "whitespace-pre" : ""
+            content.includes("\n") ? "whitespace-pre-line" : ""
           }`}
         >
           {content}

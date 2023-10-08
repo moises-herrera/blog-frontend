@@ -142,7 +142,7 @@ export const PostCard = (data: PostInfo) => {
             maxHeight="200px"
             noOfLines={6}
             textAlign="justify"
-            className="whitespace-pre"
+            className="whitespace-pre-line"
           >
             {description}
           </Text>
