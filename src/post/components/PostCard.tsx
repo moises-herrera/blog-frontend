@@ -138,7 +138,12 @@ export const PostCard = (data: PostInfo) => {
           >
             {title}
           </Heading>
-          <Text maxHeight="200px" noOfLines={6} textAlign="justify">
+          <Text
+            maxHeight="200px"
+            noOfLines={6}
+            textAlign="justify"
+            className="whitespace-pre"
+          >
             {description}
           </Text>
         </Stack>
