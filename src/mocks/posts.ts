@@ -4,7 +4,6 @@ export const posts: PostInfo[] = [
   {
     _id: "823",
     title: "React is awesome",
-    image: "https://bit.ly/dan-abramov",
     topic: "react",
     description: `when an unknown printer took a galley of type and scrambled it to
     make a type specimen book. It has survived not only five centuries,
@@ -32,5 +31,6 @@ export const posts: PostInfo[] = [
     },
     files: [],
     createdAt: new Date(),
+    isAnonymous: false,
   },
 ];
