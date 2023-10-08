@@ -93,3 +93,7 @@ body {
 .post-description {
   @apply overflow-y-auto scrollbar-gray mb-2;
 }
+
+.comment-input {
+  width: calc(100% - 50px);
+}
