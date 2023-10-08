@@ -137,14 +137,15 @@ export const ChatMessages = memo(() => {
             {messages.map(({ _id, content, sender, createdAt }, index) => (
               <Fragment key={_id}>
                 <>
-                  {index !== 0 &&
-                    !isSameDate(createdAt, messages[index - 1].createdAt) && (
-                      <div className="w-full flex justify-center">
-                        <span className="date-label">
-                          {getDateFormattedFromString(createdAt)}
-                        </span>
-                      </div>
-                    )}
+                  {((index !== 0 &&
+                    !isSameDate(createdAt, messages[index - 1].createdAt)) ||
+                    index === 0) && (
+                    <div className="w-full flex justify-center">
+                      <span className="date-label">
+                        {getDateFormattedFromString(createdAt)}
+                      </span>
+                    </div>
+                  )}
                 </>
                 <MessageContent
                   content={content}
