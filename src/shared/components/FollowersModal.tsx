@@ -19,14 +19,18 @@ export const FollowersModal = () => {
   };
 
   return (
-    <Modal isOpen={isFollowersModalOpen} onClose={onCloseModal} isCentered>
-      <ModalOverlay />
-      <ModalContent backgroundColor="primary.500" padding="16px">
-        <div className="absolute text-white right-3">
-          <CloseButton onClick={onCloseModal} />
-        </div>
-        <FollowersList />
-      </ModalContent>
-    </Modal>
+    <>
+      {isFollowersModalOpen && (
+        <Modal isOpen={isFollowersModalOpen} onClose={onCloseModal} isCentered>
+          <ModalOverlay />
+          <ModalContent backgroundColor="primary.500" padding="16px">
+            <div className="absolute text-white right-3">
+              <CloseButton onClick={onCloseModal} />
+            </div>
+            <FollowersList />
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };

@@ -19,14 +19,18 @@ export const FollowingModal = () => {
   };
 
   return (
-    <Modal isOpen={isFollowingModalOpen} onClose={onCloseModal} isCentered>
-      <ModalOverlay />
-      <ModalContent backgroundColor="primary.500" padding="16px">
-        <div className="absolute text-white right-3">
-          <CloseButton onClick={onCloseModal} />
-        </div>
-        <FollowingList />
-      </ModalContent>
-    </Modal>
+    <>
+      {isFollowingModalOpen && (
+        <Modal isOpen={isFollowingModalOpen} onClose={onCloseModal} isCentered>
+          <ModalOverlay />
+          <ModalContent backgroundColor="primary.500" padding="16px">
+            <div className="absolute text-white right-3">
+              <CloseButton onClick={onCloseModal} />
+            </div>
+            <FollowingList />
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };
