@@ -11,6 +11,7 @@ export const PostSchema = z.object({
     .string()
     .nonempty("La descripcion es requerida")
     .max(1000, "La descripcion debe tener menos de 1000 caracteres"),
+  isAnonymous: z.boolean(),
 });
 
 /**

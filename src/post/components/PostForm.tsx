@@ -1,4 +1,11 @@
-import { Button, FormLabel, Image, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormLabel,
+  Image,
+  Input,
+  Switch,
+  Textarea,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import "./PostForm.css";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -32,6 +39,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
@@ -115,6 +123,15 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     });
   };
 
+  const onDescriptionKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") {
+      const textValue = event.currentTarget.value;
+      setValue("description", textValue);
+    }
+  };
+
   return (
     <div className="post-form-container">
       <div className="relative flex justify-center mb-5">
@@ -157,6 +174,13 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
           <Input backgroundColor="white" {...register("title")} />
         </FormControlContainer>
 
+        <FormControlContainer fieldError={errors.isAnonymous}>
+          <FormLabel htmlFor="isAnonymous" textColor="secondary.300">
+            Anónimo
+          </FormLabel>
+          <Switch id="isAnonymous" {...register("isAnonymous")} />
+        </FormControlContainer>
+
         <FormControlContainer fieldError={errors.description}>
           <FormLabel textColor="secondary.300">Descripción</FormLabel>
           <Textarea
@@ -164,6 +188,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
             rows={6}
             resize="none"
             {...register("description")}
+            onKeyDown={onDescriptionKeyDown}
           />
         </FormControlContainer>
 

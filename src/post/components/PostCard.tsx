@@ -40,13 +40,13 @@ export const PostCard = (data: PostInfo) => {
     _id,
     title,
     topic,
-    image,
     description,
     user,
     comments,
     likes,
     createdAt,
     files,
+    isAnonymous,
   } = data;
 
   const onClickUpdate = () => {
@@ -55,10 +55,10 @@ export const PostCard = (data: PostInfo) => {
         _id,
         title,
         topic,
-        image,
         description,
         user: user._id,
         files,
+        isAnonymous,
       })
     );
     dispatch(openNewPostForm());
@@ -80,37 +80,41 @@ export const PostCard = (data: PostInfo) => {
 
   return (
     <PostCardContainer>
-      <CardHeader className="flex justify-between">
-        <div className="flex items-center gap-8">
-          <Link to={`/profile/${user.username}`}>
-            <div className="flex items-center space-x-2">
-              <Avatar
-                name={getFullName(user)}
-                src={user.avatar || avatarPlaceholder}
-              />
-              <Heading size="xs" width="70%" isTruncated>
-                <Username
-                  username={user.username}
-                  isFounder={user.isFounder}
-                  isAccountVerified={user.isAccountVerified}
+      <CardHeader className="relative flex justify-between">
+        {!isAnonymous && (
+          <div className="flex items-center gap-8">
+            <Link to={`/profile/${user.username}`}>
+              <div className="flex items-center space-x-2">
+                <Avatar
+                  name={getFullName(user)}
+                  src={user.avatar || avatarPlaceholder}
                 />
-              </Heading>
-            </div>
-          </Link>
-          {currentUser?._id !== user._id && (
-            <FollowButton user={user} currentUser={currentUser as User} />
-          )}
-        </div>
+                <Heading size="xs" width="70%" isTruncated>
+                  <Username
+                    username={user.username}
+                    isFounder={user.isFounder}
+                    isAccountVerified={user.isAccountVerified}
+                  />
+                </Heading>
+              </div>
+            </Link>
+            {currentUser?._id !== user._id && (
+              <FollowButton user={user} currentUser={currentUser as User} />
+            )}
+          </div>
+        )}
         {currentUser?._id === user._id && (
-          <SettingsMenu
-            onClickUpdate={onClickUpdate}
-            onClickDelete={onClickDelete}
-          />
+          <div className="absolute right-5">
+            <SettingsMenu
+              onClickUpdate={onClickUpdate}
+              onClickDelete={onClickDelete}
+            />
+          </div>
         )}
       </CardHeader>
 
       <CardBody>
-        {files?.length && (
+        {files && files.length > 0 && (
           <Box className="flex justify-center mb-5">
             {files[0].type.includes("image") ? (
               <Image src={files[0].url} alt={title} borderRadius={20} />
@@ -134,7 +138,12 @@ export const PostCard = (data: PostInfo) => {
           >
             {title}
           </Heading>
-          <Text maxHeight="200px" noOfLines={6} textAlign="justify">
+          <Text
+            maxHeight="200px"
+            noOfLines={6}
+            textAlign="justify"
+            className="whitespace-pre-line"
+          >
             {description}
           </Text>
         </Stack>
