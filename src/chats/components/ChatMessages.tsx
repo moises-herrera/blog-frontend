@@ -115,6 +115,13 @@ export const ChatMessages = memo(() => {
     }
   }, [messages]);
 
+  const onMessageKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      const textValue = e.currentTarget.value;
+      setMessage(textValue);
+    }
+  };
+
   return (
     <>
       {participant ? (
@@ -130,14 +137,15 @@ export const ChatMessages = memo(() => {
             {messages.map(({ _id, content, sender, createdAt }, index) => (
               <Fragment key={_id}>
                 <>
-                  {index !== 0 &&
-                    !isSameDate(createdAt, messages[index - 1].createdAt) && (
-                      <div className="w-full flex justify-center">
-                        <span className="date-label">
-                          {getDateFormattedFromString(createdAt)}
-                        </span>
-                      </div>
-                    )}
+                  {((index !== 0 &&
+                    !isSameDate(createdAt, messages[index - 1].createdAt)) ||
+                    index === 0) && (
+                    <div className="w-full flex justify-center">
+                      <span className="date-label">
+                        {getDateFormattedFromString(createdAt)}
+                      </span>
+                    </div>
+                  )}
                 </>
                 <MessageContent
                   content={content}
@@ -154,6 +162,7 @@ export const ChatMessages = memo(() => {
               placeholder="Mensaje"
               value={message}
               onChange={onChangeMessage}
+              onKeyDown={onMessageKeyDown}
             />
             <div className="flex justify-end">
               <Button

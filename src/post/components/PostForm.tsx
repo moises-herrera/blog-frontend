@@ -39,6 +39,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm<PostSchemaType>({
     resolver: zodResolver(PostSchema),
@@ -122,6 +123,15 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
     });
   };
 
+  const onDescriptionKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") {
+      const textValue = event.currentTarget.value;
+      setValue("description", textValue);
+    }
+  };
+
   return (
     <div className="post-form-container">
       <div className="relative flex justify-center mb-5">
@@ -178,6 +188,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
             rows={6}
             resize="none"
             {...register("description")}
+            onKeyDown={onDescriptionKeyDown}
           />
         </FormControlContainer>
 
