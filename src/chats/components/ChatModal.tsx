@@ -8,7 +8,7 @@ export const ChatModal = ({ onClose, isOpen }: ModalData) => {
   return (
     <>
       {isMobile && (
-        <Modal onClose={onClose} isOpen={isOpen} size={"full"}>
+        <Modal onClose={onClose} isOpen={isOpen} size="full">
           <ModalContent>
             <ModalBody background="secondary.100">
               <button onClick={onClose}>

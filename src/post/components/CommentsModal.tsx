@@ -21,10 +21,7 @@ import {
   CloseButton,
   Image,
   Avatar,
-  Input,
-  InputRightElement,
-  InputGroup,
-  Button,
+  Textarea,
 } from "@chakra-ui/react";
 import { CommentCard, LikeButton } from ".";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
@@ -61,6 +58,7 @@ export const CommentsModal = ({
     reset,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CommentForm>();
   const dispatch = useDispatch<AppDispatch>();
@@ -79,6 +77,15 @@ export const CommentsModal = ({
   useEffect(() => {
     dispatch(getComments(_id));
   }, []);
+
+  const onCommentKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") {
+      const textValue = event.currentTarget.value;
+      setValue("comment", textValue);
+    }
+  };
 
   return (
     <Modal
@@ -160,11 +167,11 @@ export const CommentsModal = ({
                 </div>
               )}
               <div>
-                <div className="text-secondary-100 font-bold text-[30px] pl-3 pt-3 p-4">
+                <div className="text-secondary-100 font-bold text-[30px] pt-3 p-4">
                   Comentarios
                 </div>
 
-                <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[650px]">
+                <div className="min-w-full overflow-auto comments-list scrollable-div lg:h-[500px]">
                   {!isLoadingComments ? (
                     <>
                       {comments.map(
@@ -200,8 +207,8 @@ export const CommentsModal = ({
                 </div>
               </div>
 
-              <div className="flex pt-8 mx-3">
-                <div className="pt-2 pr-3 text-2xl">
+              <div className="flex pt-8 mx-4">
+                <div className="h-[84px] flex flex-col justify-center pr-3 text-2xl">
                   <LikeButton
                     postId={_id}
                     userId={currentUser?._id as string}
@@ -210,33 +217,27 @@ export const CommentsModal = ({
                   />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                  <InputGroup className="mb-5">
-                    <InputRightElement>
-                      <Button
-                        marginTop={"10px"}
-                        background="transparent"
-                        _hover={{ background: "transparent" }}
-                        type="submit"
-                      >
+                  <div className="flex mb-5">
+                    <FormControlContainer fieldError={errors.comment}>
+                      <Textarea
+                        defaultValue={""}
+                        textColor="white"
+                        placeholder="Comentar"
+                        rows={3}
+                        resize="none"
+                        {...register("comment", {
+                          required: "El comentario es requerido",
+                        })}
+                        onKeyDown={onCommentKeyDown}
+                      />
+                    </FormControlContainer>
+
+                    <div className="h-[84px] flex flex-col justify-center mx-3">
+                      <button type="submit">
                         <i className="text-white text-2xl fa-solid fa-paper-plane"></i>
-                      </Button>
-                    </InputRightElement>
-                    <div className="flex flex-col w-full">
-                      <FormControlContainer fieldError={errors.comment}>
-                        <Input
-                          autoComplete="off"
-                          defaultValue={""}
-                          textColor="white"
-                          type="text"
-                          placeholder="Comentar"
-                          height={"50px"}
-                          {...register("comment", {
-                            required: "El comentario es requerido",
-                          })}
-                        />
-                      </FormControlContainer>
+                      </button>
                     </div>
-                  </InputGroup>
+                  </div>
                 </form>
               </div>
             </div>

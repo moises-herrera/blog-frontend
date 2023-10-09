@@ -192,7 +192,7 @@ export const updatePost = createAsyncThunk<
     const postFile = postData.fileUploaded;
     let files: FileStored[] = postData.files || [];
 
-    if (postFile) {
+    if (postFile && postFile.url !== files[0]?.url) {
       const fileUrl = !files.length
         ? await uploadFile("posts", postFile)
         : await updateFile("posts", postFile, files[0].url);
@@ -203,10 +203,10 @@ export const updatePost = createAsyncThunk<
           type: postFile?.type,
         } as FileStored,
       ];
-    } else {
-      const fileToDelete = files.length > 0 ? files[0].url : null;
+    } else if (!postFile && files.length > 0) {
+      const fileToDelete = files[0].url;
 
-      if (fileToDelete) await deleteFile(fileToDelete);
+      await deleteFile(fileToDelete);
     }
 
     const { data } = await peopleApi.put<StandardResponse<Post>>(

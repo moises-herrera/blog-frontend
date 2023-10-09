@@ -52,7 +52,7 @@ export const ChatContainer = () => {
   }, [dispatch, debouncedSearchTerm, page]);
 
   return (
-    <div className="w-full h-screen bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
+    <div className="w-full bg-secondary-100 md:w-1/2 lg:w-1/3 xl:w-1/2 2xl:w-1/3">
       <div className="flex items-center w-full gap-2 px-3 pt-16 pb-5 md:pt-3">
         <SearchUsersModal />
         <form className="w-full">
