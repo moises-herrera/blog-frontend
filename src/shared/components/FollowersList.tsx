@@ -20,7 +20,7 @@ export const FollowersList = () => {
 
   const { page } = useScrollPagination({
     isLoading: followersLoading,
-    currentRecords: followers.length,
+    currentRecords: followers?.length || 0,
     total: followersResultsCount,
     elementRef: scrollableDiv,
   });
