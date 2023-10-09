@@ -20,7 +20,7 @@ export const FollowingList = () => {
 
   const { page } = useScrollPagination({
     isLoading: followingLoading,
-    currentRecords: following.length,
+    currentRecords: following?.length || 0,
     total: followingResultsCount,
     elementRef: scrollableDiv,
   });
