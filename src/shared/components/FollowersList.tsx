@@ -26,16 +26,18 @@ export const FollowersList = () => {
   });
 
   useEffect(() => {
-    dispatch(
-      getFollowers({
-        id: currentUserId as string,
-        queryParams: {
-          username: debouncedSearchTerm || "",
-          limit: 10,
-          page,
-        },
-      })
-    );
+    if (currentUserId) {
+      dispatch(
+        getFollowers({
+          id: currentUserId,
+          queryParams: {
+            username: debouncedSearchTerm || "",
+            limit: 10,
+            page,
+          },
+        })
+      );
+    }
   }, [dispatch, debouncedSearchTerm, currentUserId, page]);
 
   return (
