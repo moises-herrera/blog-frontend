@@ -19,7 +19,7 @@ export default function Search() {
 
   const { page } = useScrollPagination({
     isLoading: isLoadingSearch,
-    currentRecords: searchResults?.length,
+    currentRecords: searchResults.length,
     total: totalResults,
   });
 
@@ -55,7 +55,7 @@ export default function Search() {
         />
       </div>
 
-      {!searchResults?.length && isLoadingSearch ? (
+      {!searchResults.length && isLoadingSearch ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
