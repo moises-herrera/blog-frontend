@@ -26,16 +26,18 @@ export const FollowersList = () => {
   });
 
   useEffect(() => {
-    dispatch(
-      getFollowers({
-        id: currentUserId as string,
-        queryParams: {
-          username: debouncedSearchTerm || "",
-          limit: 10,
-          page,
-        },
-      })
-    );
+    if (currentUserId) {
+      dispatch(
+        getFollowers({
+          id: currentUserId,
+          queryParams: {
+            username: debouncedSearchTerm || "",
+            limit: 10,
+            page,
+          },
+        })
+      );
+    }
   }, [dispatch, debouncedSearchTerm, currentUserId, page]);
 
   return (
@@ -45,7 +47,7 @@ export const FollowersList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      {!followers?.length && followersLoading ? (
+      {!followers.length && followersLoading ? (
         <div className="h-[310px]">
           <Loading />
         </div>

@@ -10,7 +10,7 @@ interface FeedContentProps {
 export const FeedContent = ({ posts }: FeedContentProps) => {
   return (
     <>
-      {posts?.length > 0 ? (
+      {posts.length > 0 ? (
         <div className="flex flex-col items-center h-full w-full gap-8">
           {posts.map((post) => (
             <PostCard key={post._id} {...post} />
