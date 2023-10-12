@@ -114,7 +114,7 @@ export const PostCard = (data: PostInfo) => {
       </CardHeader>
 
       <CardBody>
-        {files && files.length > 0 && (
+        {files && files?.length > 0 && (
           <Box className="flex justify-center mb-5">
             {files[0].type.includes("image") ? (
               <Image src={files[0].url} alt={title} borderRadius={20} />
@@ -154,7 +154,7 @@ export const PostCard = (data: PostInfo) => {
             <button onClick={onOpenCommentsModal}>
               <i className="fa-regular fa-comment"></i>
             </button>
-            <span>{comments.length}</span>
+            <span>{comments?.length}</span>
           </div>
           <div className="space-x-2">
             <LikeButton
@@ -162,8 +162,8 @@ export const PostCard = (data: PostInfo) => {
               userId={currentUser?._id as string}
               userLiked={postHasLike(likes, currentUser?._id as string)}
             />
-            <button onClick={onOpenLikesModal} disabled={likes.length === 0}>
-              <span>{likes.length}</span>
+            <button onClick={onOpenLikesModal} disabled={likes?.length === 0}>
+              <span>{likes?.length}</span>
             </button>
           </div>
         </ButtonGroup>

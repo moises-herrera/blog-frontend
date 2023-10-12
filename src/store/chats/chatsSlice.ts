@@ -43,7 +43,7 @@ export const chatSlice = createSlice({
       }
     },
     addChatToList: (state, { payload }) => {
-      state.list = state.list.length > 1 ? [payload, ...state.list] : [payload];
+      state.list = state.list?.length > 1 ? [payload, ...state.list] : [payload];
     },
     updateLastMessage: (state, { payload }) => {
       if (payload) {
@@ -133,7 +133,7 @@ export const chatSlice = createSlice({
       state.isCreatingChat = false;
       const chat = payload.data as ChatData;
       state.chatSelected = chat;
-      state.list = state.list.length > 1 ? [chat, ...state.list] : [chat];
+      state.list = state.list?.length > 1 ? [chat, ...state.list] : [chat];
     });
     builder.addCase(createChat.rejected, (state) => {
       state.isCreatingChat = false;

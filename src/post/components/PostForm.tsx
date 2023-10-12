@@ -95,7 +95,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
   const onSubmitForm: SubmitHandler<PostSchemaType> = async (data) => {
     const postData: CreatePost = {
       ...data,
-      fileUploaded: files.length > 0 ? files[0] : null,
+      fileUploaded: files?.length > 0 ? files[0] : null,
     };
 
     if (!defaultValues?._id) {
@@ -137,7 +137,7 @@ export const PostForm = ({ defaultValues }: PostFormProps) => {
       <div className="relative flex justify-center mb-5">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          {files.length === 0 && (
+          {files?.length === 0 && (
             <Image
               src={uploadImage}
               className="cursor-pointer"

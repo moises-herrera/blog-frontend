@@ -38,7 +38,7 @@ export const ProfileHeader = ({ user }: ProfileHeaderProps) => {
       <div className="flex flex-col items-center pl-2">
         <i className="fa-solid fa-user-check text-3xl"></i>
         <span>Seguidores</span>
-        <span>{user.followers.length}</span>
+        <span>{user.followers?.length}</span>
       </div>
     </header>
   );

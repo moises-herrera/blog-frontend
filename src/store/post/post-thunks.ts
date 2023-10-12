@@ -193,7 +193,7 @@ export const updatePost = createAsyncThunk<
     let files: FileStored[] = postData.files || [];
 
     if (postFile && postFile.url !== files[0]?.url) {
-      const fileUrl = !files.length
+      const fileUrl = !files?.length
         ? await uploadFile("posts", postFile)
         : await updateFile("posts", postFile, files[0].url);
 
@@ -203,7 +203,7 @@ export const updatePost = createAsyncThunk<
           type: postFile?.type,
         } as FileStored,
       ];
-    } else if (!postFile && files.length > 0) {
+    } else if (!postFile && files?.length > 0) {
       const fileToDelete = files[0].url;
 
       await deleteFile(fileToDelete);
@@ -243,7 +243,7 @@ export const deletePost = createAsyncThunk<
 >("deletePost", async ({ _id, files }, { rejectWithValue }) => {
   try {
     if (files) {
-      const fileToDelete = files.length ? files[0].url : null;
+      const fileToDelete = files?.length ? files[0].url : null;
 
       if (fileToDelete) await deleteFile(fileToDelete);
     }

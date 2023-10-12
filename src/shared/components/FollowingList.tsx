@@ -45,7 +45,7 @@ export const FollowingList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      {!following.length && followingLoading ? (
+      {!following?.length && followingLoading ? (
         <div className="h-[310px]">
           <Loading />
         </div>

@@ -19,7 +19,7 @@ export default function Users() {
 
   const { page } = useScrollPagination({
     isLoading,
-    currentRecords: list.length,
+    currentRecords: list?.length,
     total: resultsCount,
   });
 
@@ -60,7 +60,7 @@ export default function Users() {
         iconClassName="text-gray-400"
       />
 
-      {!list.length && isLoading ? (
+      {!list?.length && isLoading ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>

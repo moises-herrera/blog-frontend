@@ -26,7 +26,7 @@ export const LikesList = () => {
 
   const { page, setPage } = useScrollPagination({
     isLoading: isLoadingPostLikes,
-    currentRecords: postInfoActive?.likes.length || 0,
+    currentRecords: postInfoActive?.likes?.length || 0,
     total: totalPostLikes,
     elementRef: scrollableDiv,
   });
@@ -58,7 +58,7 @@ export const LikesList = () => {
 
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      {!postUserLikes.length && isLoadingPostLikes ? (
+      {!postUserLikes?.length && isLoadingPostLikes ? (
         <div className="h-[310px]">
           <Loading />
         </div>

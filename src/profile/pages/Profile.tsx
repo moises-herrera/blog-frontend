@@ -35,7 +35,7 @@ export default function Profile() {
 
   const { page, setPage } = useScrollPagination({
     isLoading: isLoadingUserPosts,
-    currentRecords: userPosts.length,
+    currentRecords: userPosts?.length,
     total: userPostsTotal,
   });
 
@@ -83,7 +83,7 @@ export default function Profile() {
           <ProfileHeader user={userProfile} />
 
           <div className="mt-[300px] lg:mt-28">
-            {!userPosts.length && isLoadingUserPosts ? (
+            {!userPosts?.length && isLoadingUserPosts ? (
               <div className="loading-container">
                 <Loading textClass="text-black" />
               </div>

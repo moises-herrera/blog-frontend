@@ -14,7 +14,7 @@ export const SuggestedTab = () => {
 
   const { page } = useScrollPagination({
     isLoading: isLoadingSuggested,
-    currentRecords: postSuggestedList.length,
+    currentRecords: postSuggestedList?.length,
     total: postsSuggestedTotal,
   });
 
@@ -29,7 +29,7 @@ export const SuggestedTab = () => {
 
   return (
     <>
-      {!postSuggestedList.length && isLoadingSuggested ? (
+      {!postSuggestedList?.length && isLoadingSuggested ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>
