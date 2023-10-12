@@ -29,13 +29,13 @@ export const ChatContainer = () => {
 
   const { page } = useScrollPagination({
     isLoading: isLoadingList,
-    currentRecords: list.length,
+    currentRecords: list?.length,
     total: totalChats,
     elementRef: listRef,
   });
 
   useEffect(() => {
-    if (list.length) {
+    if (list?.length) {
       const chatIds = list.map(({ _id }) => _id);
       socket.emit("join", chatIds);
     }

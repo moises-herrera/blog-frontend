@@ -101,7 +101,7 @@ export const CommentsModal = ({
           <div className="flex flex-col w-full h-full sm:flex-row">
             <div className="hidden w-full bg-white rounded-l-[20px] lg:w-1/2 lg:block">
               <CloseButton onClick={onClose} className="ml-1" />
-              {files && files.length > 0 && (
+              {files && files?.length > 0 && (
                 <div className="flex justify-center m-auto">
                   {files[0].type.includes("image") ? (
                     <Image

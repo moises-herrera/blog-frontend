@@ -15,7 +15,7 @@ export const FollowingTab = () => {
 
   const { page } = useScrollPagination({
     isLoading: isLoadingFollowing,
-    currentRecords: postFollowingList.length,
+    currentRecords: postFollowingList?.length,
     total: postsFollowingTotal,
   });
 
@@ -30,7 +30,7 @@ export const FollowingTab = () => {
 
   return (
     <>
-      {!postFollowingList.length && isLoadingFollowing ? (
+      {!postFollowingList?.length && isLoadingFollowing ? (
         <div className="loading-container">
           <Loading textClass="text-black" />
         </div>

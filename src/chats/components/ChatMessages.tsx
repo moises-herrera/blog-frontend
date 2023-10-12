@@ -36,7 +36,7 @@ export const ChatMessages = memo(() => {
 
   const { page, setPage } = useScrollPagination({
     isLoading: isLoadingMessages,
-    currentRecords: messages.length,
+    currentRecords: messages?.length,
     total: totalMessages,
     elementRef: messagesListRef,
     isReverse: true,

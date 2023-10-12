@@ -19,7 +19,7 @@ export const SearchUsersList = () => {
   const usersListRef = useRef<HTMLDivElement>(null);
   const { page } = useScrollPagination({
     isLoading,
-    currentRecords: list.length,
+    currentRecords: list?.length,
     total: resultsCount,
     elementRef: usersListRef,
   });
@@ -45,7 +45,7 @@ export const SearchUsersList = () => {
         <p className="users-list-title">Usuarios</p>
         <SearchInput placeholder="Buscar usuarios" onSearch={onSearch} />
       </div>
-      {!list.length && isLoading ? (
+      {!list?.length && isLoading ? (
         <div className="h-[310px]">
           <Loading />
         </div>
