@@ -104,12 +104,10 @@ export const PostCard = (data: PostInfo) => {
           </div>
         )}
         {currentUser?._id === user._id && (
-          <div className="absolute right-5">
-            <SettingsMenu
-              onClickUpdate={onClickUpdate}
-              onClickDelete={onClickDelete}
-            />
-          </div>
+          <SettingsMenu
+            onClickUpdate={onClickUpdate}
+            onClickDelete={onClickDelete}
+          />
         )}
       </CardHeader>
 
