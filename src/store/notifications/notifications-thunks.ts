@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { peopleApi } from "src/api";
-import { Notification, PaginatedResponse } from "src/interfaces";
+import { getQueryStringFromObject } from "src/helpers";
+import { Notification, PaginatedResponse, QueryParams } from "src/interfaces";
 import { AsyncThunkConfig } from "src/store/types";
 
 /**
@@ -11,12 +12,13 @@ import { AsyncThunkConfig } from "src/store/types";
  */
 export const getNotifications = createAsyncThunk<
   PaginatedResponse<Notification>,
-  void,
+  QueryParams,
   AsyncThunkConfig
->("getNotifications", async (_, { rejectWithValue }) => {
+>("getNotifications", async (queryParams, { rejectWithValue }) => {
   try {
+    const queryString = getQueryStringFromObject(queryParams || {});
     const { data } = await peopleApi.get<PaginatedResponse<Notification>>(
-      "/notification"
+      `/notification?${queryString}`
     );
     return data;
   } catch (error) {
