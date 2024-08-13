@@ -80,7 +80,11 @@ export const PostCard = (data: PostInfo) => {
 
   return (
     <PostCardContainer>
-      <CardHeader className="relative flex justify-between">
+      <CardHeader
+        className={`relative flex ${
+          !isAnonymous ? "justify-between" : "justify-end"
+        }`}
+      >
         {!isAnonymous && (
           <div className="flex items-center gap-8">
             <Link to={`/profile/${user.username}`}>
