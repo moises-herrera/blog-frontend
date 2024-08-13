@@ -6,8 +6,8 @@ import { z } from "zod";
  */
 export const SignUpSchema = z
   .object({
-    firstName: z.string().nonempty("El nombre es requerido"),
-    lastName: z.string().nonempty("El apellido es requerido"),
+    firstName: z.string().min(1, "El nombre es requerido"),
+    lastName: z.string().min(1, "El apellido es requerido"),
     username: z
       .string()
       .min(4, "El usuario debe tener mínimo 4 carácteres")
@@ -18,7 +18,7 @@ export const SignUpSchema = z
       ),
     email: z
       .string()
-      .nonempty("El correo es requerido")
+      .min(1, "El correo es requerido")
       .email("El correo no es valido"),
     password: z
       .string()
@@ -28,7 +28,7 @@ export const SignUpSchema = z
         passwordPattern,
         "La contraseña debe tener al menos una mayúscula, una minúscula y un número"
       ),
-    confirmPassword: z.string().nonempty("La confirmación es requerida"),
+    confirmPassword: z.string().min(1, "La confirmación es requerida"),
   })
   .superRefine(({ password, confirmPassword }, context) => {
     if (password !== confirmPassword) {
