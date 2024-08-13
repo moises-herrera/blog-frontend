@@ -8,16 +8,14 @@ import {
 } from "src/shared/components";
 import { LoginSchema, LoginSchemaType } from "src/auth/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTypedSelector } from "src/store";
 import { useMessageToast } from "src/hooks";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
-import { clearErrorMessage, loginUser } from "src/store/auth";
+import { loginUser } from "src/store/auth";
 
 export const LoginForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { errorMessage } = useTypedSelector(({ auth }) => auth);
   const [isVisible, setIsVisible] = useState(false);
   const onChangeVisible = () => {
     setIsVisible(!isVisible);
@@ -31,19 +29,12 @@ export const LoginForm = ({ isOpen, onClose }: ModalData) => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const clearError = useCallback(() => {
-    dispatch(clearErrorMessage());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (errorMessage) {
-      displayError(errorMessage);
-      clearError();
-    }
-  }, [errorMessage, displayError, clearError]);
-
   const onSubmitForm: SubmitHandler<LoginSchemaType> = (data) => {
-    dispatch(loginUser(data));
+    dispatch(loginUser(data))
+      .unwrap()
+      .catch((error) => {
+        displayError(error.message);
+      });
   };
 
   return (

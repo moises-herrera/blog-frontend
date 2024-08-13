@@ -13,18 +13,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormControlContainer } from "src/shared/components";
 import avatarPlaceholder from "src/assets/images/avatar-placeholder.png";
-import {
-  clearErrorMessage,
-  clearSuccessMessage,
-  updateUser,
-} from "src/store/auth";
+import { clearSuccessMessage, updateUser } from "src/store/auth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/types";
 import { useMessageToast } from "src/hooks";
 import { FileStored, UserWithAvatarFile } from "src/interfaces";
 
 export default function SettingForm() {
-  const { user, errorMessage, successMessage, isLoading } = useTypedSelector(
+  const { user, successMessage, isLoading } = useTypedSelector(
     ({ auth }) => auth
   );
   const [isVisible, setIsVisible] = useState(false);
@@ -91,33 +87,23 @@ export default function SettingForm() {
         id: user?._id as string,
         userData: userData,
       })
-    );
+    )
+      .unwrap()
+      .catch((error) => {
+        displayError(error.message);
+      });
   };
 
   const clearSuccess = useCallback(() => {
     dispatch(clearSuccessMessage());
   }, [dispatch]);
 
-  const clearError = useCallback(() => {
-    dispatch(clearErrorMessage());
-  }, [dispatch]);
-
   useEffect(() => {
     if (successMessage) {
       displaySuccessMessage(successMessage);
       clearSuccess();
-    } else if (errorMessage) {
-      displayError(errorMessage);
-      clearError();
     }
-  }, [
-    errorMessage,
-    displayError,
-    displaySuccessMessage,
-    successMessage,
-    clearSuccess,
-    clearError,
-  ]);
+  }, [displaySuccessMessage, successMessage, clearSuccess]);
 
   useEffect(() => {
     document.title = "Configuración";
