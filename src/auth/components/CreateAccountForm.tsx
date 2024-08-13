@@ -10,15 +10,15 @@ import {
 import { SignUpSchema, SignUpSchemaType } from "src/auth/validations";
 import { ModalData } from "src/interfaces";
 import { useDispatch } from "react-redux";
-import { clearErrorMessage, registerUser } from "src/store/auth";
-import { useCallback, useEffect, useState } from "react";
+import { registerUser } from "src/store/auth";
+import { useState } from "react";
 import { useMessageToast } from "src/hooks";
 import { useTypedSelector } from "src/store";
 import { AppDispatch } from "src/store/types";
 
 export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { status, errorMessage } = useTypedSelector(({ auth }) => auth);
+  const { status } = useTypedSelector(({ auth }) => auth);
   const [isVisible, setIsVisible] = useState(false);
   const onChangeVisible = () => {
     setIsVisible(!isVisible);
@@ -32,19 +32,12 @@ export const CreateAccountForm = ({ isOpen, onClose }: ModalData) => {
     resolver: zodResolver(SignUpSchema),
   });
 
-  const clearError = useCallback(() => {
-    dispatch(clearErrorMessage());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (errorMessage) {
-      displayError(errorMessage);
-      clearError();
-    }
-  }, [errorMessage, displayError, clearError]);
-
   const onSubmitForm: SubmitHandler<SignUpSchemaType> = (data) => {
-    dispatch(registerUser(data));
+    dispatch(registerUser(data))
+      .unwrap()
+      .catch((error) => {
+        displayError(error.message);
+      });
   };
 
   return (
